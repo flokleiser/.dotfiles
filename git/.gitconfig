@@ -1,0 +1,5 @@
+[user]
+	email = floriankleiser@gmail.com
+	name = Flo Kleiser
+[core]
+	excludesfile = /Users/flo/.gitignore_global
