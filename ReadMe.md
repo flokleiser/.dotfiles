@@ -1,1 +1,2 @@
-# Some settings that i need probably
+# Some settings stuff
+
