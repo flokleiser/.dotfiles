@@ -222,26 +222,98 @@ require('nvim-treesitter.configs').setup {
 }
 
 -- Neo-Tree
-require("neo-tree").setup({
-  window = {
-    mappings = {
-      ["<space>"] = "toggle_node",
-      ["l"] = "open",
-      ["h"] = "close_node",
-      ["<Esc>"] = "revert_preview",
-      ["H"] = function(state)
-			local winid = vim.api.nvim_get_current_win()
-		  	local cur_width = vim.api.nvim_win_get_width(winid)
-		  	vim.api.nvim_win_set_width(winid, cur_width - 5)
-	  	end,
-      ["L"] = function(state)
-		 	local winid = vim.api.nvim_get_current_win()
-		 	local cur_width = vim.api.nvim_win_get_width(winid)
-			vim.api.nvim_win_set_width(winid, cur_width + 5)
-		end,
-    }
-  }
-})
+-- require("neo-tree").setup({
+-- 	window = {
+-- 		mappings = {
+-- 		  ["<space>"] = "toggle_node",
+-- 		  ["l"] = "open",
+-- 		  ["h"] = "close_node",
+-- 		  ["<Esc>"] = "revert_preview",
+
+-- 		  ["H"] = function(state)
+-- 				local winid = vim.api.nvim_get_current_win()
+-- 				local cur_width = vim.api.nvim_win_get_width(winid)
+-- 				vim.api.nvim_win_set_width(winid, cur_width - 5)
+-- 			end,
+
+-- 		  ["L"] = function(state)
+-- 				local winid = vim.api.nvim_get_current_win()
+-- 				local cur_width = vim.api.nvim_win_get_width(winid)
+-- 				vim.api.nvim_win_set_width(winid, cur_width + 5)
+-- 			end,
+
+-- 		}
+-- 	}
+-- })
+
+vim.schedule(function()
+  local ok, fs_commands = pcall(require, "neo-tree.sources.filesystem.commands")
+  if not ok then return end
+
+  require("neo-tree").setup({
+    filesystem = {
+		filtered_items = {
+			visible = true,
+			show_hidden_count = true,	
+		},
+		  window = {
+			mappings = {
+			  ["<space>"] = "toggle_node",
+			  ["l"] = "open",
+			  ["h"] = "close_node",
+			  ["<Esc>"] = "revert_preview",
+
+			  ["H"] = function(state)
+					local winid = vim.api.nvim_get_current_win()
+					local cur_width = vim.api.nvim_win_get_width(winid)
+					vim.api.nvim_win_set_width(winid, cur_width - 5)
+				end,
+
+			  ["L"] = function(state)
+					local winid = vim.api.nvim_get_current_win()
+					local cur_width = vim.api.nvim_win_get_width(winid)
+					vim.api.nvim_win_set_width(winid, cur_width + 5)
+				end,
+
+
+				["a"] = function(state)
+				  local node = state.tree:get_node()
+				  local base_path = node.type == "directory" and node.path or vim.fn.fnamemodify(node.path, ":h")
+				  vim.ui.input({ prompt = "New directory name: " }, function(input)
+					if input and input ~= "" then
+					  os.execute(string.format("mkdir -p '%s/%s'", base_path, input))
+					  require("neo-tree.sources.filesystem.commands").refresh(state)
+					end
+				  end)
+				end,
+
+				["A"] = function(state)
+				  local node = state.tree:get_node()
+				  local base_path = node.type == "directory" and node.path or vim.fn.fnamemodify(node.path, ":h")
+				  vim.ui.input({ prompt = "New file name: " }, function(input)
+					if input and input ~= "" then
+					  os.execute(string.format("touch '%s/%s'", base_path, input))
+					  require("neo-tree.sources.filesystem.commands").refresh(state)
+					end
+				  end)
+				end,
+
+			  ["x"] = fs_commands.delete,
+			  ["r"] = fs_commands.rename,
+			  ["y"] = fs_commands.copy_to_clipboard,
+			  ["d"] = fs_commands.cut_to_clipboard,
+			  ["p"] = fs_commands.paste_from_clipboard,
+			  ["w"] = "set_root",
+			  ["u"] = "navigate_up",
+			  ["gh"] = "toggle_hidden",
+			  -- ["p"] = fs_commands.paste_from_clipboard,
+			},
+		  },
+		},
+	  })
+	end)
+
+
 -- Notify
 vim.notify = require('notify')
 require('notify').setup({
@@ -281,10 +353,25 @@ end
 
 -- Lualine
 local custom_codedark = require'lualine.themes.codedark'
-custom_codedark.normal.c.bg = 'NONE'
-custom_codedark.insert.c.bg = 'NONE'
+
+custom_codedark.normal.a.bg = 'NONE'
 custom_codedark.normal.b.bg = 'NONE'
+custom_codedark.normal.c.bg = 'NONE'
+
+custom_codedark.insert.a.bg = 'NONE'
 custom_codedark.insert.b.bg = 'NONE'
+custom_codedark.insert.c.bg = 'NONE'
+
+custom_codedark.normal.a.fg= '#7F8490'
+custom_codedark.normal.b.fg= '#7F8490'
+custom_codedark.normal.c.fg= '#7F8490'
+
+custom_codedark.insert.a.fg= '#7F8490'
+custom_codedark.insert.b.fg= '#7F8490'
+custom_codedark.insert.c.fg= '#7F8490'
+
+custom_codedark.normal.a.gui= 'bold'
+custom_codedark.insert.a.gui= 'bold'
 
 require('lualine').setup({
 	options = { 
@@ -295,7 +382,6 @@ require('lualine').setup({
         lualine_a = {'mode'},
         lualine_b = {'filename'},
         lualine_c = {},
-        -- lualine_x = {'diagnostics'},
 		lualine_x = {
 		{
 			'diagnostics',

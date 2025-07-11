@@ -70,6 +70,13 @@ lfcd() {
 
 eval $(thefuck --alias)
 
+### --- LazyGit function ---
+function lazygit() {
+	git add.
+	git commit -a -m "$*"
+	git push
+}
+
 ### --- DIFFERENT CURSORS FOR VIM MODES ---
 function zle-keymap-select {
 	if [[ ${KEYMAP} == vicmd ]] || [[ $1 = 'block' ]]; then
@@ -85,12 +92,3 @@ echo -ne '\e[5 q'
 preexec() {
 	echo -ne '\e[5 q'
 }
-
-
-
-
-
-
-
-
-export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
