@@ -53,6 +53,7 @@ alias yz=yazi
 ### --- ALIASES FOR PATHS ---
 alias obsidian="cd /Users/flo/Library/Mobile\ Documents/iCloud\~md\~obsidian/Documents"
 alias home="cd ~"
+alias config="cd ~/.dotfiles"
 alias mca="cd /Users/flo/Documents/curseforge/minecraft/Instances/Flo\ 1.21.4/mca/zulu21.32.17-ca-fx-jre21.0.2-macosx_aarch64"
 alias mcaselector="/Users/flo/Documents/curseforge/minecraft/Instances/Flo\ 1.21.4/mca/zulu21.32.17-ca-fx-jre21.0.2-macosx_aarch64/zulu-21.jre/Contents/Home/bin/java -jar /Users/flo/Documents/curseforge/minecraft/Instances/Flo\ 1.21.4/mca/mcaselector-2.4.2.jar" 
 
@@ -92,3 +93,4 @@ preexec() {
 
 
 
+export PATH="/opt/homebrew/opt/ruby/bin:$PATH"

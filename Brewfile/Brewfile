@@ -1,0 +1,123 @@
+tap "epk/epk"
+tap "felixkratz/formulae"
+tap "koekeishiya/formulae"
+tap "nikitabobko/tap"
+tap "powershell/tap"
+# Clone of cat(1) with syntax highlighting and Git integration
+brew "bat"
+# Vector graphics library with cross-device output support
+brew "cairo"
+# Validating, recursive, caching DNS resolver
+brew "unbound"
+# Framework for layout and rendering of i18n text
+brew "pango"
+# Play, record, convert, and stream audio and video
+brew "ffmpeg"
+# GNU File, Shell, and Text utilities
+brew "coreutils"
+# Like neofetch, but much faster because written mostly in C
+brew "fastfetch"
+# Command-line fuzzy finder written in Go
+brew "fzf"
+# Multi-platform library for OpenGL applications
+brew "glfw"
+# GNU typing tutor
+brew "gnu-typist"
+# Powerful, lightweight programming language
+brew "lua"
+# Convert source code to formatted text with syntax highlighting
+brew "highlight"
+# Tools and libraries to manipulate images in many formats
+brew "imagemagick"
+# Lightweight and flexible command-line JSON processor
+brew "jq"
+# Pager program similar to more
+brew "less"
+# Terminal file manager
+brew "lf"
+# Language Server for the Lua language
+brew "lua-language-server"
+# Music Player Daemon
+brew "mpd"
+# Ambitious Vim-fork focused on extensibility and agility
+brew "neovim"
+# Platform built on V8 to build network applications
+brew "node"
+# Interpreted, interactive, object-oriented programming language
+brew "python@3.13"
+# Execute binaries from Python packages in isolated environments
+brew "pipx"
+# Package compiler and linker metadata toolkit
+brew "pkgconf"
+# Python 3 bindings for the Cairo graphics library
+brew "py3cairo"
+# Interpreted, interactive, object-oriented programming language
+brew "python@3.11"
+# Search tool like grep and The Silver Searcher
+brew "ripgrep"
+# Powerful, clean, object-oriented scripting language
+brew "ruby"
+# Organize software neatly under a single directory tree (e.g. /usr/local)
+brew "stow"
+# Programmatically correct mistyped console commands
+brew "thefuck"
+# Terminal multiplexer
+brew "tmux"
+# Little beautifier tool for xcodebuild
+brew "xcbeautify"
+# Build server protocol implementation for integrating Xcode with sourcekit-lsp
+brew "xcode-build-server"
+# Blazing fast terminal file manager written in Rust, based on async I/O
+brew "yazi"
+# Feature-rich command-line audio/video downloader
+brew "yt-dlp"
+# Shell extension to navigate your filesystem faster
+brew "zoxide"
+# A window border system for macOS
+brew "felixkratz/formulae/borders"
+# Custom macOS statusbar with shell plugin, interaction and graph support
+brew "felixkratz/formulae/sketchybar"
+# Turns macOS input fields into real vim buffers
+brew "felixkratz/formulae/svim"
+# AeroSpace is an i3-like tiling window manager for macOS
+cask "aerospace"
+cask "font-jetbrains-mono-nerd-font"
+cask "font-sf-mono-nerd-font"
+cask "font-sketchybar-app-font"
+# Desktop automation application
+cask "hammerspoon"
+# Full TeX Live distribution with GUI applications
+cask "mactex"
+vscode "adpyke.codesnap"
+vscode "alexnesnes.teleplot"
+vscode "bierner.markdown-mermaid"
+vscode "bradlc.vscode-tailwindcss"
+vscode "chadalen.vscode-jetbrains-icon-theme"
+vscode "christian-kohler.npm-intellisense"
+vscode "davidbwaters.macos-modern-theme"
+vscode "ecmel.vscode-html-css"
+vscode "esbenp.prettier-vscode"
+vscode "gera2ld.markmap-vscode"
+vscode "github.copilot"
+vscode "github.copilot-chat"
+vscode "l-igh-t.vscode-theme-seti-folder"
+vscode "llvm-vs-code-extensions.lldb-dap"
+vscode "miguelsolorio.symbols"
+vscode "ms-python.debugpy"
+vscode "ms-python.python"
+vscode "ms-python.vscode-pylance"
+vscode "ms-vscode.cmake-tools"
+vscode "ms-vscode.cpptools"
+vscode "ms-vscode.cpptools-extension-pack"
+vscode "platformio.platformio-ide"
+vscode "pranaygp.vscode-css-peek"
+vscode "rangav.vscode-thunder-client"
+vscode "ritwickdey.liveserver"
+vscode "samplavigne.p5-vscode"
+vscode "shd101wyy.markdown-preview-enhanced"
+vscode "slevesque.shader"
+vscode "swiftlang.swift-vscode"
+vscode "tomoki1207.pdf"
+vscode "twxs.cmake"
+vscode "vadimcn.vscode-lldb"
+vscode "vscodevim.vim"

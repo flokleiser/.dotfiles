@@ -1,5 +1,4 @@
--- =========================================================
--- BASIC VIM OPTIONS
+-- ========================================================= BASIC VIM OPTIONS
 -- =========================================================
 vim.opt.mouse = "a"
 vim.opt.number = true
@@ -36,6 +35,10 @@ vim.g.codedark_transparent = 1
 -- =========================================================
 -- PLUGIN MANAGEMENT
 -- =========================================================
+
+-- call plug#begin('~/.config/nvim/plugged')
+-- call plug#begin('~/.dotfiles/nvim/.config/nvim/plugged')
+
 vim.cmd [[
 	syntax on
 	filetype plugin indent on
@@ -53,7 +56,7 @@ vim.cmd [[
 	hi VertSplit guibg=NONE ctermbg=NONE
 	hi Folded guibg=NONE ctermbg=NONE
 
-	call plug#begin('~/.vim/plugged')
+	call plug#begin('~/.config/nvim/plugged')
 
 		Plug 'tomasiser/vim-code-dark'
 		Plug 'tpope/vim-commentary'
@@ -89,6 +92,8 @@ vim.cmd [[
 		Plug 'glepnir/lspsaga.nvim'
 
 		Plug 'windwp/nvim-autopairs'
+		Plug 'wojciech-kulik/xcodebuild.nvim'
+		Plug 'christoomey/vim-tmux-navigator'
 
 	call plug#end()
 
@@ -197,6 +202,15 @@ cmp.setup({
 -- PLUGIN CONFIGURATIONS
 -- =========================================================
 
+-- XcodeBuild
+-- more options: https://github.com/wojciech-kulik/xcodebuild.nvim/wiki/Integrations
+
+require("xcodebuild").setup({
+  auto_select_scheme = true,
+  auto_select_target = true,
+  show_build_progress = true,
+})
+
 -- Cutlass
 require("cutlass").setup()
 
@@ -207,6 +221,27 @@ require('nvim-treesitter.configs').setup {
   auto_install = true,
 }
 
+-- Neo-Tree
+require("neo-tree").setup({
+  window = {
+    mappings = {
+      ["<space>"] = "toggle_node",
+      ["l"] = "open",
+      ["h"] = "close_node",
+      ["<Esc>"] = "revert_preview",
+      ["H"] = function(state)
+			local winid = vim.api.nvim_get_current_win()
+		  	local cur_width = vim.api.nvim_win_get_width(winid)
+		  	vim.api.nvim_win_set_width(winid, cur_width - 5)
+	  	end,
+      ["L"] = function(state)
+		 	local winid = vim.api.nvim_get_current_win()
+		 	local cur_width = vim.api.nvim_win_get_width(winid)
+			vim.api.nvim_win_set_width(winid, cur_width + 5)
+		end,
+    }
+  }
+})
 -- Notify
 vim.notify = require('notify')
 require('notify').setup({
@@ -214,6 +249,7 @@ require('notify').setup({
 	background_colour = "#000000",
 	level = vim.log.levels.ERROR, 
 })
+vim.opt.termguicolors = true
 
 -- Noice
 if not vim.g._noice_loaded then
@@ -350,6 +386,9 @@ vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Telescope find f
 vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Telescope live grep' })
 vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers' })
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags' })
+
+-- Neo-tree navigation
+vim.keymap.set("n", "<leader>fe", "<cmd>Neotree toggle<CR>")
 
 -- Config reload
 vim.keymap.set("n", "<leader>rr", function()

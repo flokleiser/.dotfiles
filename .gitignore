@@ -1,1 +1,4 @@
 .DS_Store
+nvim/.config/nvim/plugged/
+tmux/.tmux/plugins/
+zsh/.zsh/
