@@ -8,16 +8,6 @@
 	<true/>
 	<key>AlwaysOpenWindowAtStartup</key>
 	<true/>
-	<key>AppleAntiAliasingThreshold</key>
-	<integer>1</integer>
-	<key>ApplePressAndHoldEnabled</key>
-	<false/>
-	<key>AppleScrollAnimationEnabled</key>
-	<integer>0</integer>
-	<key>AppleSmoothFixedFontsSizeThreshold</key>
-	<integer>1</integer>
-	<key>AppleWindowTabbingMode</key>
-	<string>manual</string>
 	<key>CopySelection</key>
 	<true/>
 	<key>Default Bookmark Guid</key>
@@ -168,13 +158,13 @@
 		<key>0x6b-0x100000-0x28</key>
 		<dict>
 			<key>Action</key>
-			<integer>10</integer>
+			<integer>12</integer>
 			<key>Apply Mode</key>
 			<integer>0</integer>
 			<key>Escaping</key>
 			<integer>2</integer>
 			<key>Text</key>
-			<string>\ek</string>
+			<string>^[\ek </string>
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
@@ -2696,6 +2686,8 @@
 			<string>kNextWindowPointerAction</string>
 		</dict>
 	</dict>
+	<key>Print In Black And White</key>
+	<true/>
 	<key>PromptOnQuit</key>
 	<false/>
 	<key>QuitWhenAllWindowsClosed</key>

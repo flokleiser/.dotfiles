@@ -1,6 +1,4 @@
 ### --- ZSH CONFIG ---
-### --- ZSH CONFIG ---
-### --- ZSH CONFIG ---
 
 ### --- TERMINAL SETUP ---
 bindkey -v
@@ -12,6 +10,10 @@ DEFAULT_VI_MODE=viins
 export EDITOR=vim
 export TERM=screen-256color
 export PIP_REQUIRE_VIRTUALENV=true
+
+# export PATH="/opt/homebrew/bin:$PATH"
+export XDG_CONFIG_HOME="$HOME/.config"
+
 
 export GROFF_NO_SGR=1
 export MANROFFOPT="-c"
@@ -48,7 +50,10 @@ PROMPT="%F{241}flo@mac %1~ |%f "
 alias vim=nvim
 alias vi=nvim
 alias n="nvim $1"
-alias yz=yazi
+
+### --- ncspot alias --- 
+alias spotify='ncspot'
+alias sp='ncspot'
 
 ### --- ALIASES FOR PATHS ---
 alias obsidian="cd /Users/flo/Library/Mobile\ Documents/iCloud\~md\~obsidian/Documents"

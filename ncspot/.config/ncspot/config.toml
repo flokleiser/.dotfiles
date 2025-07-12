@@ -1,0 +1,131 @@
+# vim: ft=cfg
+# Basic options
+default_keybindings = false 
+use_nerdfont = true
+notify = false 
+gapless = false 
+flip_status_indicators=false
+shuffle = false
+repeat = 'off'
+initial_screen="library"
+library_tabs = ["playlists", "tracks", "browse"]
+
+[keybindings]
+##################
+# Fast forward / rewind
+##################
+"b" = "seek -1000"
+"f" = "seek +1000"
+"Shift+b" = "seek -10000"
+"Shift+f" = "seek +10000"
+
+##################
+# Play / pause
+##################
+"p" = "play selected"
+"Space" = "playpause"
+"Enter" = "play"
+"s" = "stop"
+
+##################
+# Track manipulation
+##################
+"r" = "repeat"
+"z" = "shuffle"
+"Shift+o" = "open current"
+"l" = "open selected"
+"o" = "open selected"
+"Shift+a" = "goto artist"
+"a" = "goto album"
+
+##################
+# Queue
+##################
+"Ctrl+s" = "save queue"
+"Shift+c" = "clear"
+
+
+######################################
+# Movements
+######################################
+"Ctrl+q" = "focus queue"
+
+"Shift+g" = "move bottom"
+"g" = "move top"
+
+"Shift + j" = "move down 5"
+"Shift + k" = "move up 5"
+"J" = "move down 5"
+"K" = "move up 5"
+
+"H" = "move left 1"
+"j" = "move down 1"
+"k" = "move up 1"
+
+"L" = "move right 1"
+"." = "move playing"
+"h" = "back"
+"q" = "back"
+"Esc" = "back"
+
+######################################
+# Sorting
+######################################
+"t" = "sort added d"
+"Shift+t" = "sort title a"
+
+######################################
+# Other
+######################################
+"Shift+q" = "quit"
+"Shift+z" = "quit"
+"?" = "help"
+"Shift+u" = "update"
+
+######################################
+# Rest options
+######################################
+
+# "F1" = "focus queue"
+# "F2" = "focus library"
+# "F3" = "focus search"
+# "1" = "focus queue"
+# "2" = "focus library"
+# "=" = "volup 1"
+# "-" = "voldown 1"
+# "[" = "volup 5"
+# "]" = "voldown 5"
+# "Shift+j" = "shift down 1"
+# "Shift+k" = "shift up 1"
+# "Space" = "queue"
+# "Shift+d" = "delete"
+# "Shift+s" = "save"
+# "Shift+h" = "previous"
+# "Shift+l" = "next"
+
+[theme]
+background = "default"
+primary = "#5a5d66"
+secondary = "#5a5d66"
+title = "#5a5d66"
+playing = "#5a5d66"
+playing_selected = "#5a5d66"
+playing_bg = "default"
+highlight = "#ffffff"
+highlight_bg = "default"
+highlight_inactive_bg = "default"
+error = "white"
+error_bg = "default"
+statusbar = "#5a5d66"
+statusbar_progress = "#5a5d66"
+statusbar_bg = "default"
+statusbar_progress_bg = "default"
+cmdline = "#5a5d66"
+cmdline_bg = "default"
+search_match = "white"
+
+contextmenu_bg = "default"
+contextmenu_text = "#5a5d66"
+contextmenu_highlight = "white"
+contextmenu_highlight_bg = "default"
+title = "white"

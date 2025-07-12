@@ -2,3 +2,4 @@
 nvim/.config/nvim/plugged/
 tmux/.tmux/plugins/
 zsh/.zsh/
+thefuck/.config/thefuck/__pycache__/
