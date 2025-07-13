@@ -12,13 +12,8 @@ vim.opt.shiftwidth = 4
 vim.opt.showcmd = false
 vim.opt.more = true
 vim.opt.showmode = false
--- vim.opt.undofile = true
 vim.opt.scrolloff = 8
 
--- experimental things
---
--- vim.opt.smartindent = true
---
 -- vim.opt.foldcolumn = "0"
 -- vim.opt.foldenable = true
 -- vim.opt.foldlevel = 99
@@ -72,6 +67,7 @@ vim.cmd([[
 		Plug 'tpope/vim-commentary'
 
 		Plug 'folke/noice.nvim'
+		Plug 'folke/which-key.nvim'
 		Plug 'MunifTanjim/nui.nvim'
 
 		Plug 'echasnovski/mini.nvim'
@@ -87,6 +83,8 @@ vim.cmd([[
 
 		Plug 'akinsho/bufferline.nvim', { 'tag': '*' }
 		Plug 'gbprod/cutlass.nvim'
+
+		Plug 'OXY2DEV/markview.nvim'
 	
 		Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
@@ -113,7 +111,8 @@ vim.cmd([[
 
 	call plug#end()
 
-  	colorscheme codedark
+	colorscheme codedark
+
 ]])
 
 -- =========================================================
@@ -168,6 +167,26 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
 		vim.keymap.set("n", "gd", vim.lsp.buf.definition, { noremap = true, silent = true })
 	end,
+})
+
+-- Go-lsp
+
+lspconfig.gopls.setup({
+	on_attach = on_attach,
+	cmd = { "gopls" },
+	filetypes = { "go", "gomod", "gowork", "gotmpl" },
+	root_dir = lspconfig.util.root_pattern("go.work", "go.mod", ".git"),
+	settings = {
+		gopls = {
+			completeUnimported = true,
+			usePlaceholders = true,
+			analyses = {
+				unusedparams = true,
+			},
+			staticcheck = true,
+			gofumpt = true,
+		},
+	},
 })
 
 -- =========================================================
@@ -225,6 +244,23 @@ cmp.setup({
 -- =========================================================
 -- PLUGIN CONFIGURATIONS
 -- =========================================================
+
+-- Render-markdown
+-- require("render-markdown").setup({
+-- 	file_types = {'markdown'},
+-- })
+local presets = require("markview.presets")
+
+require("markview").setup({
+	markdown = {
+		headings = {
+			presets.headings.glow,
+			heading_1 = { sign = "" },
+			heading_2 = { sign = "" },
+		},
+		horizontal_rules = presets.horizontal_rules.thin,
+	},
+})
 
 -- XcodeBuild
 -- more options: https://github.com/wojciech-kulik/xcodebuild.nvim/wiki/Integrations
@@ -432,6 +468,9 @@ require("nvim-autopairs").setup({
 -- Telescope
 require("telescope").setup()
 
+-- Which-key
+require("which-key").setup()
+
 -- =========================================================
 -- HIGHLIGHT GROUPS AND COLORS
 -- =========================================================
@@ -466,6 +505,9 @@ vim.api.nvim_set_hl(0, "NoiceCmdlinePrompt", { fg = "#ffffff", bg = "NONE" })
 vim.api.nvim_set_hl(0, "MsgArea", { fg = "white", bg = "NONE" })
 vim.api.nvim_set_hl(0, "MsgSeparator", { bg = "NONE" })
 vim.api.nvim_set_hl(0, "CmdLine", { bg = "NONE" })
+
+-- Markview hl
+-- vim.api.nvim_set_hl(0, "MarkviewPalette0", { bg = "NONE", fg = "#ffffff" })
 
 -- =========================================================
 -- KEY MAPPINGS
@@ -502,6 +544,7 @@ vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Telescope find f
 vim.keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "Telescope live grep" })
 vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Telescope buffers" })
 vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "Telescope help tags" })
+-- vim.keymap.set("n", "J", )
 
 -- Neo-tree navigation
 vim.keymap.set("n", "<leader>fe", "<cmd>Neotree toggle<CR>")
@@ -607,6 +650,13 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 	pattern = "*",
 	callback = function(args)
 		require("conform").format({ bufnr = args.buf })
+	end,
+})
+
+vim.api.nvim_create_autocmd("BufWritePre", {
+	pattern = "*.go",
+	callback = function()
+		vim.lsp.buf.format({ async = false })
 	end,
 })
 

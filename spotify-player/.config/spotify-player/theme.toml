@@ -1,0 +1,19 @@
+[[themes]]
+name = "flo"
+[themes.palette]
+
+[themes.component_style]
+selection = { bg = "#5a5d66", modifiers = ["Bold"] }
+block_title = { fg = "#ffffff" }
+playback_track = { fg = "#ffffff", modifiers = ["Bold"] }
+playback_artists = { fg = "#ffffff", modifiers = ["Bold"] }
+playback_status = { fg = "#5a5d66", modifiers = ["Bold"] }
+playback_album = { fg = "#5a5d66" }
+playback_metadata = { fg = "#5a5d66" }
+playback_progress_bar = { bg = "#5a5d66", fg = "#ffffff" }
+current_playing = { fg = "#ffffff", modifiers = ["Bold"] }
+page_desc = { fg = "#5a5d66", modifiers = ["Bold"] }
+table_header = { fg = "#ffffff" }
+border = { fg = "#5a5d66", modifiers = ["Bold"]}
+playlist_desc = { fg = "#5a5d66" }
+secondary_row = { bg = "#677075" }

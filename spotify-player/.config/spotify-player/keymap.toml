@@ -1,0 +1,89 @@
+[[keymaps]]
+command = "NextTrack"
+key_sequence = "<"
+
+[[keymaps]]
+command = "PreviousTrack"
+key_sequence = ">"
+
+[[keymaps]]
+command = "Search"
+key_sequence = "/"
+
+[[keymaps]]
+command = "ResumePause"
+key_sequence = "space"
+
+[[keymaps]]
+command = "ResumePause"
+key_sequence = "p"
+
+[[keymaps]]
+command = "ReverseTrackOrder"
+key_sequence = "R"
+
+[[keymaps]]
+command = "ChooseSelected"
+key_sequence = "enter"
+
+[[keymaps]]
+command = "ChooseSelected"
+key_sequence = "l"
+
+[[keymaps]]
+command = "ClosePopup"
+key_sequence = "q"
+
+[[keymaps]]
+command = "LibraryPage"
+key_sequence = "V"
+
+[[keymaps]]
+command = "ClosePopup"
+key_sequence = "esc"
+
+[[keymaps]]
+command = "ChooseSelected"
+key_sequence = "l"
+
+[[keymaps]]
+command = "Shuffle"
+key_sequence = "z"
+
+[[keymaps]]
+command = "Repeat"
+key_sequence = "r"
+
+[[keymaps]]
+command = "PageSelectNextOrScrollDown"
+key_sequence = "J"
+repeat = 5
+
+[[keymaps]]
+command = "PageSelectPreviousOrScrollUp"
+key_sequence = "K"
+repeat = 5
+
+[[keymaps]]
+command = "SelectFirstOrScrollToTop"
+key_sequence = "g g"
+
+[[keymaps]]
+command = "SelectLastOrScrollToBottom"
+key_sequence = "G"
+
+[[keymaps]]
+command = "SortTrackByAddedDate"
+key_sequence = "t"
+
+[[keymaps]]
+command = "SortTrackByTitle"
+key_sequence = "T"
+
+[[keymaps]]
+command = "JumpToCurrentTrackInContext"
+key_sequence = "."
+
+[[keymaps]]
+command = "Queue"
+key_sequence = "C-q"

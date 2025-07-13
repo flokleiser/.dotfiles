@@ -42,13 +42,16 @@ library_tabs = ["playlists", "tracks", "browse"]
 # Queue
 ##################
 "Ctrl+s" = "save queue"
-"Shift+c" = "clear"
+"Shift+x" = "clear"
 
 
 ######################################
 # Movements
 ######################################
 "Ctrl+q" = "focus queue"
+"Shift+c" = "focus cover"
+"/" = "focus search"
+"Shift+v" = "focus library"
 
 "Shift+g" = "move bottom"
 "g" = "move top"
@@ -80,7 +83,10 @@ library_tabs = ["playlists", "tracks", "browse"]
 "Shift+q" = "quit"
 "Shift+z" = "quit"
 "?" = "help"
-"Shift+u" = "update"
+# "Shift+u" = "update"
+">" = "previous"
+"<" = "next"
+
 
 ######################################
 # Rest options
@@ -88,7 +94,6 @@ library_tabs = ["playlists", "tracks", "browse"]
 
 # "F1" = "focus queue"
 # "F2" = "focus library"
-# "F3" = "focus search"
 # "1" = "focus queue"
 # "2" = "focus library"
 # "=" = "volup 1"
@@ -100,32 +105,35 @@ library_tabs = ["playlists", "tracks", "browse"]
 # "Space" = "queue"
 # "Shift+d" = "delete"
 # "Shift+s" = "save"
-# "Shift+h" = "previous"
-# "Shift+l" = "next"
 
 [theme]
 background = "default"
 primary = "#5a5d66"
 secondary = "#5a5d66"
-title = "#5a5d66"
-playing = "#5a5d66"
-playing_selected = "#5a5d66"
+title = "#ffffff"
+# playing = "#5a5d66"
+# playing_selected = "#ffffff"
+# playing_bg = "default"
+playing = "#ffffff"
+playing_selected = "#ffffff"
 playing_bg = "default"
+
 highlight = "#ffffff"
-highlight_bg = "default"
+# highlight_bg = "default"
+# highlight_bg = "#232323"
+highlight_bg = "black"
 highlight_inactive_bg = "default"
+
 error = "white"
 error_bg = "default"
-statusbar = "#5a5d66"
-statusbar_progress = "#5a5d66"
+# statusbar = "#5a5d66"
+statusbar = "#ffffff"
+# statusbar_progress = "#5a5d66"
+statusbar_progress = "#ffffff"
 statusbar_bg = "default"
-statusbar_progress_bg = "default"
+# statusbar_progress_bg = "default"
+statusbar_progress_bg = "#5a5d66"
 cmdline = "#5a5d66"
 cmdline_bg = "default"
 search_match = "white"
 
-contextmenu_bg = "default"
-contextmenu_text = "#5a5d66"
-contextmenu_highlight = "white"
-contextmenu_highlight_bg = "default"
-title = "white"

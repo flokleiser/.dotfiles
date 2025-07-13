@@ -2,6 +2,8 @@ set icons true
 set icon_theme ~/.config/lf/icons
 
 set previewer ~/.config/lf/pv.sh
+set cleaner ~/.config/lf/cl.sh
+set preview true
 
 set sortby atime
 set reverse true
@@ -10,6 +12,13 @@ set reverse true
 cmd open ${{
 	nvim "$f"
 }}
+
+#cmd open ${{
+#	case "$f" in
+#		*.md) glow "$f" ;;
+#		*) nvim "$f" ;;
+#	esac
+#}}
 
 cmd sort_normal ${{
     lf -remote "send $id set sortby name"

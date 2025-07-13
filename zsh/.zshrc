@@ -7,17 +7,21 @@ export KEYTIMEOUT=1
 
 DEFAULT_VI_MODE=viins
 
-export EDITOR=vim
+# export EDITOR=vim
+export EDITOR=nvim
 export TERM=screen-256color
 export PIP_REQUIRE_VIRTUALENV=true
 
-# export PATH="/opt/homebrew/bin:$PATH"
 export XDG_CONFIG_HOME="$HOME/.config"
+export PATH=$PATH:$(go env GOPATH)/bin
+
+export LESSHISTFILE=-
 
 
 export GROFF_NO_SGR=1
 export MANROFFOPT="-c"
 export MANPAGER="/usr/bin/less -R --use-color -Ddg -Du+y"
+
 
 ### --- PLUGINS & THEMES ---
 export ZSH=$HOME/.zsh
@@ -51,9 +55,12 @@ alias vim=nvim
 alias vi=nvim
 alias n="nvim $1"
 
-### --- ncspot alias --- 
-alias spotify='ncspot'
-alias sp='ncspot'
+### --- ncspot/spotify_player alias --- 
+# alias spotify='~/Code/ncspot/target/release/ncspot'
+# alias sp='~/Code/ncspot/target/release/ncspot'
+alias spotify='spotify_player'
+alias sp='spotify_player'
+
 
 ### --- ALIASES FOR PATHS ---
 alias obsidian="cd /Users/flo/Library/Mobile\ Documents/iCloud\~md\~obsidian/Documents"
@@ -97,3 +104,6 @@ echo -ne '\e[5 q'
 preexec() {
 	echo -ne '\e[5 q'
 }
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
