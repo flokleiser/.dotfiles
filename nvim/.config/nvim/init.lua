@@ -21,6 +21,9 @@ vim.opt.expandtab = true
 vim.opt.winborder = "rounded"
 vim.g.tmux_navigator_no_wrap = 1
 
+-- maybe cursor fix
+vim.opt.guicursor = "n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50"
+
 -- LEADER KEY SETUP
 -- =========================================================
 vim.keymap.set("n", "<Space>", "<Nop>", { silent = true, remap = false })
@@ -258,12 +261,12 @@ cmp.setup({
 -- =========================================================
 
 -- smear-cursor
--- require("smear_cursor").setup({
--- 	stiffness = 0.7,
--- 	trailing_stiffness = 0.7,
--- 	distance_stop_animating = 0.5,
--- 	smear_to_cmd = false,
--- })
+require("smear_cursor").setup({
+	stiffness = 0.7,
+	trailing_stiffness = 0.7,
+	distance_stop_animating = 0.5,
+	smear_to_cmd = false,
+})
 
 -- toggleterm
 require("toggleterm").setup()

@@ -9,7 +9,8 @@ DEFAULT_VI_MODE=viins
 
 # export EDITOR=vim
 export EDITOR=nvim
-export TERM=screen-256color
+# export TERM=screen-256color
+export TERM=xterm-256color
 export PIP_REQUIRE_VIRTUALENV=true
 
 export XDG_CONFIG_HOME="$HOME/.config"
@@ -92,20 +93,38 @@ function lazygit() {
 }
 
 ### --- DIFFERENT CURSORS FOR VIM MODES ---
-function zle-keymap-select {
-	if [[ ${KEYMAP} == vicmd ]] || [[ $1 = 'block' ]]; then
-		echo -ne '\e[1 q'
-	elif [[ ${KEYMAP} == main ]] || [[ ${KEYMAP} == viins ]] || [[ ${KEYMAP} = '' ]] || [[ $1 = 'beam' ]]; then
-		echo -ne '\e[5 q'
-		fi
-	}
-	zle -N zle-keymap-select
+# function zle-keymap-select {
+# 	if [[ ${KEYMAP} == vicmd ]] || [[ $1 = 'block' ]]; then
+# 		echo -ne '\e[1 q'
+# 	elif [[ ${KEYMAP} == main ]] || [[ ${KEYMAP} == viins ]] || [[ ${KEYMAP} = '' ]] || [[ $1 = 'beam' ]]; then
+# 		echo -ne '\e[5 q'
+# 		fi
+# 	}
+# 	zle -N zle-keymap-select
 
-echo -ne '\e[5 q'
+# echo -ne '\e[5 q'
 
-preexec() {
-	echo -ne '\e[5 q'
+# preexec() {
+# 	echo -ne '\e[5 q'
+# }
+
+# Prevent blinking cursor.
+function __set_beam_cursor {
+    echo -ne '\e[6 q'
 }
 
-test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+function __set_block_cursor {
+    echo -ne '\e[2 q'
+}
 
+function zle-keymap-select {
+  case $KEYMAP in
+    vicmd) __set_block_cursor;;
+    viins|main) __set_beam_cursor;;
+  esac
+}
+zle -N zle-keymap-select
+
+precmd_functions+=(__set_beam_cursor)
+
+# test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"

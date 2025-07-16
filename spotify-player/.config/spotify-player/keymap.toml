@@ -87,3 +87,11 @@ key_sequence = "."
 [[keymaps]]
 command = "Queue"
 key_sequence = "C-q"
+
+[[keymaps]]
+command = "SeekForward"
+key_sequence = "f"
+
+[[keymaps]]
+command = "SeekBackward"
+key_sequence = "b"

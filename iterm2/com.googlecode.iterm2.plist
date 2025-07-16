@@ -1277,7 +1277,7 @@
 			<key>Non-ASCII Anti Aliased</key>
 			<true/>
 			<key>Normal Font</key>
-			<string>JetBrainsMonoNFM-Bold 15.5</string>
+			<string>JetBrainsMonoNFM-Medium 15.5</string>
 			<key>Only The Default BG Color Uses Transparency</key>
 			<false/>
 			<key>Option Key Sends</key>

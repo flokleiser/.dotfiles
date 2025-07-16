@@ -14,5 +14,6 @@ playback_progress_bar = { bg = "#5a5d66", fg = "#ffffff" }
 current_playing = { fg = "#ffffff", modifiers = ["Bold"] }
 page_desc = { fg = "#5a5d66", modifiers = ["Bold"] }
 table_header = { fg = "#ffffff" }
-border = { fg = "#5a5d66", modifiers = ["Bold"]}
+# border = { fg = "#5a5d66", modifiers = ["Bold"]}
+border = { fg = "#ffffff", modifiers = ["Bold"]}
 playlist_desc = { fg = "#5a5d66" }

@@ -41,7 +41,7 @@ body = "{album}"
 
 [layout]
 playback_window_position = "Top"
-playback_window_height = 4 
+playback_window_height = 4
 
 [layout.library]
 playlist_percent = 70
@@ -50,7 +50,7 @@ album_percent = 15
 [device]
 name = "spotify-player"
 device_type = "speaker"
-volume = 70
+volume = 100
 bitrate = 320
 audio_cache = false
 normalization = false
