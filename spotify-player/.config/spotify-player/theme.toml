@@ -16,4 +16,3 @@ page_desc = { fg = "#5a5d66", modifiers = ["Bold"] }
 table_header = { fg = "#ffffff" }
 border = { fg = "#5a5d66", modifiers = ["Bold"]}
 playlist_desc = { fg = "#5a5d66" }
-secondary_row = { bg = "#677075" }

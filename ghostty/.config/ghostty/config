@@ -1,0 +1,43 @@
+font-family = "SF Mono"
+font-size = 13
+font-size = 15.5
+font-style = bold
+font-family = JetBrains Mono Nerd Font Mono
+
+macos-titlebar-proxy-icon = hidden
+title = ""
+
+window-padding-x = 10
+window-padding-y = 10
+window-decoration = auto
+window-subtitle = working-directory
+
+background-opacity = 0.95
+background-blur = 15
+
+cursor-style = block
+cursor-style-blink = false
+
+scrollback-limit = 10000
+
+keybind = cmd+'=text:¿
+keybind = shift+cmd+7=text:¿
+keybind = shift+cmd+b=text: fe\r
+
+# macos-option-as-alt = true
+# macos-titlebar-style = tabs
+
+keybind = cmd+t=new_tab
+keybind = cmd+w=close_tab
+keybind = cmd+1=previous_tab
+keybind = cmd+2=next_tab
+
+keybind = cmd+9=increase_font_size:1
+keybind = cmd+8=decrease_font_size:1
+keybind = cmd+zero=reset_font_size
+
+# keybind = cmd+f=search
+# keybind = cmd+shift+f=search:reverse
+
+theme = ghostty-flo-theme
+custom-shader = shaders/cursor_smear.glsl

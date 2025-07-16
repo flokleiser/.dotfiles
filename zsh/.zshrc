@@ -17,11 +17,9 @@ export PATH=$PATH:$(go env GOPATH)/bin
 
 export LESSHISTFILE=-
 
-
 export GROFF_NO_SGR=1
 export MANROFFOPT="-c"
 export MANPAGER="/usr/bin/less -R --use-color -Ddg -Du+y"
-
 
 ### --- PLUGINS & THEMES ---
 export ZSH=$HOME/.zsh
@@ -55,17 +53,21 @@ alias vim=nvim
 alias vi=nvim
 alias n="nvim $1"
 
-### --- ncspot/spotify_player alias --- 
-# alias spotify='~/Code/ncspot/target/release/ncspot'
-# alias sp='~/Code/ncspot/target/release/ncspot'
-alias spotify='spotify_player'
-alias sp='spotify_player'
+# --- tmux alias ---
+alias tk="tmux kill-server"
 
+# --- bat instead of cat ---
+# alias cat="bat"
+
+### --- ncspot/spotify_player alias --- 
+alias sp='~/Code/ncspot/target/release/ncspot'
+alias sp2='spotify_player'
 
 ### --- ALIASES FOR PATHS ---
-alias obsidian="cd /Users/flo/Library/Mobile\ Documents/iCloud\~md\~obsidian/Documents"
+alias obsidian="cd /Users/flo/Library/Mobile\ Documents/iCloud\~md\~obsidian/Documents/Flo"
 alias home="cd ~"
 alias config="cd ~/.dotfiles"
+alias dot="cd ~/.dotfiles"
 alias mca="cd /Users/flo/Documents/curseforge/minecraft/Instances/Flo\ 1.21.4/mca/zulu21.32.17-ca-fx-jre21.0.2-macosx_aarch64"
 alias mcaselector="/Users/flo/Documents/curseforge/minecraft/Instances/Flo\ 1.21.4/mca/zulu21.32.17-ca-fx-jre21.0.2-macosx_aarch64/zulu-21.jre/Contents/Home/bin/java -jar /Users/flo/Documents/curseforge/minecraft/Instances/Flo\ 1.21.4/mca/mcaselector-2.4.2.jar" 
 
