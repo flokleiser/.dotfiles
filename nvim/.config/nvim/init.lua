@@ -109,7 +109,14 @@ vim.cmd([[
 
         Plug 'sphamba/smear-cursor.nvim'
         Plug 'akinsho/toggleterm.nvim', {'tag' : '*'}
+
         Plug 'lmburns/lf.nvim'
+        Plug 'mikavilpas/yazi.nvim'
+
+        Plug 'ThePrimeagen/harpoon', {'branch': 'harpoon2'}
+        Plug 'folke/which-key.nvim'
+
+        Plug 'epwalsh/obsidian.nvim'
 
 
 	call plug#end()
@@ -261,12 +268,25 @@ cmp.setup({
 -- =========================================================
 
 -- smear-cursor
-require("smear_cursor").setup({
-	stiffness = 0.7,
-	trailing_stiffness = 0.7,
-	distance_stop_animating = 0.5,
-	smear_to_cmd = false,
+-- require("smear_cursor").setup({
+-- 	stiffness = 0.7,
+-- 	trailing_stiffness = 0.7,
+-- 	distance_stop_animating = 0.5,
+-- 	smear_to_cmd = false,
+-- })
+
+-- obsidian.nvim
+require("obsidian").setup({
+	workspaces = {
+		{
+			name = "Flo",
+			path = "/Users/flo/Library/Mobile Documents/iCloud~md~obsidian/Documents/Flo",
+		},
+	},
 })
+
+-- which-key
+require("which-key").setup()
 
 -- toggleterm
 require("toggleterm").setup()
@@ -277,6 +297,52 @@ require("lf").setup({
 	border = "rounded",
 })
 vim.keymap.set("n", "<leader>lf", "<Cmd>Lf<CR>")
+
+-- yazi inside nvim
+vim.keymap.set("n", "<leader>yz", function()
+	require("yazi").yazi()
+end)
+
+-- harpoon
+-- local harpoon = require("harpoon")
+-- harpoon:setup()
+-- vim.keymap.set("n", "<leader>a", function()
+-- 	harpoon:list():add()
+-- end)
+-- vim.keymap.set("n", "<leader>hp", function()
+-- 	harpoon.ui:toggle_quick_menu(harpoon:list())
+-- end)
+-- vim.keymap.set("n", "<leader>1", function()
+-- 	harpoon:list():select(1)
+-- end)
+-- vim.keymap.set("n", "<leader>2", function()
+-- 	harpoon:list():select(2)
+-- end)
+-- vim.keymap.set("n", "<leader>3", function()
+-- 	harpoon:list():select(3)
+-- end)
+-- local conf = require("telescope.config").values
+-- local function toggle_telescope(harpoon_files)
+-- 	local file_paths = {}
+-- 	for _, item in ipairs(harpoon_files.items) do
+-- 		table.insert(file_paths, item.value)
+-- 	end
+
+-- 	require("telescope.pickers")
+-- 		.new({}, {
+-- 			prompt_title = "Harpoon",
+-- 			finder = require("telescope.finders").new_table({
+-- 				results = file_paths,
+-- 			}),
+-- 			previewer = conf.file_previewer({}),
+-- 			sorter = conf.generic_sorter({}),
+-- 		})
+-- 		:find()
+-- end
+
+-- vim.keymap.set("n", "<C-e>", function()
+-- 	toggle_telescope(harpoon:list())
+-- end, { desc = "Open harpoon window" })
 
 -- XcodeBuild
 require("xcodebuild").setup({
@@ -294,7 +360,7 @@ vim.o.foldenable = true
 vim.keymap.set("n", "zR", require("ufo").openAllFolds)
 vim.keymap.set("n", "zM", require("ufo").closeAllFolds)
 
--- Statuscol thing --
+-- Statuscol thing ('')--
 local function simple_foldfunc()
 	local lnum = vim.v.lnum
 	if vim.fn.foldlevel(lnum) > 0 then

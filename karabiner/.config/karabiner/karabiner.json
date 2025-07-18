@@ -46,7 +46,7 @@
                         ]
                     },
                     {
-                        "description": "Map Option+Tab to F13 in Terminal.app only",
+                        "description": "Map Option+Tab to F13 in iterm2 & ghostty only",
                         "manipulators": [
                             {
                                 "conditions": [

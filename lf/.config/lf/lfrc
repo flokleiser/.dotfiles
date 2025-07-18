@@ -13,12 +13,9 @@ cmd open ${{
 	nvim "$f"
 }}
 
-#cmd open ${{
-#	case "$f" in
-#		*.md) glow "$f" ;;
-#		*) nvim "$f" ;;
-#	esac
-#}}
+push m-
+map Q push '-q
+
 
 cmd sort_normal ${{
     lf -remote "send $id set sortby name"

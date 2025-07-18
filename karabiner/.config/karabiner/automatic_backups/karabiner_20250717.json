@@ -1,19 +1,98 @@
 {
-    "global": {
-        "check_for_updates_on_startup": false,
-        "show_in_menu_bar": false
-    },
+    "global": { "check_for_updates_on_startup": false },
     "profiles": [
         {
             "complex_modifications": {
                 "rules": [
+                    {
+                        "description": "cmd+shift+h: Focus window to the left",
+                        "enabled": false,
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "h",
+                                    "modifiers": { "mandatory": ["left_command", "left_shift"] }
+                                },
+                                "to": [{ "shell_command": "/opt/homebrew/bin/yabai -m window --focus \"$(/opt/homebrew/bin/yabai -m query --windows | /opt/homebrew/bin/jq -re 'sort_by(.display, .space, .frame.x, .frame.y, .id) | map(select(.[\"is-visible\"] == true and .role != \"AXUnknown\")) | reverse | nth(index(map(select(.[\"has-focus\"] == true))) - 1).id')\"" }],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "cmd+shift+l: Focus window to the right",
+                        "enabled": false,
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "l",
+                                    "modifiers": { "mandatory": ["left_command", "left_shift"] }
+                                },
+                                "to": [{ "shell_command": "/opt/homebrew/bin/yabai -m window --focus \"$(/opt/homebrew/bin/yabai -m query --windows | /opt/homebrew/bin/jq -re 'sort_by(.display, .space, .frame.x, .frame.y, .id) | map(select(.[\"is-visible\"] == true and .role != \"AXUnknown\")) | nth(index(map(select(.[\"has-focus\"] == true))) - 1).id')\"" }],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "disable option+p",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "p",
+                                    "modifiers": { "mandatory": ["option"] }
+                                },
+                                "to": [],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "Map Option+Tab to F13 in Terminal.app only",
+                        "manipulators": [
+                            {
+                                "conditions": [
+                                    {
+                                        "bundle_identifiers": [
+                                            "^com\\.googlecode\\.iterm2$"
+                                        ],
+                                        "type": "frontmost_application_if"
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "tab",
+                                    "modifiers": { "mandatory": ["option"] }
+                                },
+                                "to": [{ "key_code": "f13" }],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "Caps Lock to ESC on tap/Left Alt on hold",
+                        "enabled": false,
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "caps_lock",
+                                    "modifiers": { "optional": ["any"] }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "left_option",
+                                        "lazy": true
+                                    }
+                                ],
+                                "to_if_alone": [{ "key_code": "escape" }],
+                                "type": "basic"
+                            }
+                        ]
+                    },
                     {
                         "description": "ctrl - to ~ (Swiss keyboard)",
                         "manipulators": [
                             {
                                 "from": {
                                     "key_code": "slash",
-                                    "modifiers": { "mandatory": ["control"] }
+                                    "modifiers": { "mandatory": ["option", "shift"] }
                                 },
                                 "to": [
                                     {
@@ -127,7 +206,7 @@
                         ]
                     },
                     {
-                        "description": "Option+[à/ä] -> { ",
+                        "description": "Option+[à/ä] -> [ ",
                         "manipulators": [
                             {
                                 "conditions": [
@@ -170,7 +249,7 @@
                                     }
                                 },
                                 "to": {
-                                    "key_code": "8",
+                                    "key_code": "5",
                                     "modifiers": ["option"]
                                 },
                                 "type": "basic"
@@ -178,7 +257,7 @@
                         ]
                     },
                     {
-                        "description": "Option+[è/ü] -> [",
+                        "description": "Option+[è/ü] -> {",
                         "manipulators": [
                             {
                                 "conditions": [
@@ -221,7 +300,7 @@
                                     }
                                 },
                                 "to": {
-                                    "key_code": "5",
+                                    "key_code": "8",
                                     "modifiers": ["option"]
                                 },
                                 "type": "basic"
@@ -229,7 +308,7 @@
                         ]
                     },
                     {
-                        "description": "Option+[¨] -> ]",
+                        "description": "Option+[¨] -> }",
                         "manipulators": [
                             {
                                 "conditions": [
@@ -272,7 +351,7 @@
                                     }
                                 },
                                 "to": {
-                                    "key_code": "6",
+                                    "key_code": "9",
                                     "modifiers": ["option"]
                                 },
                                 "type": "basic"
@@ -280,7 +359,7 @@
                         ]
                     },
                     {
-                        "description": "Option+[$] -> }",
+                        "description": "Option+[$] -> ]",
                         "manipulators": [
                             {
                                 "conditions": [
@@ -323,7 +402,7 @@
                                     }
                                 },
                                 "to": {
-                                    "key_code": "9",
+                                    "key_code": "6",
                                     "modifiers": ["option"]
                                 },
                                 "type": "basic"
@@ -348,21 +427,104 @@
                 {
                     "from": { "key_code": "f3" },
                     "to": [{ "key_code": "f3" }]
+                },
+                {
+                    "from": { "key_code": "f5" },
+                    "to": [{ "key_code": "f5" }]
                 }
             ],
             "name": "Default profile",
             "selected": true
         },
         {
+            "complex_modifications": {
+                "rules": [
+                    {
+                        "description": "Shift + Option held together → Command (no timing restrictions)",
+                        "manipulators": [
+                            {
+                                "conditions": [
+                                    {
+                                        "name": "shift_option_held",
+                                        "type": "variable_if",
+                                        "value": 0
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "left_shift",
+                                    "modifiers": {
+                                        "mandatory": ["left_option"],
+                                        "optional": ["any"]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "set_variable": {
+                                            "name": "shift_option_held",
+                                            "value": 1
+                                        }
+                                    },
+                                    {
+                                        "key_code": "left_command",
+                                        "lazy": true
+                                    }
+                                ],
+                                "to_after_key_up": [
+                                    {
+                                        "set_variable": {
+                                            "name": "shift_option_held",
+                                            "value": 0
+                                        }
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "conditions": [
+                                    {
+                                        "name": "shift_option_held",
+                                        "type": "variable_if",
+                                        "value": 0
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "left_option",
+                                    "modifiers": {
+                                        "mandatory": ["left_shift"],
+                                        "optional": ["any"]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "set_variable": {
+                                            "name": "shift_option_held",
+                                            "value": 1
+                                        }
+                                    },
+                                    {
+                                        "key_code": "left_command",
+                                        "lazy": true
+                                    }
+                                ],
+                                "to_after_key_up": [
+                                    {
+                                        "set_variable": {
+                                            "name": "shift_option_held",
+                                            "value": 0
+                                        }
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    }
+                ]
+            },
             "name": "LiesOfPi",
             "simple_modifications": [
                 {
                     "from": { "key_code": "left_command" },
-                    "to": [{ "key_code": "vk_none" }]
-                },
-                {
-                    "from": { "key_code": "left_option" },
-                    "to": [{ "key_code": "left_command" }]
+                    "to": [{ "key_code": "left_option" }]
                 }
             ]
         }

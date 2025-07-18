@@ -41,6 +41,9 @@ bindkey -M vicmd '^[[25~' expand-or-complete #opt+tab, mapped in karabiner eleme
 bindkey -M viins "^[[1;2P" expand-or-complete #dumb fix for tmux not receiving the correct esc sequence
 bindkey -M vicmd "^[[1;2P" expand-or-complete
 
+bindkey -M viins "^[[Z" expand-or-complete #shift+tab for ghostty
+bindkey -M vicmd "^[[Z" expand-or-complete 
+
 source $ZSH/completion.zsh
 
 # ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#777777'
@@ -53,6 +56,8 @@ PROMPT="%F{241}flo@mac %1~ |%f "
 alias vim=nvim
 alias vi=nvim
 alias n="nvim $1"
+
+alias yz=yazi
 
 # --- tmux alias ---
 alias tk="tmux kill-server"
@@ -69,10 +74,13 @@ alias obsidian="cd /Users/flo/Library/Mobile\ Documents/iCloud\~md\~obsidian/Doc
 alias home="cd ~"
 alias config="cd ~/.dotfiles"
 alias dot="cd ~/.dotfiles"
-alias mca="cd /Users/flo/Documents/curseforge/minecraft/Instances/Flo\ 1.21.4/mca/zulu21.32.17-ca-fx-jre21.0.2-macosx_aarch64"
-alias mcaselector="/Users/flo/Documents/curseforge/minecraft/Instances/Flo\ 1.21.4/mca/zulu21.32.17-ca-fx-jre21.0.2-macosx_aarch64/zulu-21.jre/Contents/Home/bin/java -jar /Users/flo/Documents/curseforge/minecraft/Instances/Flo\ 1.21.4/mca/mcaselector-2.4.2.jar" 
 
 export HOMEBREW_AUTO_UPDATE_SECS=604800
+
+lf() {
+    (command lf "$@")
+    clear
+}
 
 lfcd() {
 	local tmp="$(mktemp)"
@@ -90,6 +98,17 @@ function lazygit() {
 	git add .
 	git commit -a -m "$*"
 	git push
+}
+
+# --- Yazi cd thing
+
+function yy() {
+    local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
+    yazi "$@" --cwd-file="$tmp"
+    if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+        cd -- "$cwd"
+    fi
+    rm -f -- "$tmp"
 }
 
 ### --- DIFFERENT CURSORS FOR VIM MODES ---

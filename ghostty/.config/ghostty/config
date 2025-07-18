@@ -13,9 +13,12 @@ font-variation-bold = wght=600
 # TITLEBAR & ICON 
 # =========================================================
 macos-titlebar-proxy-icon = hidden
+# title = " "
 title = ""
+# window-subtitle = working-directory
 macos-icon = glass
 macos-titlebar-style = tabs
+maximize = true
 
 # =========================================================
 # WINDOW
@@ -23,7 +26,6 @@ macos-titlebar-style = tabs
 window-padding-x = 10
 window-padding-y = 10
 window-decoration = auto
-window-subtitle = working-directory
 background-opacity = 0.85
 background-blur = 20
 window-colorspace = display-p3
@@ -38,7 +40,6 @@ custom-shader = shaders/cursor_smear.glsl
 # =========================================================
 # CURSOR
 # =========================================================
-# cursor-style = block
 cursor-style = bar
 cursor-style-blink = false
 shell-integration-features = no-cursor 
@@ -52,23 +53,18 @@ scrollback-limit = 10000
 # =========================================================
 # KEYBINDS
 # =========================================================
-
 keybind = cmd+'=text:¿
 keybind = shift+cmd+7=text:¿
 keybind = shift+cmd+b=text: fe\r
 keybind = cmd+f=text:/
-
 keybind = cmd+t=new_tab
 keybind = cmd+w=close_tab
 keybind = cmd+1=previous_tab
 keybind = cmd+2=next_tab
-
 keybind = cmd+9=increase_font_size:1
 keybind = cmd+8=decrease_font_size:1
 keybind = cmd+zero=reset_font_size
+keybind = opt+tab=text:\t
+# keybind = global:cmd+§=toggle_quick_terminal
 
 quit-after-last-window-closed = true
-
-# window-inherit-working-directory = false
-# working-directory = home
-
