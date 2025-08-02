@@ -14,7 +14,7 @@ export TERM=xterm-256color
 export PIP_REQUIRE_VIRTUALENV=true
 
 export XDG_CONFIG_HOME="$HOME/.config"
-export PATH=$PATH:$(go env GOPATH)/bin
+export PATH="/opt/homebrew/bin:$HOME/.local/bin:$PATH:$(go env GOPATH)/bin"
 
 export LESSHISTFILE=-
 

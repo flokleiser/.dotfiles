@@ -169,6 +169,7 @@ rules = [
     { name = ".*", fg = "#808080" },
     # Symlinks
     { name = "*", category = "link", fg = "#4EC9B0", bg = "#1F1F1F" },
+    # { name = "*", category = "link", fg = "#4EC9B0", bg = "#000000" },
     # Broken symlinks
     { name = "*", category = "broken", fg = "#F44747", bg = "#3A1212" },
 ]

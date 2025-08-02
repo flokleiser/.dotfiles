@@ -74,7 +74,9 @@ vim.cmd([[
 		Plug 'echasnovski/mini.nvim'
 		Plug 'gbprod/cutlass.nvim'
 		Plug 'nvim-lua/plenary.nvim'
-		Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.8' }
+        Plug 'nvim-telescope/telescope.nvim'
+        Plug 'nvim-telescope/telescope-file-browser.nvim'
+
 		Plug 'nvim-neo-tree/neo-tree.nvim'
 
 		Plug 'nvim-lualine/lualine.nvim'
@@ -113,36 +115,57 @@ vim.cmd([[
         Plug 'lmburns/lf.nvim'
         Plug 'mikavilpas/yazi.nvim'
 
-        Plug 'ThePrimeagen/harpoon', {'branch': 'harpoon2'}
         Plug 'folke/which-key.nvim'
 
-        Plug 'epwalsh/obsidian.nvim'
-
-
+        Plug 'folke/snacks.nvim'
+        Plug 'brenoprata10/nvim-highlight-colors'
 	call plug#end()
 
 	colorscheme codedark
 
-    hi NeoTreeNormal guifg=#ffffff
-    hi NeoTreeGitUntracked guifg=#569cd6
-    hi NeoTreeGitUnstaged guifg=#f44747
-    hi NeoTreeGitConflict guifg=#ff8c00
-    hi NeoTreeGitDeleted guifg=#f44747
-    hi NeoTreeGitStaged guifg=#6a9955
-    hi NeoTreeGitAdded guifg=#6a9955
-    hi NeoTreeFileIcon guifg=#569cd6
-    hi NeoTreeDirectoryName guifg=#dcdcaa
-    hi NeoTreeDirectoryIcon guifg=#569cd6
+    hi NeoTreeNormal guifg=#d4d4d4
+    hi NeoTreeGitUntracked guifg=#99d5fb
+    hi NeoTreeGitUnstaged guifg=#71c6b1
+    hi NeoTreeGitConflict guifg=#c5947c
+    hi NeoTreeGitModified guifg=#ffffff
+    hi NeoTreeGitDeleted guifg=#71c6b1
+    hi NeoTreeGitStaged guifg=#74985c
+    hi NeoTreeGitAdded guifg=#74985c
+    hi NeoTreeFileIcon guifg=#99d5fb
+    hi NeoTreeDirectoryName guifg=#d4d4d4
+
+    hi NeoTreeTitleBar guibg=NONE
+    hi NeoTreeCursorLine guibg=NONE
+    hi NeoTreeRootName guibg=NONE
+    hi NeoTreeDirectoryIcon guifg=#99d5fb
+
+    hi MiniIndentscopeSymbol guifg=#7F8490
+
 
 ]])
-
--- Plug 'github/copilot.vim'
--- Plug 'olimorris/codecompanion.nvim'
 
 -- =========================================================
 -- LSP CONFIGURATION
 -- =========================================================
 local lspconfig = require("lspconfig")
+
+-- glsl_analyzer
+local function setup_glsl_analyzer()
+	local lspconfig = require("lspconfig")
+
+	lspconfig.glsl_analyzer.setup({
+		cmd = { "glsl_analyzer" },
+		on_attach = function(client, bufnr)
+			print("GLSL Analyzer attached to buffer " .. bufnr)
+		end,
+	})
+end
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = { "glsl" },
+	callback = function()
+		setup_glsl_analyzer()
+	end,
+})
 
 -- SourceKit LSP (Swift)
 lspconfig.sourcekit.setup({
@@ -178,6 +201,15 @@ lspconfig.gopls.setup({
 		},
 	},
 })
+
+-- 	filetypes = { "javascript", "typescript", "typescriptreact", "javascriptreact" },
+-- Typescript lsp
+
+-- require("lspconfig").ts_ls.setup({
+-- 	cmd = { "tsserver" },
+-- })
+
+vim.lsp.enable("ts_ls")
 
 -- Rust Analyzer LSP (Rust)
 lspconfig.rust_analyzer.setup({
@@ -275,16 +307,6 @@ cmp.setup({
 -- 	smear_to_cmd = false,
 -- })
 
--- obsidian.nvim
-require("obsidian").setup({
-	workspaces = {
-		{
-			name = "Flo",
-			path = "/Users/flo/Library/Mobile Documents/iCloud~md~obsidian/Documents/Flo",
-		},
-	},
-})
-
 -- which-key
 require("which-key").setup()
 
@@ -303,46 +325,8 @@ vim.keymap.set("n", "<leader>yz", function()
 	require("yazi").yazi()
 end)
 
--- harpoon
--- local harpoon = require("harpoon")
--- harpoon:setup()
--- vim.keymap.set("n", "<leader>a", function()
--- 	harpoon:list():add()
--- end)
--- vim.keymap.set("n", "<leader>hp", function()
--- 	harpoon.ui:toggle_quick_menu(harpoon:list())
--- end)
--- vim.keymap.set("n", "<leader>1", function()
--- 	harpoon:list():select(1)
--- end)
--- vim.keymap.set("n", "<leader>2", function()
--- 	harpoon:list():select(2)
--- end)
--- vim.keymap.set("n", "<leader>3", function()
--- 	harpoon:list():select(3)
--- end)
--- local conf = require("telescope.config").values
--- local function toggle_telescope(harpoon_files)
--- 	local file_paths = {}
--- 	for _, item in ipairs(harpoon_files.items) do
--- 		table.insert(file_paths, item.value)
--- 	end
-
--- 	require("telescope.pickers")
--- 		.new({}, {
--- 			prompt_title = "Harpoon",
--- 			finder = require("telescope.finders").new_table({
--- 				results = file_paths,
--- 			}),
--- 			previewer = conf.file_previewer({}),
--- 			sorter = conf.generic_sorter({}),
--- 		})
--- 		:find()
--- end
-
--- vim.keymap.set("n", "<C-e>", function()
--- 	toggle_telescope(harpoon:list())
--- end, { desc = "Open harpoon window" })
+-- highlight-colors
+require("nvim-highlight-colors").setup({})
 
 -- XcodeBuild
 require("xcodebuild").setup({
@@ -352,33 +336,43 @@ require("xcodebuild").setup({
 })
 
 -- nvim-ufo (foldable things)
-require("ufo").setup()
-vim.o.foldcolumn = "1"
+require("ufo").setup({
+	open_fold_hl_timeout = 150,
+	-- close_fold_kinds = { "imports", "comment" },
+	preview = {
+		win_config = {
+			border = { "", "─", "", "", "", "─", "", "" },
+			winhighlight = "Normal:Folded",
+			winblend = 0,
+		},
+	},
+})
+-- vim.o.foldcolumn = "1"
 vim.o.foldlevel = 99
 vim.o.foldlevelstart = 99
 vim.o.foldenable = true
+
+-- vim.keymap.set("n", "zR", require("ufo").toggleFold)
+vim.keymap.set("n", "\x1b[1;5P", "za", { desc = "Toggle fold under cursor" })
+
 vim.keymap.set("n", "zR", require("ufo").openAllFolds)
 vim.keymap.set("n", "zM", require("ufo").closeAllFolds)
 
--- Statuscol thing ('')--
-local function simple_foldfunc()
-	local lnum = vim.v.lnum
-	if vim.fn.foldlevel(lnum) > 0 then
-		if vim.fn.foldclosed(lnum) == -1 then
-			return ""
-		elseif vim.fn.foldclosed(lnum) == lnum then
-			return ""
-		end
-	end
-	return " "
-end
-require("statuscol").setup({
-	relculright = true,
-	segments = {
-		{ text = { "%s" }, click = "v:lua.ScSa" },
-		{ text = { simple_foldfunc }, click = "v:lua.ScFa" },
-		{ text = { "%l " }, click = "v:lua.ScLa" },
-	},
+-- mini stuff --
+-- mini.indentscope
+require("mini.indentscope").setup({
+	symbol = "│",
+	-- draw = {
+	-- 	animation = require("mini.indentscope").gen_animation.cubic({
+	-- 		unit = "total",
+	-- 		easing = "out",
+	-- 		duration = 85,
+	-- 	}),
+	-- 	delay = 105,
+	-- },
+	-- options = {
+	-- 	try_as_border = true,
+	-- },
 })
 
 -- Formatter (conform/stylua)
@@ -400,6 +394,9 @@ require("nvim-treesitter.configs").setup({
 	ensure_installed = { "javascript", "typescript", "tsx", "glsl" },
 	highlight = { enable = true },
 	auto_install = true,
+	indent = { enable = true },
+	autopairs = { enable = true },
+	autotag = { enable = true },
 })
 
 -- neo-tree
@@ -558,7 +555,21 @@ require("nvim-autopairs").setup({
 })
 
 -- Telescope
-require("telescope").setup()
+require("telescope").setup({
+	extensions = {
+		file_browser = {
+			theme = "ivy",
+			-- disables netrw and use telescope-file-browser in its place
+			hijack_netrw = true,
+			mappings = {
+				["i"] = {},
+				["n"] = {},
+			},
+		},
+	},
+})
+
+require("telescope").load_extension("file_browser")
 
 -- =========================================================
 -- HIGHLIGHT GROUPS AND COLORS
@@ -618,11 +629,15 @@ vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Clear search highl
 
 -- Telescope mappings
 local builtin = require("telescope.builtin")
-vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Telescope find files" })
+vim.keymap.set("n", "<leader>fi", builtin.find_files, { desc = "Telescope find files" })
 vim.keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "Telescope live grep" })
 vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Telescope buffers" })
 vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "Telescope help tags" })
 vim.keymap.set("n", "<leader>fx", "<cmd>Telescope diagnostics<CR>", { desc = "Telescope diagnostics" })
+
+vim.keymap.set("n", "<leader>ff", function()
+	require("telescope").extensions.file_browser.file_browser()
+end)
 
 -- vim.keymap.set("n", "J", )
 

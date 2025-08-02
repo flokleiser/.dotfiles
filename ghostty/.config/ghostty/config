@@ -65,6 +65,7 @@ keybind = cmd+9=increase_font_size:1
 keybind = cmd+8=decrease_font_size:1
 keybind = cmd+zero=reset_font_size
 keybind = opt+tab=text:\t
+
 # keybind = global:cmd+§=toggle_quick_terminal
 
 quit-after-last-window-closed = true

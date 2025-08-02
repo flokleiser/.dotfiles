@@ -42,7 +42,6 @@ keymap = [
 
 
     # make yazi like lf
-    # { on = "w",         run = }
     { on = [ "x" ], run = "remove", desc = "Delete" },
     { on = [ "w" ], run = "shell 'pwd | wl-copy' --confirm", desc = "Copy current directory to clipboard" },
     { on = [ "A" ], run = "create --file", desc = "Create file" },
@@ -50,16 +49,15 @@ keymap = [
     { on = [ "r" ], run = "rename", desc = "Rename" },
     { on = ["g", "<Space>"], run = "cd --interactive", desc = "Jump interactively" },
 
+    { on = "s",         run = "search --via=fd",             desc = "Search files by name via fd" },
+	{ on = "S",         run = "search --via=rg",             desc = "Search files by content via ripgrep" },
+    
+    { on = "~",    run = "help", desc = "Open help" },
+    { on = "?",    run = "help", desc = "Open help" },
 
-{ on = [ "s", "f" ], run = [ "sort mtime --reverse", "linemode mtime" ],    desc = "Sort by modified time (reverse)" },
-
-	{ on = [ "s", "n" ], run = "sort alphabetical --reverse=no",                desc = "Sort alphabetically" },
-	{ on = [ "s", "N" ], run = "sort alphabetical --reverse",                   desc = "Sort alphabetically (reverse)" },
-	# { on = [ ",", "n" ], run = "sort natural --reverse=no",                     desc = "Sort naturally" },
-	# { on = [ ",", "N" ], run = "sort natural --reverse",                        desc = "Sort naturally (reverse)" },
-	# { on = [ ",", "s" ], run = [ "sort size --reverse=no", "linemode size" ],   desc = "Sort by size" },
-	# { on = [ ",", "S" ], run = [ "sort size --reverse", "linemode size" ],      desc = "Sort by size (reverse)" },
-	# { on = [ ",", "r" ], run = "sort random --reverse=no",                      desc = "Sort randomly" },
+    # { on = [ "s", "f" ], run = [ "sort mtime --reverse", "linemode mtime" ],    desc = "Sort by modified time (reverse)" },
+	# { on = [ "s", "n" ], run = "sort alphabetical --reverse=no",                desc = "Sort alphabetically" },
+	# { on = [ "s", "N" ], run = "sort alphabetical --reverse",                   desc = "Sort alphabetically (reverse)" },
 
 ]
 
@@ -67,3 +65,9 @@ keymap = [
 on   = "l"
 run  = "plugin smart-enter"
 desc = "Enter the child directory, or open the file"
+
+# [[mgr.prepend_keymap]]
+# on   = "f"
+# run  = "plugin jump-to-char"
+# desc = "Jump to char"
+
