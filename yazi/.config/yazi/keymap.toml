@@ -50,6 +50,7 @@ keymap = [
     { on = ["g", "<Space>"], run = "cd --interactive", desc = "Jump interactively" },
 
     { on = "s",         run = "search --via=fd",             desc = "Search files by name via fd" },
+    { on = "/",         run = "search --via=fd",             desc = "Search files by name via fd" },
 	{ on = "S",         run = "search --via=rg",             desc = "Search files by content via ripgrep" },
     
     { on = "~",    run = "help", desc = "Open help" },

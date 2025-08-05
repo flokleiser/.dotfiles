@@ -48,7 +48,7 @@ shell-integration-features = no-cursor
 # =========================================================
 # REST
 # =========================================================
-scrollback-limit = 10000
+scrollback-limit = 1000000
 
 # =========================================================
 # KEYBINDS
@@ -65,6 +65,23 @@ keybind = cmd+9=increase_font_size:1
 keybind = cmd+8=decrease_font_size:1
 keybind = cmd+zero=reset_font_size
 keybind = opt+tab=text:\t
+
+# keybind = ctrl+l=goto_split:right
+# keybind = alt+-=new_split:right
+
+keybind = ctrl+h=goto_split:left
+keybind = ctrl+l=goto_split:right
+keybind = ctrl+j=goto_split:bottom
+keybind = ctrl+k=goto_split:top
+
+keybind = ctrl+s>i=new_split:right
+keybind = ctrl+s>-=new_split:down
+keybind = ctrl+s>x=close_surface
+
+keybind = ctrl+s>h=resize_split:left,100
+keybind = ctrl+s>j=resize_split:down,100
+keybind = ctrl+s>k=resize_split:up,100
+keybind = ctrl+s>l=resize_split:right,100
 
 # keybind = global:cmd+§=toggle_quick_terminal
 

@@ -119,6 +119,7 @@ vim.cmd([[
 
         Plug 'folke/snacks.nvim'
         Plug 'brenoprata10/nvim-highlight-colors'
+
 	call plug#end()
 
 	colorscheme codedark
@@ -306,6 +307,9 @@ cmp.setup({
 -- 	distance_stop_animating = 0.5,
 -- 	smear_to_cmd = false,
 -- })
+
+-- tab bar?
+-- require("barbar").setup()
 
 -- which-key
 require("which-key").setup()

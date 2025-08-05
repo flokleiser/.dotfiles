@@ -10,7 +10,8 @@ playback_artists = { fg = "#ffffff", modifiers = ["Bold"] }
 playback_status = { fg = "#5a5d66", modifiers = ["Bold"] }
 playback_album = { fg = "#5a5d66" }
 playback_metadata = { fg = "#5a5d66" }
-playback_progress_bar = { bg = "#5a5d66", fg = "#ffffff" }
+# playback_progress_bar = { bg = "#5a5d66", fg = "#ffffff" }
+playback_progress_bar = { bg = "#ffffff", fg = "#5a5d66" }
 current_playing = { fg = "#ffffff", modifiers = ["Bold"] }
 page_desc = { fg = "#5a5d66", modifiers = ["Bold"] }
 table_header = { fg = "#ffffff" }

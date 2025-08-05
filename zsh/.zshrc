@@ -66,8 +66,9 @@ alias tk="tmux kill-server"
 # alias cat="bat"
 
 ### --- ncspot/spotify_player alias --- 
-alias sp='~/Code/ncspot/target/release/ncspot'
-alias sp2='spotify_player'
+alias ncsp='~/Code/ncspot/target/release/ncspot'
+# alias sp='spotify_player'
+alias sp='~/Code/spotify-player/target/debug/spotify_player'
 
 ### --- ALIASES FOR PATHS ---
 alias obsidian="cd /Users/flo/Library/Mobile\ Documents/iCloud\~md\~obsidian/Documents/Flo"

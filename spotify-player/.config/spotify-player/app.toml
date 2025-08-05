@@ -2,7 +2,6 @@ theme = "flo"
 # client_id = "65b708073fc0480ea92a077233ca87bd"
 client_id = "0f9d545c5985465180cc41c73d91c053"
 client_port = 8080
-# login_redirect_uri = "http://127.0.0.1:8989/login"
 login_redirect_uri = "http://127.0.0.1:8080/callback"
 playback_format = """
 {status} {track} • {artists} {liked}
@@ -17,14 +16,15 @@ pause_icon = "▌▌"
 liked_icon = "♥"
 # border_type = "Plain"
 border_type = "Rounded"
-progress_bar_type = "Rectangle"
+# progress_bar_type = "Rectangle"
+progress_bar_type = "Line"
 
-# cover_img_length = 9
-# cover_img_width = 5
-# cover_img_scale = 1.0
-cover_img_length = 0
-cover_img_width = 0
-cover_img_scale = 0
+cover_img_length = 9
+cover_img_width = 5
+cover_img_scale = 1.0
+# cover_img_length = 0
+# cover_img_width = 0
+# cover_img_scale = 0
 
 enable_media_control = false
 enable_streaming = "Always"
@@ -32,7 +32,7 @@ enable_notify = false
 enable_cover_image_cache = true
 default_device = "spotify-player"
 notify_streaming_only = false
-seek_duration_secs = 5
+seek_duration_secs = 7
 sort_artist_albums_by_type = false
 
 [notify_format]
@@ -41,14 +41,16 @@ body = "{album}"
 
 [layout]
 playback_window_position = "Top"
+# playback_window_position = "Bottom"
 playback_window_height = 4
 
 [layout.library]
 playlist_percent = 70
-album_percent = 15 
+album_percent = 29
 
 [device]
-name = "spotify-player"
+# name = "spotify-player"
+name = "flo"
 device_type = "speaker"
 volume = 100
 bitrate = 320

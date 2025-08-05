@@ -95,3 +95,7 @@ key_sequence = "f"
 [[keymaps]]
 command = "SeekBackward"
 key_sequence = "b"
+
+[[keymaps]]
+command = "PreviousPage"
+key_sequence = "h"
