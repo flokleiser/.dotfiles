@@ -3,3 +3,6 @@ nvim/.config/nvim/plugged/
 tmux/.tmux/plugins/
 zsh/.zsh/
 thefuck/.config/thefuck/__pycache__/
+yazi/.config/yazi/plugins/easyjump.yazi/
+yazi/.config/yazi/plugins/icons-brew.yazi/
+yazi/.config/yazi/plugins/searchjump.yazi/
