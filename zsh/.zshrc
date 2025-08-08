@@ -14,7 +14,14 @@ export TERM=xterm-256color
 export PIP_REQUIRE_VIRTUALENV=true
 
 export XDG_CONFIG_HOME="$HOME/.config"
-export PATH="/opt/homebrew/bin:$HOME/.local/bin:$PATH:$(go env GOPATH)/bin"
+export GOPATH="$HOME/Code/Go/go"
+export CARGO_HOME="$HOME/Code/Rust/.cargo"
+export RUSTUP_HOME="$HOME/Code/Rust/.rustup"
+export GEM_HOME="$HOME/Code/Ruby/.gem"
+export PLATFORMIO_CORE_DIR="$HOME/Code/Arduino/.platformio"
+export ANDROID_HOME="$HOME/Code/Android/.android"
+
+export PATH="/opt/homebrew/bin:$HOME/.local/bin:$CARGO_HOME/bin:$GEM_HOME/bin:$(go env GOPATH)/bin:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$ANDROID_HOME/tools/bin:$PATH"
 
 export LESSHISTFILE=-
 
@@ -66,9 +73,9 @@ alias tk="tmux kill-server"
 # alias cat="bat"
 
 ### --- ncspot/spotify_player alias --- 
-alias ncsp='~/Code/ncspot/target/release/ncspot'
+alias ncsp='~/Code/Rust/ncspot/target/release/ncspot'
 # alias sp='spotify_player'
-alias sp='~/Code/spotify-player/target/debug/spotify_player'
+alias sp='~/Code/Rust/spotify-player/target/debug/spotify_player'
 
 ### --- ALIASES FOR PATHS ---
 alias obsidian="cd /Users/flo/Library/Mobile\ Documents/iCloud\~md\~obsidian/Documents/Flo"
@@ -103,7 +110,7 @@ function lazygit() {
 
 # --- Yazi cd thing
 
-function yy() {
+function y() {
     local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
     yazi "$@" --cwd-file="$tmp"
     if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
@@ -113,21 +120,6 @@ function yy() {
 }
 
 ### --- DIFFERENT CURSORS FOR VIM MODES ---
-# function zle-keymap-select {
-# 	if [[ ${KEYMAP} == vicmd ]] || [[ $1 = 'block' ]]; then
-# 		echo -ne '\e[1 q'
-# 	elif [[ ${KEYMAP} == main ]] || [[ ${KEYMAP} == viins ]] || [[ ${KEYMAP} = '' ]] || [[ $1 = 'beam' ]]; then
-# 		echo -ne '\e[5 q'
-# 		fi
-# 	}
-# 	zle -N zle-keymap-select
-
-# echo -ne '\e[5 q'
-
-# preexec() {
-# 	echo -ne '\e[5 q'
-# }
-
 # Prevent blinking cursor.
 function __set_beam_cursor {
     echo -ne '\e[6 q'
@@ -147,4 +139,3 @@ zle -N zle-keymap-select
 
 precmd_functions+=(__set_beam_cursor)
 
-# test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"

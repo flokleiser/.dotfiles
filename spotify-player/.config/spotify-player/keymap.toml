@@ -99,3 +99,4 @@ key_sequence = "b"
 [[keymaps]]
 command = "PreviousPage"
 key_sequence = "h"
+

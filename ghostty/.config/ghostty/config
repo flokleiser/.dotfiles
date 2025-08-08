@@ -17,6 +17,7 @@ macos-titlebar-proxy-icon = hidden
 title = ""
 # window-subtitle = working-directory
 macos-icon = glass
+
 macos-titlebar-style = tabs
 maximize = true
 
@@ -30,6 +31,10 @@ background-opacity = 0.85
 background-blur = 20
 window-colorspace = display-p3
 alpha-blending = linear-corrected
+
+unfocused-split-opacity = 0.9
+
+# split-divider-color = 
 
 # =========================================================
 # THEME
@@ -49,6 +54,10 @@ shell-integration-features = no-cursor
 # REST
 # =========================================================
 scrollback-limit = 1000000
+
+clipboard-read = allow
+clipboard-write = allow
+copy-on-select = true
 
 # =========================================================
 # KEYBINDS
@@ -75,13 +84,21 @@ keybind = ctrl+j=goto_split:bottom
 keybind = ctrl+k=goto_split:top
 
 keybind = ctrl+s>i=new_split:right
+keybind = ctrl+s>I=new_split:left
 keybind = ctrl+s>-=new_split:down
+keybind = ctrl+s>_=new_split:up
+
 keybind = ctrl+s>x=close_surface
 
 keybind = ctrl+s>h=resize_split:left,100
 keybind = ctrl+s>j=resize_split:down,100
 keybind = ctrl+s>k=resize_split:up,100
 keybind = ctrl+s>l=resize_split:right,100
+
+keybind = ctrl+cmd+h=resize_split:left,100
+keybind = ctrl+cmd+j=resize_split:down,100
+keybind = ctrl+cmd+k=resize_split:up,100
+keybind = ctrl+cmd+l=resize_split:right,100
 
 # keybind = global:cmd+§=toggle_quick_terminal
 
