@@ -1,22 +1,21 @@
 # =========================================================
 # FONT
 # =========================================================
-font-family = "SF Mono"
-# font-size = 13
+# font-family = "SF Mono"
+font-family = "SFMono Nerd Font"
 font-size = 15.5
-font-style = bold
-font-family = JetBrains Mono Nerd Font Mono
-font-style-bold = Bold
-font-variation-bold = wght=600
+font-style = semibold 
+font-style-bold = bold
+font-variation-bold = wght=700
 
 # =========================================================
 # TITLEBAR & ICON 
 # =========================================================
 macos-titlebar-proxy-icon = hidden
-# title = " "
 title = ""
-# window-subtitle = working-directory
-macos-icon = glass
+
+# macos-icon = glass
+macos-icon = custom-style
 
 macos-titlebar-style = tabs
 maximize = true
@@ -25,16 +24,15 @@ maximize = true
 # WINDOW
 # =========================================================
 window-padding-x = 10
-window-padding-y = 10
+window-padding-y = 5
 window-decoration = auto
-background-opacity = 0.85
+background-opacity = 0.8
+# background-opacity = 1
 background-blur = 20
 window-colorspace = display-p3
 alpha-blending = linear-corrected
 
 unfocused-split-opacity = 0.9
-
-# split-divider-color = 
 
 # =========================================================
 # THEME
@@ -75,31 +73,24 @@ keybind = cmd+8=decrease_font_size:1
 keybind = cmd+zero=reset_font_size
 keybind = opt+tab=text:\t
 
-# keybind = ctrl+l=goto_split:right
-# keybind = alt+-=new_split:right
 
-keybind = ctrl+h=goto_split:left
-keybind = ctrl+l=goto_split:right
-keybind = ctrl+j=goto_split:bottom
-keybind = ctrl+k=goto_split:top
+keybind = left=goto_split:left
+keybind = right=goto_split:right
+keybind = down=goto_split:bottom
+keybind = up=goto_split:top
+keybind = ctrl+x=close_surface
 
-keybind = ctrl+s>i=new_split:right
-keybind = ctrl+s>I=new_split:left
-keybind = ctrl+s>-=new_split:down
-keybind = ctrl+s>_=new_split:up
+keybind = opt+s>i=new_split:right
+keybind = opt+s>I=new_split:left
+keybind = opt+s>-=new_split:down
+keybind = opt+s>_=new_split:up
 
-keybind = ctrl+s>x=close_surface
-
-keybind = ctrl+s>h=resize_split:left,100
-keybind = ctrl+s>j=resize_split:down,100
-keybind = ctrl+s>k=resize_split:up,100
-keybind = ctrl+s>l=resize_split:right,100
+keybind = opt+s>x=close_surface
 
 keybind = ctrl+cmd+h=resize_split:left,100
 keybind = ctrl+cmd+j=resize_split:down,100
 keybind = ctrl+cmd+k=resize_split:up,100
 keybind = ctrl+cmd+l=resize_split:right,100
 
-# keybind = global:cmd+§=toggle_quick_terminal
 
 quit-after-last-window-closed = true

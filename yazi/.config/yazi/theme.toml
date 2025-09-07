@@ -1,39 +1,23 @@
-# If the user's terminal is in dark mode, Yazi will load `theme-dark.toml` on startup; otherwise, `theme-light.toml`.
-# You can override any parts of them that are not related to the dark/light mode in your own `theme.toml`.
-
-# If you want to dynamically override their content based on dark/light mode, you can specify two different flavors
-# for dark and light modes under `[flavor]`, and do so in those flavors instead.
 "$schema" = "https://yazi-rs.github.io/schemas/theme.json"
 
 # vim:fileencoding=utf-8:foldmethod=marker
-
-# : Flavor {{{
 
 [flavor]
 dark  = "vscode-dark-modern"
 light = ""
 
-# : }}}
-
-
-# : Manager {{{
-
 [mgr]
-# cwd = { fg = "cyan" }
 cwd = { fg = "white" }
 
-# Hovered
 hovered         = { reversed = true }
-preview_hovered = { underline = true }
+preview_hovered = { underline = false}
 
-# Find
 find_keyword  = { fg = "yellow", bold = true, italic = true, underline = true }
 find_position = { fg = "magenta", bg = "reset", bold = true, italic = true }
 
-# Symlink
+# symlink_target = { fg= "#555555", italic = true }
 symlink_target = { italic = true }
 
-# Marker
 marker_copied   = { fg = "lightgreen",  bg = "lightgreen" }
 marker_cut      = { fg = "lightred",    bg = "lightred" }
 marker_marked   = { fg = "lightcyan",   bg = "lightcyan" }
@@ -48,67 +32,6 @@ count_selected = { fg = "white", bg = "yellow" }
 border_symbol = "│"
 # border_style  = { fg = "gray" }
 border_style  = { fg = "white" }
-# border_style  = { fg = "#5a5d66" }
-
-# Highlighting
-# syntect_theme = ""
-
-# : }}}
-
-
-# : Tabs {{{
-
-# [tabs]
-# active   = { bg = "blue", bold = true }
-# inactive = { fg = "blue", bg = "gray" }
-
-# # Separator
-# sep_inner = { open = "", close = "" }
-# sep_outer = { open = "", close = "" }
-
-# # : }}}
-
-
-# # : Mode {{{
-
-# [mode]
-# normal_main = { bg = "blue", bold = true }
-# normal_alt  = { fg = "blue", bg = "gray" }
-
-# # Select mode
-# select_main = { bg = "red", bold = true }
-# select_alt  = { fg = "red", bg = "gray" }
-
-# # Unset mode
-# unset_main = { bg = "red", bold = true }
-# unset_alt  = { fg = "red", bg = "gray" }
-
-# # : }}}
-
-
-# # : Status bar {{{
-
-# [status]
-# overall   = {}
-# sep_left  = { open = "", close = "" }
-# sep_right = { open = "", close = "" }
-
-# # Permissions
-# perm_sep   = { fg = "darkgray" }
-# perm_type  = { fg = "green" }
-# perm_read  = { fg = "yellow" }
-# perm_write = { fg = "red" }
-# perm_exec  = { fg = "cyan" }
-
-# # Progress
-# progress_label  = { bold = true }
-# progress_normal = { fg = "blue", bg = "black" }
-# progress_error  = { fg = "red", bg = "black" }
-
-# : }}}
-
-
-# : Which {{{
 
 [which]
 cols            = 3
@@ -191,10 +114,12 @@ selected = { reversed = true }
 border   = { fg = "blue" }
 active   = { reversed = true }
 inactive = {}
-
 # Icons
+
+# icon_file    = ""
 icon_file    = ""
-icon_folder  = ""
+# icon_folder  = ""
+icon_folder  = ""
 icon_command = ""
 
 # : }}}
@@ -233,17 +158,10 @@ rules = [
 	{ mime = "{audio,video}/*", fg = "magenta" },
 
 	# Archives
-	{ mime = "application/{zip,rar,7z*,tar,gzip,xz,zstd,bzip*,lzma,compress,archive,cpio,arj,xar,ms-cab*}", fg = "red" },
+	{ mime = "application/{zip,rar,7z*,tar,gzip,xz,zstd,bzip*,lzma,compress,archive,cpio,arj,xar,ms-cab*}", fg = "green"},
 
 	# Documents
 	{ mime = "application/{pdf,doc,rtf}", fg = "cyan" },
-
-	# Empty files
-	# { mime = "inode/empty", fg = "red" },
-
-	# Special files
-	# { name = "*", is = "orphan", bg = "red" },
-	# { name = "*", is = "exec"  , fg = "green" },
 
 	# Dummy files
 	{ name = "*", is = "dummy", bg = "red" },
@@ -254,29 +172,44 @@ rules = [
 	{ name = "*/", fg = "blue" }
 ]
 
-# : }}}
-
-
-# : Icons {{{
-
 [icon]
 globs = []
+# dirs  = [
+# 	{ name = ".dotfiles", text = "" },
+# 	{ name = ".git", text = "" },
+# 	{ name = ".github", text = "" },
+# 	{ name = ".npm", text = "" },
+# 	{ name = "Desktop", text = "" },
+# 	{ name = "Code", text = "" },
+# 	{ name = "Documents", text = "" },
+# 	{ name = "Downloads", text = "" },
+# 	{ name = "Library", text = "" },
+# 	{ name = "Movies", text = "" },
+# 	{ name = "Music", text = "" },
+# 	{ name = "Pictures", text = "" },
+# 	{ name = "Public", text = "" },
+# 	{ name = "Videos", text = "" },
+#     { name = "Temp", text = ""},
+#     { name = "Applications", text = "󰀻"},
+# ]
 dirs  = [
-	{ name = ".config", text = "" },
-	{ name = ".git", text = "" },
-	{ name = ".github", text = "" },
-	{ name = ".npm", text = "" },
-	{ name = "Desktop", text = "" },
-	{ name = "Development", text = "" },
-	{ name = "Documents", text = "" },
-	{ name = "Downloads", text = "" },
-	{ name = "Library", text = "" },
-	{ name = "Movies", text = "" },
-	{ name = "Music", text = "" },
-	{ name = "Pictures", text = "" },
-	{ name = "Public", text = "" },
-	{ name = "Videos", text = "" },
+	{ name = ".dotfiles",   text = "󱂀", fg="#71c6b1"},
+	{ name = "Desktop",     text = "󱂶", fg="#71c6b1"},
+	{ name = "Code",        text = "󰴊", fg="#71c6b1"},
+	{ name = "Documents",   text = "󱧷", fg="#71c6b1"},
+	{ name = "Downloads",   text = "󱃩", fg="#71c6b1"},
+	{ name = "Library",     text = "󰲃", fg="#71c6b1"},
+	{ name = "Movies",      text = "󱧻", fg="#71c6b1"},
+	{ name = "Music",       text = "󱍚", fg="#71c6b1"},
+	{ name = "Pictures",    text = "󱞋", fg="#71c6b1"},
+	{ name = "Flo",         text = "󰮟", fg="#71c6b1"},
+	{ name = "Public",      text = "󰮜", fg="#71c6b1"},
+	{ name = "Videos",      text = "󱧻", fg="#71c6b1"},
+    { name = "Temp",        text = "󰉖", fg="#71c6b1"},
+    { name = "Applications",text = "󱋤", fg="#71c6b1"},
+    { name = "ZHdK",        text = "󰷎", fg="#71c6b1"},
 ]
+
 files = [
 	{ name = ".babelrc", text = "", fg = "#74985c" },
 	{ name = ".bash_profile", text = "", fg = "#74985c" },
@@ -621,7 +554,7 @@ exts = [
 	{ name = "gcode", text = "󰐫", fg = "#99d5fb" },
 	{ name = "gd", text = "", fg = "#cc8bd2" },
 	{ name = "gemspec", text = "", fg = "#e1554f" },
-	{ name = "gif", text = "", fg = "#cc8bd2" },
+	{ name = "gif", text = "", fg = "#cc8bd2" },
 	{ name = "git", text = "", fg = "#e1554f" },
 	{ name = "glb", text = "", fg = "#c5947c" },
 	{ name = "gleam", text = "", fg = "#cc8bd2" },
@@ -673,7 +606,7 @@ exts = [
 	{ name = "java", text = "", fg = "#e1554f" },
 	{ name = "jl", text = "", fg = "#cc8bd2" },
 	{ name = "jpeg", text = "", fg = "#cc8bd2" },
-	{ name = "jpg", text = "", fg = "#cc8bd2" },
+	{ name = "jpg", text = "", fg = "#cc8bd2" },
 	{ name = "js", text = "", fg = "#74985c" },
 	{ name = "json", text = "", fg = "#74985c" },
 	{ name = "json5", text = "", fg = "#74985c" },
@@ -776,7 +709,8 @@ exts = [
 	{ name = "pls", text = "󰲹", fg = "#cc8bd2" },
 	{ name = "ply", text = "󰆧", fg = "#d4d4d4" },
 	{ name = "pm", text = "", fg = "#99d5fb" },
-	{ name = "png", text = "", fg = "#cc8bd2" },
+	# { name = "png", text = "", fg = "#cc8bd2" },
+	{ name = "png", text = "", fg = "#cc8bd2" },
 	{ name = "po", text = "", fg = "#99d5fb" },
 	{ name = "pot", text = "", fg = "#99d5fb" },
 	{ name = "pp", text = "", fg = "#c5947c" },
@@ -954,7 +888,8 @@ exts = [
 conds = [
 	# Special files
 	{ if = "orphan", text = "" },
-	{ if = "link", text = "" },
+	# { if = "link", text = "" },
+	{ if = "link", text = "󰉒" },
 	{ if = "block", text = "" },
 	{ if = "char", text = "" },
 	{ if = "fifo", text = "" },
@@ -963,9 +898,13 @@ conds = [
 	{ if = "dummy", text = "" },
 
 	# Fallback
-	{ if = "dir", text = "" },
+	# { if = "dir", text = "" },
+	# { if = "dir", text = "" },
+	{ if = "dir", text = "󰉋" },
 	{ if = "exec", text = "" },
-	{ if = "!dir", text = "" },
+	# { if = "!dir", text = "" },
+	{ if = "!dir", text = "󰈤" },
+	# { if = "!dir", text = "" },
 ]
 
 # : }}}

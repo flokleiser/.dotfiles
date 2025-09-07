@@ -138,4 +138,3 @@ function zle-keymap-select {
 zle -N zle-keymap-select
 
 precmd_functions+=(__set_beam_cursor)
-

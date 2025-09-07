@@ -289,7 +289,7 @@
         "command": "editor.action.fontZoomOut"
     },
     {
-        "key": "ctrl+shift+cmd+j",
+        "key": "shift+cmd+j",
         "command": "editor.action.joinLines",
         "when": "editorTextFocus && !editorReadonly"
     },
@@ -478,6 +478,11 @@
         "key": "ctrl+alt+cmd+8",
         "command": "-workbench.action.terminal.focusPrevious",
         "when": "terminalFocus && terminalHasBeenCreated && !terminalEditorFocus || terminalFocus && terminalProcessSupported && !terminalEditorFocus"
+    },
+    {
+        "key": "shift+cmd+j",
+        "command": "-workbench.action.search.toggleQueryDetails",
+        "when": "inSearchEditor || searchViewletFocus"
     }
 
 ]  

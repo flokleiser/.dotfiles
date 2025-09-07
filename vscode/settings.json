@@ -73,7 +73,7 @@
 	"editor.accessibilitySupport": "off",
 	"explorer.confirmDragAndDrop": false,
 	"workbench.startupEditor": "none",
-	"editor.fontFamily": " JetBrains Mono, Menlo,Monaco, 'Courier New', monospace",
+	"editor.fontFamily": "SFMono Nerd Font, JetBrains Mono, Menlo,Monaco, 'Courier New', monospace",
 	"editor.letterSpacing": 0.2,
 	"vue.server.hybridMode": false,
 	"markdown-preview-enhanced.enableScriptExecution": true,
@@ -146,9 +146,10 @@
     "editor.pasteAs.enabled": false,
     "editor.pasteAs.preferences": [],
     "vscode_vibrancy.theme": "GitHub Dark Default",
-    "workbench.navigationControl.enabled": false,
     "chat.commandCenter.enabled": false,
     "workbench.activityBar.location": "top",
     "vim.autoindent": false,
-    "editor.formatOnPaste": true
+    "editor.formatOnPaste": true,
+    "workbench.navigationControl.enabled": false,
+    "workbench.secondarySideBar.defaultVisibility": "hidden"
 }

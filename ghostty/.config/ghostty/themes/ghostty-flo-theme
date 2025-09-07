@@ -14,9 +14,13 @@ palette = 12=#99d5fb
 palette = 13=#cc8bd2
 palette = 14=#71c6b1
 palette = 15=#d4d4d4
-background = #15191e
+# background = #15191e
+background = #0d0e0f
+# background = #15191e
+# background = #000000
 foreground = #dbdbdb
 cursor-color = #dbdbdb
 selection-background = #bad5fb
 selection-foreground = #000000
 split-divider-color = #7F8490
+

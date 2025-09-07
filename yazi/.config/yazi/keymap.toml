@@ -62,6 +62,8 @@ keymap = [
 	{ on = [ "s", "n" ], run = "sort alphabetical --reverse=no",                desc = "Sort alphabetically" },
 	{ on = [ "s", "N" ], run = "sort alphabetical --reverse",                   desc = "Sort alphabetically (reverse)" },
 
+	{ on = ".",    run = "hidden toggle",                   desc = "hide/show dot files" },
+
 ]
 
 [[mgr.prepend_keymap]]

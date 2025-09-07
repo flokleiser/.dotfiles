@@ -14,6 +14,8 @@ vim.opt.more = true
 vim.opt.showmode = false
 vim.opt.scrolloff = 8
 
+vim.opt.formatoptions:remove({ "r", "o" })
+
 vim.opt.autoindent = true
 vim.opt.smartindent = true
 vim.opt.expandtab = true
@@ -24,6 +26,7 @@ vim.g.tmux_navigator_no_wrap = 1
 -- maybe cursor fix
 vim.opt.guicursor = "n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50"
 
+-- =========================================================
 -- LEADER KEY SETUP
 -- =========================================================
 vim.keymap.set("n", "<Space>", "<Nop>", { silent = true, remap = false })
@@ -65,7 +68,6 @@ vim.cmd([[
 
 	call plug#begin('~/.config/nvim/plugged')
 
-		Plug 'tomasiser/vim-code-dark'
 		Plug 'tpope/vim-commentary'
 
 		Plug 'folke/noice.nvim'
@@ -75,7 +77,6 @@ vim.cmd([[
 		Plug 'gbprod/cutlass.nvim'
 		Plug 'nvim-lua/plenary.nvim'
         Plug 'nvim-telescope/telescope.nvim'
-        Plug 'nvim-telescope/telescope-file-browser.nvim'
 
 		Plug 'nvim-neo-tree/neo-tree.nvim'
 
@@ -84,6 +85,8 @@ vim.cmd([[
 
 		Plug 'akinsho/bufferline.nvim', { 'tag': '*' }
 		Plug 'gbprod/cutlass.nvim'
+
+        Plug 'OXY2DEV/markview.nvim'
 
 		Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
@@ -120,9 +123,16 @@ vim.cmd([[
         Plug 'folke/snacks.nvim'
         Plug 'brenoprata10/nvim-highlight-colors'
 
+        Plug 'knubie/vim-kitty-navigator', {'do': 'cp ./*.py ~/.config/kitty/'}
+
+		Plug 'tomasiser/vim-code-dark'
+
+        Plug 'petertriho/nvim-scrollbar'
+
 	call plug#end()
 
-	colorscheme codedark
+    colorscheme codedark
+    highlight Comment cterm=italic gui=italic
 
     hi NeoTreeNormal guifg=#d4d4d4
     hi NeoTreeGitUntracked guifg=#99d5fb
@@ -142,8 +152,10 @@ vim.cmd([[
 
     hi MiniIndentscopeSymbol guifg=#7F8490
 
-
 ]])
+
+-- Debugging area for plugs that cause issues
+-- Plug 'nvim-telescope/telescope-file-browser.nvim'
 
 -- =========================================================
 -- LSP CONFIGURATION
@@ -202,13 +214,6 @@ lspconfig.gopls.setup({
 		},
 	},
 })
-
--- 	filetypes = { "javascript", "typescript", "typescriptreact", "javascriptreact" },
--- Typescript lsp
-
--- require("lspconfig").ts_ls.setup({
--- 	cmd = { "tsserver" },
--- })
 
 vim.lsp.enable("ts_ls")
 
@@ -300,19 +305,25 @@ cmp.setup({
 -- PLUGIN CONFIGURATIONS
 -- =========================================================
 
--- smear-cursor
--- require("smear_cursor").setup({
--- 	stiffness = 0.7,
--- 	trailing_stiffness = 0.7,
--- 	distance_stop_animating = 0.5,
--- 	smear_to_cmd = false,
--- })
+-- scrollbar
+require("scrollbar").setup()
 
--- tab bar?
--- require("barbar").setup()
+-- snacks (scratch buffer)
+vim.keymap.set("n", "<leader>.", function()
+	Snacks.scratch()
+end)
 
 -- which-key
-require("which-key").setup()
+require("which-key").setup({
+	preset = "modern",
+	-- preset = "helix",
+	-- preset = "classic",
+})
+
+-- require("which-key").show({
+-- 	keys = "<c-w>",
+-- 	loop = true,
+-- })
 
 -- toggleterm
 require("toggleterm").setup()
@@ -325,7 +336,7 @@ require("lf").setup({
 vim.keymap.set("n", "<leader>lf", "<Cmd>Lf<CR>")
 
 -- yazi inside nvim
-vim.keymap.set("n", "<leader>yz", function()
+vim.keymap.set("n", "<leader>yy", function()
 	require("yazi").yazi()
 end)
 
@@ -366,18 +377,33 @@ vim.keymap.set("n", "zM", require("ufo").closeAllFolds)
 -- mini.indentscope
 require("mini.indentscope").setup({
 	symbol = "│",
-	-- draw = {
-	-- 	animation = require("mini.indentscope").gen_animation.cubic({
-	-- 		unit = "total",
-	-- 		easing = "out",
-	-- 		duration = 85,
-	-- 	}),
-	-- 	delay = 105,
-	-- },
-	-- options = {
-	-- 	try_as_border = true,
-	-- },
 })
+
+-- markdown/markview
+local presets = require("markview.presets")
+require("markview").setup({
+	markdown = {
+		-- headings = presets.headings.marker,
+		-- headings = presets.headings.glow,
+		headings = presets.headings.simple,
+
+		-- horizontal_rules = presets.horizontal_rules.double,
+		-- horizontal_rules = presets.horizontal_rules.thin,
+		horizontal_rules = presets.horizontal_rules.solid,
+	},
+})
+
+require("markview").setup({
+	markdown = {
+		headings = {
+			heading_1 = { sign = "" },
+			heading_2 = { sign = "" },
+		},
+	},
+})
+-- require("markview.extras.checkboxes").setup()
+-- require("markview.extras.headings").setup()
+-- require("markview").setup(presets.no_nerd_fonts)
 
 -- Formatter (conform/stylua)
 require("conform").setup({
@@ -387,6 +413,7 @@ require("conform").setup({
 	},
 	formatters_by_ft = {
 		lua = { "stylua" },
+		rust = { "rustfmt" },
 	},
 })
 
@@ -409,8 +436,8 @@ vim.schedule(function()
 	if not ok then
 		return
 	end
-
 	require("neo-tree").setup({
+		sources = { "filesystem" },
 		filesystem = {
 			filtered_items = {
 				visible = true,
@@ -422,21 +449,24 @@ vim.schedule(function()
 					["l"] = "open",
 					["h"] = "close_node",
 					["<Esc>"] = "revert_preview",
-
 					["H"] = function(state)
 						local winid = vim.api.nvim_get_current_win()
 						local cur_width = vim.api.nvim_win_get_width(winid)
 						vim.api.nvim_win_set_width(winid, cur_width - 5)
 					end,
-
 					["L"] = function(state)
 						local winid = vim.api.nvim_get_current_win()
 						local cur_width = vim.api.nvim_win_get_width(winid)
 						vim.api.nvim_win_set_width(winid, cur_width + 5)
 					end,
-
 					["a"] = function(state)
+						if not state.tree or not state.tree.get_node then
+							return
+						end
 						local node = state.tree:get_node()
+						if not node then
+							return
+						end
 						local base_path = node.type == "directory" and node.path or vim.fn.fnamemodify(node.path, ":h")
 						vim.ui.input({ prompt = "New directory name: " }, function(input)
 							if input and input ~= "" then
@@ -445,9 +475,14 @@ vim.schedule(function()
 							end
 						end)
 					end,
-
 					["A"] = function(state)
+						if not state.tree or not state.tree.get_node then
+							return
+						end
 						local node = state.tree:get_node()
+						if not node then
+							return
+						end
 						local base_path = node.type == "directory" and node.path or vim.fn.fnamemodify(node.path, ":h")
 						vim.ui.input({ prompt = "New file name: " }, function(input)
 							if input and input ~= "" then
@@ -456,7 +491,6 @@ vim.schedule(function()
 							end
 						end)
 					end,
-
 					["x"] = fs_commands.delete,
 					["r"] = fs_commands.rename,
 					["y"] = fs_commands.copy_to_clipboard,
@@ -466,7 +500,6 @@ vim.schedule(function()
 					["u"] = "navigate_up",
 					["gh"] = "toggle_hidden",
 				},
-				-- default_component_configs = {}
 			},
 		},
 	})
@@ -533,10 +566,11 @@ require("lualine").setup({
 		lualine_c = {},
 		lualine_x = {
 			{
+				"filetype",
 				"diagnostics",
 				symbols = { error = " ", warn = " ", info = " ", hint = " " },
 				separator = { right = " " },
-				colored = true,
+				colored = false,
 			},
 		},
 		lualine_y = {
@@ -560,20 +594,20 @@ require("nvim-autopairs").setup({
 
 -- Telescope
 require("telescope").setup({
-	extensions = {
-		file_browser = {
-			theme = "ivy",
-			-- disables netrw and use telescope-file-browser in its place
-			hijack_netrw = true,
-			mappings = {
-				["i"] = {},
-				["n"] = {},
-			},
-		},
-	},
+	-- extensions = {
+	-- 	file_browser = {
+	-- 		theme = "ivy",
+	-- 		-- disables netrw and use telescope-file-browser in its place
+	-- 		hijack_netrw = true,
+	-- 		mappings = {
+	-- 			["i"] = {},
+	-- 			["n"] = {},
+	-- 		},
+	-- 	},
+	-- },
 })
 
-require("telescope").load_extension("file_browser")
+-- require("telescope").load_extension("file_browser")
 
 -- =========================================================
 -- HIGHLIGHT GROUPS AND COLORS
@@ -597,8 +631,23 @@ vim.api.nvim_set_hl(0, "MsgArea", { fg = "white", bg = "NONE" })
 vim.api.nvim_set_hl(0, "MsgSeparator", { bg = "NONE" })
 vim.api.nvim_set_hl(0, "CmdLine", { bg = "NONE" })
 
--- Markview hl
--- vim.api.nvim_set_hl(0, "MarkviewPalette0", { bg = "NONE", fg = "#ffffff" })
+vim.api.nvim_set_hl(0, "DiagnosticVirtualTextHint", { fg = "#7F8490" })
+vim.api.nvim_set_hl(0, "DiagnosticVirtualLinesHint", { fg = "#7F8490" })
+
+-- Markdown
+-- vim.api.nvim_set_hl(0, "RenderMarkdownH1BG", { bg = "NONE", fg = "#ffffff" })
+-- vim.api.nvim_set_hl(0, "RenderMarkdownH2BG", { bg = "NONE", fg = "#ffffff" })
+-- vim.api.nvim_set_hl(0, "RenderMarkdownH3BG", { bg = "NONE", fg = "#ffffff" })
+-- vim.api.nvim_set_hl(0, "RenderMarkdownH4BG", { bg = "NONE", fg = "#ffffff" })
+-- vim.api.nvim_set_hl(0, "RenderMarkdownH5BG", { bg = "NONE", fg = "#ffffff" })
+-- vim.api.nvim_set_hl(0, "RenderMarkdownH6BG", { bg = "NONE", fg = "#ffffff" })
+
+-- vim.api.nvim_set_hl(0, "RenderMarkdownH1BG", { bg = "NONE", fg = "#9cdcfe", bold = true })
+-- vim.api.nvim_set_hl(0, "RenderMarkdownH2BG", { bg = "NONE", fg = "#9cdcfe", bold = true })
+-- vim.api.nvim_set_hl(0, "RenderMarkdownH3BG", { bg = "NONE", fg = "#9cdcfe", bold = true })
+-- vim.api.nvim_set_hl(0, "RenderMarkdownH4BG", { bg = "NONE", fg = "#9cdcfe", bold = true })
+-- vim.api.nvim_set_hl(0, "RenderMarkdownH5BG", { bg = "NONE", fg = "#9cdcfe", bold = true })
+-- vim.api.nvim_set_hl(0, "RenderMarkdownH6BG", { bg = "NONE", fg = "#9cdcfe", bold = true })
 
 -- =========================================================
 -- KEY MAPPINGS
@@ -628,6 +677,9 @@ vim.keymap.set("v", "K", "5k")
 vim.keymap.set("v", "L", "5l")
 vim.keymap.set("v", "H", "5h")
 
+-- Toggleterm keybinds
+vim.keymap.set("n", "<leader>tt", "<cmd>ToggleTerm<CR>", { noremap = true, silent = true })
+
 -- Utility mappings
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Clear search highlighting" })
 
@@ -639,11 +691,9 @@ vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Telescope buffers" 
 vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "Telescope help tags" })
 vim.keymap.set("n", "<leader>fx", "<cmd>Telescope diagnostics<CR>", { desc = "Telescope diagnostics" })
 
-vim.keymap.set("n", "<leader>ff", function()
-	require("telescope").extensions.file_browser.file_browser()
-end)
-
--- vim.keymap.set("n", "J", )
+-- vim.keymap.set("n", "<leader>ff", function()
+-- 	require("telescope").extensions.file_browser.file_browser()
+-- end)
 
 -- Neo-tree navigation
 vim.keymap.set("n", "<leader>fe", "<cmd>Neotree toggle<CR>")
@@ -664,17 +714,28 @@ vim.keymap.set("x", "¿", "<Plug>Commentary", { noremap = false })
 -- vim.keymap.set("n", "<leader>k", require("smart-splits").resize_up)
 -- vim.keymap.set("n", "<leader>l", require("smart-splits").resize_right)
 
-if vim.fn.empty(vim.env.TMUX) == 1 then
-	local map = vim.keymap.set
-	local opts = { noremap = true, silent = true }
+-- if vim.fn.empty(vim.env.TMUX) == 1 then
+-- 	local map = vim.keymap.set
+-- 	local opts = { noremap = true, silent = true }
 
-	map("n", "<leader>|", ":vsplit<CR>", opts)
-	map("n", "<leader>-", ":split<CR>", opts)
+-- 	map("n", "<leader>|", ":vsplit<CR>", opts)
+-- 	map("n", "<leader>-", ":split<CR>", opts)
 
-	map("n", "<leader>h", "10<C-w><") -- shrink horizontally
-	map("n", "<leader>l", "10<C-w>>") -- grow horizontally
-	map("n", "<leader>j", "2<C-w>+", opts) -- grow vertically
-	map("n", "<leader>k", "2<C-w>-", opts) -- shrink vertically
+-- 	map("n", "<leader>h", "10<C-w><") -- shrink horizontally
+-- 	map("n", "<leader>l", "10<C-w>>") -- grow horizontally
+-- 	map("n", "<leader>j", "2<C-w>+", opts) -- grow vertically
+-- 	map("n", "<leader>k", "2<C-w>-", opts) -- shrink vertically
+-- end
+
+-- kitty splits?
+if os.getenv("TERM") == "xterm-kitty" then
+	vim.g.kitty_navigator_no_mappings = 1
+	vim.g.tmux_navigator_no_mappings = 1
+
+	vim.api.nvim_set_keymap("n", "C-h", ":KittyNavigateLeft <CR>", { noremap = true, silent = true })
+	vim.api.nvim_set_keymap("n", "C-j", ":KittyNavigateDown <CR>", { noremap = true, silent = true })
+	vim.api.nvim_set_keymap("n", "C-k", ":KittyNavigateUp <CR>", { noremap = true, silent = true })
+	vim.api.nvim_set_keymap("n", "C-l", ":KittyNavigateRight <CR>", { noremap = true, silent = true })
 end
 
 -- Config reload
@@ -707,6 +768,28 @@ vim.api.nvim_create_autocmd("WinEnter", {
 })
 
 -- output to buffer
+-- dumb color inspect
+vim.api.nvim_create_user_command("InspectBuf", function()
+	-- run Inspect, capture its echo output
+	local output = vim.fn.execute("Inspect")
+	-- split the captured text into lines
+	local lines = vim.split(output, "\n", { trimempty = true })
+
+	-- create or reuse a scratch buffer
+	local buf_name = "InspectOutput"
+	local bufnr = vim.fn.bufnr(buf_name)
+	if bufnr == -1 then
+		bufnr = vim.api.nvim_create_buf(false, true)
+		vim.api.nvim_buf_set_name(bufnr, buf_name)
+	end
+
+	-- fill it with the Inspect lines
+	vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, lines)
+
+	-- open in a new split
+	vim.cmd("botright split " .. buf_name)
+	vim.api.nvim_set_current_buf(bufnr)
+end, {})
 
 vim.api.nvim_create_user_command("Redir", function(ctx)
 	local output = vim.api.nvim_exec2(ctx.args, { output = true })

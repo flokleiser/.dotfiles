@@ -889,13 +889,13 @@
 				<key>Alpha Component</key>
 				<real>1</real>
 				<key>Blue Component</key>
-				<real>0.12103271484375</real>
+				<real>0.058823529411764705</real>
 				<key>Color Space</key>
-				<string>sRGB</string>
+				<string>P3</string>
 				<key>Green Component</key>
-				<real>0.099111050367355347</real>
+				<real>0.054901960784313725</real>
 				<key>Red Component</key>
-				<real>0.0806884765625</real>
+				<real>0.050980392156862744</real>
 			</dict>
 			<key>Background Color (Light)</key>
 			<dict>
@@ -1395,7 +1395,7 @@
 			<key>Title Components</key>
 			<integer>384</integer>
 			<key>Transparency</key>
-			<real>0.056389508928571426</real>
+			<real>0.19517299107142858</real>
 			<key>Unlimited Scrollback</key>
 			<false/>
 			<key>Use Bold Font</key>
