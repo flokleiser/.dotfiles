@@ -56,6 +56,7 @@ keymap = [
     { on = "?",    run = "help", desc = "Open help" },
 
     {on = "d",     run = "yank --cut", desc = "Cut file"},
+    {on = "y",     run = "yank", desc = "Copy file"},
     {on = "p",     run = "paste", desc = "Paste file"},
 
     { on = [ "s", "f" ], run = [ "sort mtime --reverse", "linemode mtime" ],    desc = "Sort by modified time (reverse)" },
@@ -81,22 +82,3 @@ on   = [ "i" ]
 run = "plugin easyjump"
 desc = "easyjump"
 
-[[mgr.prepend_keymap]]
-on   = [ "b", "a" ]
-run  = "plugin mactag add"
-desc = "Tag selected files"
-
-[[mgr.prepend_keymap]]
-on   = [ "b", "r" ]
-run  = "plugin mactag remove"
-desc = "Untag selected files"
-
-[[plugin.prepend_fetchers]]
-id   = "mactag"
-name = "*"
-run  = "mactag"
-
-[[plugin.prepend_fetchers]]
-id   = "mactag"
-name = "*/"
-run  = "mactag"

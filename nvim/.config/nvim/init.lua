@@ -13,6 +13,11 @@ vim.opt.showcmd = false
 vim.opt.more = true
 vim.opt.showmode = false
 vim.opt.scrolloff = 8
+vim.opt.wrap = true
+vim.opt.linebreak = true
+vim.opt.fillchars = { eob = " " }
+vim.opt.splitbelow = true
+vim.opt.splitright = true
 
 vim.opt.formatoptions:remove({ "r", "o" })
 
@@ -71,14 +76,14 @@ vim.cmd([[
 		Plug 'tpope/vim-commentary'
 
 		Plug 'folke/noice.nvim'
+        Plug 'folke/flash.nvim'
+
 		Plug 'MunifTanjim/nui.nvim'
 
 		Plug 'echasnovski/mini.nvim'
 		Plug 'gbprod/cutlass.nvim'
 		Plug 'nvim-lua/plenary.nvim'
         Plug 'nvim-telescope/telescope.nvim'
-
-		Plug 'nvim-neo-tree/neo-tree.nvim'
 
 		Plug 'nvim-lualine/lualine.nvim'
 		Plug 'nvim-tree/nvim-web-devicons'
@@ -113,10 +118,6 @@ vim.cmd([[
 		Plug 'luukvbaal/statuscol.nvim'
 
         Plug 'sphamba/smear-cursor.nvim'
-        Plug 'akinsho/toggleterm.nvim', {'tag' : '*'}
-
-        Plug 'lmburns/lf.nvim'
-        Plug 'mikavilpas/yazi.nvim'
 
         Plug 'folke/which-key.nvim'
 
@@ -129,9 +130,18 @@ vim.cmd([[
 
         Plug 'petertriho/nvim-scrollbar'
 
+        Plug '0x00-ketsu/maximizer.nvim'
+
+        Plug 'akinsho/toggleterm.nvim', {'tag' : '*'}
+
+        Plug 'mikavilpas/yazi.nvim'
+
+        Plug 'nvim-tree/nvim-tree.lua'
+
 	call plug#end()
 
     colorscheme codedark
+
     highlight Comment cterm=italic gui=italic
 
     hi NeoTreeNormal guifg=#d4d4d4
@@ -145,6 +155,8 @@ vim.cmd([[
     hi NeoTreeFileIcon guifg=#99d5fb
     hi NeoTreeDirectoryName guifg=#d4d4d4
 
+    hi DiffText guibg=#005f87
+
     hi NeoTreeTitleBar guibg=NONE
     hi NeoTreeCursorLine guibg=NONE
     hi NeoTreeRootName guibg=NONE
@@ -152,10 +164,30 @@ vim.cmd([[
 
     hi MiniIndentscopeSymbol guifg=#7F8490
 
+    hi MarkviewListItemMinus guifg=#7F8490
+    hi MarkviewCodeInfo guifg=#7F8490
+    hi MarkviewBlockQuoteDefault guifg=#7F8490
+
+    hi MarkviewPalette0 guifg=#000000 guibg=#7F8490
+    hi MarkviewPalette0Sign guifg=#ffffff
+    hi MarkviewIcon0 guifg=#ffffff
+    hi MarkviewPalette1 guifg=#000000 guibg=#7F8490
+    hi MarkviewPalette1Sign guifg=#ffffff
+    hi MarkviewPalette2 guifg=#000000 guibg=#7F8490
+    hi MarkviewPalette2Sign guifg=#ffffff
+    hi MarkviewPalette3 guifg=#000000 guibg=#7F8490
+    hi MarkviewPalette3Sign guifg=#ffffff
+    hi MarkviewPalette4 guifg=#000000 guibg=#7F8490
+    hi MarkviewPalette4Sign guifg=#ffffff
+    hi MarkviewPalette5 guifg=#000000 guibg=#7F8490
+    hi MarkviewPalette5Sign guifg=#ffffff
+    hi MarkviewPalette6 guifg=#000000 guibg=#7F8490
+    hi MarkviewPalette6Sign guifg=#ffffff
+
 ]])
 
 -- Debugging area for plugs that cause issues
--- Plug 'nvim-telescope/telescope-file-browser.nvim'
+-- Plug 'nvim-neo-tree/neo-tree.nvim'
 
 -- =========================================================
 -- LSP CONFIGURATION
@@ -212,6 +244,15 @@ lspconfig.gopls.setup({
 			staticcheck = true,
 			gofumpt = true,
 		},
+		Search = {
+			text = { "-", "=" },
+			priority = 1,
+			gui = nil,
+			color = nil,
+			cterm = nil,
+			color_nr = nil,
+			highlight = "Search",
+		},
 	},
 })
 
@@ -244,9 +285,15 @@ vim.api.nvim_create_autocmd("LspAttach", {
 					end
 				end
 			end, 100)
-		end, { noremap = true, silent = true })
+		end, { noremap = true, silent = true }, { desc = "Hover description" })
 
-		vim.keymap.set("n", "gd", vim.lsp.buf.definition, { noremap = true, silent = true })
+		vim.keymap.set(
+			"n",
+			"gd",
+			vim.lsp.buf.definition,
+			{ noremap = true, silent = true },
+			{ desc = "Go to definition" }
+		)
 	end,
 })
 
@@ -305,40 +352,60 @@ cmp.setup({
 -- PLUGIN CONFIGURATIONS
 -- =========================================================
 
+-- move lines
+-- vim.keymap.set("n", "<leader>J", ":m +1<CR>")
+-- vim.keymap.set("n", "<leader>K", ":m -2<CR>")
+
 -- scrollbar
-require("scrollbar").setup()
+require("scrollbar").setup({
+	show_in_active_only = true,
+	hide_if_all_visible = true,
+	handle = {
+		text = " ",
+		blend = 90,
+		color = nil,
+		color_nr = nil,
+		highlight = "CursorColumn",
+		hide_if_all_visible = true,
+	},
+	marks = {
+		Cursor = {
+			text = "•",
+			priority = 0,
+			gui = nil,
+			color = nil,
+			cterm = nil,
+			color_nr = nil,
+			highlight = "Normal",
+		},
+	},
+})
 
 -- snacks (scratch buffer)
 vim.keymap.set("n", "<leader>.", function()
 	Snacks.scratch()
-end)
+end, { desc = "Scratch buffer" })
 
 -- which-key
 require("which-key").setup({
-	preset = "modern",
-	-- preset = "helix",
-	-- preset = "classic",
+	-- preset = "modern",
+	preset = "helix",
 })
-
--- require("which-key").show({
--- 	keys = "<c-w>",
--- 	loop = true,
--- })
 
 -- toggleterm
 require("toggleterm").setup()
+vim.keymap.set("t", "<C-h>", [[<Cmd>wincmd h<CR>]], opts)
+vim.keymap.set("t", "<C-j>", [[<Cmd>wincmd j<CR>]], opts)
+vim.keymap.set("t", "<C-k>", [[<Cmd>wincmd k<CR>]], opts)
+vim.keymap.set("t", "<C-l>", [[<Cmd>wincmd l<CR>]], opts)
 
--- lf inside nvim
-require("lf").setup({
-	winblend = 0,
-	border = "rounded",
-})
-vim.keymap.set("n", "<leader>lf", "<Cmd>Lf<CR>")
+-- maximizer
+require("maximizer").setup()
 
 -- yazi inside nvim
 vim.keymap.set("n", "<leader>yy", function()
 	require("yazi").yazi()
-end)
+end, { desc = "Yazi" })
 
 -- highlight-colors
 require("nvim-highlight-colors").setup({})
@@ -353,7 +420,6 @@ require("xcodebuild").setup({
 -- nvim-ufo (foldable things)
 require("ufo").setup({
 	open_fold_hl_timeout = 150,
-	-- close_fold_kinds = { "imports", "comment" },
 	preview = {
 		win_config = {
 			border = { "", "─", "", "", "", "─", "", "" },
@@ -368,13 +434,13 @@ vim.o.foldlevelstart = 99
 vim.o.foldenable = true
 
 -- vim.keymap.set("n", "zR", require("ufo").toggleFold)
+vim.keymap.set("n", "za", "za", { desc = "Toggle fold under cursor" })
 vim.keymap.set("n", "\x1b[1;5P", "za", { desc = "Toggle fold under cursor" })
 
-vim.keymap.set("n", "zR", require("ufo").openAllFolds)
-vim.keymap.set("n", "zM", require("ufo").closeAllFolds)
+vim.keymap.set("n", "zR", require("ufo").openAllFolds, { desc = "Open all folds" })
+vim.keymap.set("n", "zM", require("ufo").closeAllFolds, { desc = "Close all folds" })
 
 -- mini stuff --
--- mini.indentscope
 require("mini.indentscope").setup({
 	symbol = "│",
 })
@@ -383,12 +449,7 @@ require("mini.indentscope").setup({
 local presets = require("markview.presets")
 require("markview").setup({
 	markdown = {
-		-- headings = presets.headings.marker,
-		-- headings = presets.headings.glow,
-		headings = presets.headings.simple,
-
-		-- horizontal_rules = presets.horizontal_rules.double,
-		-- horizontal_rules = presets.horizontal_rules.thin,
+		headings = presets.headings.marker,
 		horizontal_rules = presets.horizontal_rules.solid,
 	},
 })
@@ -401,9 +462,6 @@ require("markview").setup({
 		},
 	},
 })
--- require("markview.extras.checkboxes").setup()
--- require("markview.extras.headings").setup()
--- require("markview").setup(presets.no_nerd_fonts)
 
 -- Formatter (conform/stylua)
 require("conform").setup({
@@ -422,7 +480,7 @@ require("cutlass").setup()
 
 -- Treesitter
 require("nvim-treesitter.configs").setup({
-	ensure_installed = { "javascript", "typescript", "tsx", "glsl" },
+	ensure_installed = { "javascript", "typescript", "tsx", "glsl", "markdown", "markdown_inline" },
 	highlight = { enable = true },
 	auto_install = true,
 	indent = { enable = true },
@@ -430,80 +488,234 @@ require("nvim-treesitter.configs").setup({
 	autotag = { enable = true },
 })
 
--- neo-tree
-vim.schedule(function()
-	local ok, fs_commands = pcall(require, "neo-tree.sources.filesystem.commands")
-	if not ok then
-		return
+-- nvim-tree
+vim.keymap.set("n", "<leader>fe", "<cmd>NvimTreeToggle<CR>", { desc = "Neotree Toggle" })
+
+local function on_attach(bufnr)
+	local api = require("nvim-tree.api")
+
+	local function opts(desc)
+		return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
 	end
-	require("neo-tree").setup({
-		sources = { "filesystem" },
-		filesystem = {
-			filtered_items = {
-				visible = true,
-				show_hidden_count = true,
+
+	vim.keymap.set("n", "<space>", api.node.open.edit, opts("Toggle node"))
+	vim.keymap.set("n", "l", api.node.open.edit, opts("Open"))
+	vim.keymap.set("n", "h", api.node.navigate.parent_close, opts("Close node"))
+	vim.keymap.set("n", "<Esc>", api.node.open.preview, opts("Preview"))
+
+	vim.keymap.set("n", "H", function()
+		local winid = vim.api.nvim_get_current_win()
+		local cur_width = vim.api.nvim_win_get_width(winid)
+		vim.api.nvim_win_set_width(winid, cur_width - 5)
+	end, opts("Decrease width"))
+
+	vim.keymap.set("n", "L", function()
+		local winid = vim.api.nvim_get_current_win()
+		local cur_width = vim.api.nvim_win_get_width(winid)
+		vim.api.nvim_win_set_width(winid, cur_width + 5)
+	end, opts("Increase width"))
+
+	vim.keymap.set("n", "a", function()
+		local node = api.tree.get_node_under_cursor()
+		if not node then
+			return
+		end
+		local base_path = node.type == "directory" and node.absolute_path
+			or vim.fn.fnamemodify(node.absolute_path, ":h")
+		vim.ui.input({ prompt = "New directory name: " }, function(input)
+			if input and input ~= "" then
+				os.execute(string.format("mkdir -p '%s/%s'", base_path, input))
+				api.tree.reload()
+			end
+		end)
+	end, opts("Create directory"))
+
+	vim.keymap.set("n", "A", function()
+		local node = api.tree.get_node_under_cursor()
+		if not node then
+			return
+		end
+		local base_path = node.type == "directory" and node.absolute_path
+			or vim.fn.fnamemodify(node.absolute_path, ":h")
+		vim.ui.input({ prompt = "New file name: " }, function(input)
+			if input and input ~= "" then
+				os.execute(string.format("touch '%s/%s'", base_path, input))
+				api.tree.reload()
+			end
+		end)
+	end, opts("Create file"))
+
+	vim.keymap.set("n", "x", api.fs.remove, opts("Delete"))
+	vim.keymap.set("n", "r", api.fs.rename, opts("Rename"))
+	vim.keymap.set("n", "y", api.fs.copy.node, opts("Copy"))
+	vim.keymap.set("n", "d", api.fs.cut, opts("Cut"))
+	vim.keymap.set("n", "p", api.fs.paste, opts("Paste"))
+	vim.keymap.set("n", "w", api.tree.change_root_to_node, opts("Set root"))
+	vim.keymap.set("n", "u", api.tree.change_root_to_parent, opts("Navigate up"))
+	vim.keymap.set("n", "gh", api.tree.toggle_hidden_filter, opts("Toggle hidden"))
+end
+
+require("nvim-tree").setup({
+	on_attach = on_attach,
+	auto_reload_on_write = true,
+	disable_netrw = false,
+	hijack_netrw = true,
+	hijack_cursor = false,
+	hijack_unnamed_buffer_when_opening = false,
+	sort = {
+		sorter = "name",
+		folders_first = true,
+	},
+	view = {
+		centralize_selection = false,
+		cursorline = true,
+		debounce_delay = 15,
+		width = 40,
+		preserve_window_proportions = false,
+		number = false,
+		relativenumber = false,
+		signcolumn = "yes",
+		float = {
+			enable = false,
+		},
+	},
+	renderer = {
+		add_trailing = false,
+		group_empty = false,
+		highlight_git = false,
+		full_name = false,
+		highlight_opened_files = "none",
+		root_folder_label = ":~:s?$?/..?",
+		indent_width = 2,
+		indent_markers = {
+			enable = false,
+		},
+		icons = {
+			webdev_colors = true,
+			git_placement = "before",
+			padding = " ",
+			symlink_arrow = " ➛ ",
+			show = {
+				file = true,
+				folder = true,
+				folder_arrow = true,
+				git = true,
 			},
-			window = {
-				mappings = {
-					["<space>"] = "toggle_node",
-					["l"] = "open",
-					["h"] = "close_node",
-					["<Esc>"] = "revert_preview",
-					["H"] = function(state)
-						local winid = vim.api.nvim_get_current_win()
-						local cur_width = vim.api.nvim_win_get_width(winid)
-						vim.api.nvim_win_set_width(winid, cur_width - 5)
-					end,
-					["L"] = function(state)
-						local winid = vim.api.nvim_get_current_win()
-						local cur_width = vim.api.nvim_win_get_width(winid)
-						vim.api.nvim_win_set_width(winid, cur_width + 5)
-					end,
-					["a"] = function(state)
-						if not state.tree or not state.tree.get_node then
-							return
-						end
-						local node = state.tree:get_node()
-						if not node then
-							return
-						end
-						local base_path = node.type == "directory" and node.path or vim.fn.fnamemodify(node.path, ":h")
-						vim.ui.input({ prompt = "New directory name: " }, function(input)
-							if input and input ~= "" then
-								os.execute(string.format("mkdir -p '%s/%s'", base_path, input))
-								require("neo-tree.sources.filesystem.commands").refresh(state)
-							end
-						end)
-					end,
-					["A"] = function(state)
-						if not state.tree or not state.tree.get_node then
-							return
-						end
-						local node = state.tree:get_node()
-						if not node then
-							return
-						end
-						local base_path = node.type == "directory" and node.path or vim.fn.fnamemodify(node.path, ":h")
-						vim.ui.input({ prompt = "New file name: " }, function(input)
-							if input and input ~= "" then
-								os.execute(string.format("touch '%s/%s'", base_path, input))
-								require("neo-tree.sources.filesystem.commands").refresh(state)
-							end
-						end)
-					end,
-					["x"] = fs_commands.delete,
-					["r"] = fs_commands.rename,
-					["y"] = fs_commands.copy_to_clipboard,
-					["d"] = fs_commands.cut_to_clipboard,
-					["p"] = fs_commands.paste_from_clipboard,
-					["w"] = "set_root",
-					["u"] = "navigate_up",
-					["gh"] = "toggle_hidden",
+		},
+	},
+	hijack_directories = {
+		enable = true,
+		auto_open = true,
+	},
+	update_focused_file = {
+		enable = false,
+		update_root = false,
+		ignore_list = {},
+	},
+	system_open = {
+		cmd = "",
+		args = {},
+	},
+	diagnostics = {
+		enable = false,
+	},
+	filters = {
+		dotfiles = false,
+		git_clean = false,
+		no_buffer = false,
+		custom = {},
+		exclude = {},
+	},
+	filesystem_watchers = {
+		enable = true,
+		debounce_delay = 50,
+		ignore_dirs = {},
+	},
+	git = {
+		enable = true,
+		ignore = true,
+		show_on_dirs = true,
+		show_on_open_dirs = true,
+		timeout = 400,
+	},
+	actions = {
+		use_system_clipboard = true,
+		change_dir = {
+			enable = true,
+			global = false,
+			restrict_above_cwd = false,
+		},
+		expand_all = {
+			max_folder_discovery = 300,
+			exclude = {},
+		},
+		file_popup = {
+			open_win_config = {
+				col = 1,
+				row = 1,
+				relative = "cursor",
+				border = "shadow",
+				style = "minimal",
+			},
+		},
+		open_file = {
+			quit_on_open = false,
+			resize_window = true,
+			window_picker = {
+				enable = true,
+				picker = "default",
+				chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890",
+				exclude = {
+					filetype = { "notify", "packer", "qf", "diff", "fugitive", "fugitiveblame" },
+					buftype = { "nofile", "terminal", "help" },
 				},
 			},
 		},
-	})
-end)
+		remove_file = {
+			close_window = true,
+		},
+	},
+	trash = {
+		cmd = "gio trash",
+	},
+	live_filter = {
+		prefix = "[FILTER]: ",
+		always_show_folders = true,
+	},
+	tab = {
+		sync = {
+			open = false,
+			close = false,
+			ignore = {},
+		},
+	},
+	notify = {
+		threshold = vim.log.levels.INFO,
+	},
+	log = {
+		enable = false,
+		truncate = false,
+		types = {
+			all = false,
+			config = false,
+			copy_paste = false,
+			dev = false,
+			diagnostics = false,
+			git = false,
+			profile = false,
+			watcher = false,
+		},
+	},
+})
+
+-- flash
+require("flash").setup()
+vim.keymap.set("n", "s", function()
+	require("flash").jump()
+end, { desc = "Flash" })
+
+vim.keymap.del("n", "f")
+vim.keymap.del("n", "F")
 
 -- Noice
 if not vim.g._noice_loaded then
@@ -523,7 +735,6 @@ if not vim.g._noice_loaded then
 		routes = {
 			{
 				view = "mini",
-				-- view = "popup",
 				filter = {
 					event = "msg_show",
 				},
@@ -536,7 +747,7 @@ end
 -- Lualine
 local custom_codedark = require("lualine.themes.codedark")
 
-local modes = { "normal", "insert", "visual", "replace", "command", "terminal", "inactive" }
+local modes = { "normal", "insert", "visual", "command", "terminal", "inactive" }
 local sections = { "a", "b", "c" }
 
 for _, mode in ipairs(modes) do
@@ -593,21 +804,48 @@ require("nvim-autopairs").setup({
 })
 
 -- Telescope
+local actions = require("telescope.actions")
+
+local function move_down(prompt_bufnr, count)
+	for _ = 1, count do
+		actions.move_selection_next(prompt_bufnr)
+	end
+end
+
+local function move_up(prompt_bufnr, count)
+	for _ = 1, count do
+		actions.move_selection_previous(prompt_bufnr)
+	end
+end
+
 require("telescope").setup({
-	-- extensions = {
-	-- 	file_browser = {
-	-- 		theme = "ivy",
-	-- 		-- disables netrw and use telescope-file-browser in its place
-	-- 		hijack_netrw = true,
-	-- 		mappings = {
-	-- 			["i"] = {},
-	-- 			["n"] = {},
-	-- 		},
-	-- 	},
-	-- },
+	defaults = {
+		mappings = {
+			i = {
+				["<C-j>"] = function(prompt_bufnr)
+					move_down(prompt_bufnr, 5)
+				end,
+				["<C-k>"] = function(prompt_bufnr)
+					move_up(prompt_bufnr, 5)
+				end,
+			},
+			n = {
+				["J"] = function(prompt_bufnr)
+					move_down(prompt_bufnr, 5)
+				end,
+				["K"] = function(prompt_bufnr)
+					move_up(prompt_bufnr, 5)
+				end,
+			},
+		},
+	},
 })
 
--- require("telescope").load_extension("file_browser")
+-- Config reload
+vim.keymap.set("n", "<leader>rr", function()
+	vim.cmd("luafile $MYVIMRC")
+	print("Config reloaded!")
+end, { desc = "Reload Neovim config" })
 
 -- =========================================================
 -- HIGHLIGHT GROUPS AND COLORS
@@ -633,21 +871,6 @@ vim.api.nvim_set_hl(0, "CmdLine", { bg = "NONE" })
 
 vim.api.nvim_set_hl(0, "DiagnosticVirtualTextHint", { fg = "#7F8490" })
 vim.api.nvim_set_hl(0, "DiagnosticVirtualLinesHint", { fg = "#7F8490" })
-
--- Markdown
--- vim.api.nvim_set_hl(0, "RenderMarkdownH1BG", { bg = "NONE", fg = "#ffffff" })
--- vim.api.nvim_set_hl(0, "RenderMarkdownH2BG", { bg = "NONE", fg = "#ffffff" })
--- vim.api.nvim_set_hl(0, "RenderMarkdownH3BG", { bg = "NONE", fg = "#ffffff" })
--- vim.api.nvim_set_hl(0, "RenderMarkdownH4BG", { bg = "NONE", fg = "#ffffff" })
--- vim.api.nvim_set_hl(0, "RenderMarkdownH5BG", { bg = "NONE", fg = "#ffffff" })
--- vim.api.nvim_set_hl(0, "RenderMarkdownH6BG", { bg = "NONE", fg = "#ffffff" })
-
--- vim.api.nvim_set_hl(0, "RenderMarkdownH1BG", { bg = "NONE", fg = "#9cdcfe", bold = true })
--- vim.api.nvim_set_hl(0, "RenderMarkdownH2BG", { bg = "NONE", fg = "#9cdcfe", bold = true })
--- vim.api.nvim_set_hl(0, "RenderMarkdownH3BG", { bg = "NONE", fg = "#9cdcfe", bold = true })
--- vim.api.nvim_set_hl(0, "RenderMarkdownH4BG", { bg = "NONE", fg = "#9cdcfe", bold = true })
--- vim.api.nvim_set_hl(0, "RenderMarkdownH5BG", { bg = "NONE", fg = "#9cdcfe", bold = true })
--- vim.api.nvim_set_hl(0, "RenderMarkdownH6BG", { bg = "NONE", fg = "#9cdcfe", bold = true })
 
 -- =========================================================
 -- KEY MAPPINGS
@@ -678,7 +901,17 @@ vim.keymap.set("v", "L", "5l")
 vim.keymap.set("v", "H", "5h")
 
 -- Toggleterm keybinds
-vim.keymap.set("n", "<leader>tt", "<cmd>ToggleTerm<CR>", { noremap = true, silent = true })
+local Terminal = require("toggleterm.terminal").Terminal
+local term1 = Terminal:new({ direction = "horizontal", id = 1 })
+local term2 = Terminal:new({ direction = "horizontal", id = 2 })
+
+local function open_terms()
+	term1:open()
+	term2:open()
+	vim.cmd("wincmd =")
+end
+
+vim.keymap.set("n", "<leader>tt", open_terms, { desc = "Open two quick terminals" })
 
 -- Utility mappings
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Clear search highlighting" })
@@ -691,12 +924,10 @@ vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Telescope buffers" 
 vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "Telescope help tags" })
 vim.keymap.set("n", "<leader>fx", "<cmd>Telescope diagnostics<CR>", { desc = "Telescope diagnostics" })
 
--- vim.keymap.set("n", "<leader>ff", function()
--- 	require("telescope").extensions.file_browser.file_browser()
--- end)
+vim.keymap.set("n", "<leader>k", require("telescope.builtin").keymaps, { desc = "Telescope Keymaps" })
 
 -- Neo-tree navigation
-vim.keymap.set("n", "<leader>fe", "<cmd>Neotree toggle<CR>")
+-- vim.keymap.set("n", "<leader>fe", "<cmd>Neotree toggle<CR>", { desc = "Neotree Toggle" })
 
 -- Commentary plugin
 vim.keymap.set("n", "\\", "<Plug>CommentaryLine", { noremap = false })
@@ -705,44 +936,11 @@ vim.keymap.set("n", "¿", "<Plug>CommentaryLine", { noremap = false })
 vim.keymap.set("x", "¿", "<Plug>Commentary", { noremap = false })
 
 -- maximizer --
--- vim.keymap.set("n",)
+vim.api.nvim_set_keymap("n", "mt", '<cmd>lua require("maximizer").toggle()<CR>', { silent = true, noremap = true })
 
 -- splits --
-
--- vim.keymap.set("n", "<leader>h", require("smart-splits").resize_left)
--- vim.keymap.set("n", "<leader>j", require("smart-splits").resize_down)
--- vim.keymap.set("n", "<leader>k", require("smart-splits").resize_up)
--- vim.keymap.set("n", "<leader>l", require("smart-splits").resize_right)
-
--- if vim.fn.empty(vim.env.TMUX) == 1 then
--- 	local map = vim.keymap.set
--- 	local opts = { noremap = true, silent = true }
-
--- 	map("n", "<leader>|", ":vsplit<CR>", opts)
--- 	map("n", "<leader>-", ":split<CR>", opts)
-
--- 	map("n", "<leader>h", "10<C-w><") -- shrink horizontally
--- 	map("n", "<leader>l", "10<C-w>>") -- grow horizontally
--- 	map("n", "<leader>j", "2<C-w>+", opts) -- grow vertically
--- 	map("n", "<leader>k", "2<C-w>-", opts) -- shrink vertically
--- end
-
--- kitty splits?
-if os.getenv("TERM") == "xterm-kitty" then
-	vim.g.kitty_navigator_no_mappings = 1
-	vim.g.tmux_navigator_no_mappings = 1
-
-	vim.api.nvim_set_keymap("n", "C-h", ":KittyNavigateLeft <CR>", { noremap = true, silent = true })
-	vim.api.nvim_set_keymap("n", "C-j", ":KittyNavigateDown <CR>", { noremap = true, silent = true })
-	vim.api.nvim_set_keymap("n", "C-k", ":KittyNavigateUp <CR>", { noremap = true, silent = true })
-	vim.api.nvim_set_keymap("n", "C-l", ":KittyNavigateRight <CR>", { noremap = true, silent = true })
-end
-
--- Config reload
-vim.keymap.set("n", "<leader>rr", function()
-	vim.cmd("luafile $MYVIMRC")
-	print("Config reloaded!")
-end, { desc = "Reload Neovim config" })
+vim.api.nvim_set_keymap("n", "<leader>|", "<cmd>vnew<CR>", { silent = true, noremap = true })
+vim.api.nvim_set_keymap("n", "<leader>-", "<cmd>new<CR>", { silent = true, noremap = true })
 
 -- =========================================================
 -- AUTOCOMMANDS
@@ -766,40 +964,6 @@ vim.api.nvim_create_autocmd("WinEnter", {
 		end
 	end,
 })
-
--- output to buffer
--- dumb color inspect
-vim.api.nvim_create_user_command("InspectBuf", function()
-	-- run Inspect, capture its echo output
-	local output = vim.fn.execute("Inspect")
-	-- split the captured text into lines
-	local lines = vim.split(output, "\n", { trimempty = true })
-
-	-- create or reuse a scratch buffer
-	local buf_name = "InspectOutput"
-	local bufnr = vim.fn.bufnr(buf_name)
-	if bufnr == -1 then
-		bufnr = vim.api.nvim_create_buf(false, true)
-		vim.api.nvim_buf_set_name(bufnr, buf_name)
-	end
-
-	-- fill it with the Inspect lines
-	vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, lines)
-
-	-- open in a new split
-	vim.cmd("botright split " .. buf_name)
-	vim.api.nvim_set_current_buf(bufnr)
-end, {})
-
-vim.api.nvim_create_user_command("Redir", function(ctx)
-	local output = vim.api.nvim_exec2(ctx.args, { output = true })
-	vim.cmd("new")
-	local lines = vim.split(output.output, "\n", { plain = true })
-	vim.api.nvim_buf_set_lines(0, 0, -1, false, lines)
-	vim.opt_local.modified = false
-	vim.opt_local.buftype = "nofile"
-	vim.opt_local.bufhidden = "wipe"
-end, { nargs = "+", complete = "command" })
 
 -- Error showing
 vim.diagnostic.config({
@@ -840,14 +1004,6 @@ vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
 	pattern = { "*.frag", "*.vert", "*.glsl" },
 	callback = function()
 		vim.bo.filetype = "glsl"
-	end,
-})
-
--- LF config filetype
-vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
-	pattern = "~/.config/lf/lfrc",
-	callback = function()
-		vim.bo.filetype = "vim"
 	end,
 })
 

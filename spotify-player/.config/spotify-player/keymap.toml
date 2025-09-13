@@ -1,10 +1,10 @@
-[[keymaps]]
-command = "NextTrack"
-key_sequence = "<"
+# [[keymaps]]
+# command = "NextTrack"
+# key_sequence = "<"
 
-[[keymaps]]
-command = "PreviousTrack"
-key_sequence = ">"
+# [[keymaps]]
+# command = "PreviousTrack"
+# key_sequence = ">"
 
 [[keymaps]]
 command = "Search"
@@ -88,13 +88,13 @@ key_sequence = "."
 command = "Queue"
 key_sequence = "C-q"
 
-[[keymaps]]
-command = "SeekForward"
-key_sequence = "f"
+# [[keymaps]]
+# command = "SeekForward"
+# key_sequence = "f"
 
-[[keymaps]]
-command = "SeekBackward"
-key_sequence = "b"
+# [[keymaps]]
+# command = "SeekBackward"
+# key_sequence = "b"
 
 [[keymaps]]
 command = "PreviousPage"

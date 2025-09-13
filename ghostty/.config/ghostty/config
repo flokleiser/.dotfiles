@@ -4,7 +4,8 @@
 # font-family = "SF Mono"
 font-family = "SFMono Nerd Font"
 font-size = 15.5
-font-style = semibold 
+# font-style = semibold 
+font-style = regular 
 font-style-bold = bold
 font-variation-bold = wght=700
 
@@ -81,9 +82,7 @@ keybind = up=goto_split:top
 keybind = ctrl+x=close_surface
 
 keybind = opt+s>i=new_split:right
-keybind = opt+s>I=new_split:left
 keybind = opt+s>-=new_split:down
-keybind = opt+s>_=new_split:up
 
 keybind = opt+s>x=close_surface
 

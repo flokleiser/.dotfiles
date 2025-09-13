@@ -27,7 +27,8 @@ export LESSHISTFILE=-
 
 export GROFF_NO_SGR=1
 export MANROFFOPT="-c"
-export MANPAGER="/usr/bin/less -R --use-color -Ddg -Du+y"
+# export MANPAGER="/usr/bin/less -R --use-color -Ddg -Du+y"
+export MANPAGER='nvim +Man!'
 
 ### --- PLUGINS & THEMES ---
 export ZSH=$HOME/.zsh
@@ -75,6 +76,7 @@ alias tk="tmux kill-server"
 ### --- ncspot/spotify_player alias --- 
 alias ncsp='~/Code/Rust/ncspot/target/release/ncspot'
 # alias sp='spotify_player'
+# alias sp='~/Code/Rust/spotify-player-old/target/debug/spotify_player'
 alias sp='~/Code/Rust/spotify-player/target/debug/spotify_player'
 
 ### --- ALIASES FOR PATHS ---
