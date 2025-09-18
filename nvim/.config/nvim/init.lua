@@ -168,26 +168,25 @@ vim.cmd([[
     hi MarkviewCodeInfo guifg=#7F8490
     hi MarkviewBlockQuoteDefault guifg=#7F8490
 
-    hi MarkviewPalette0 guifg=#000000 guibg=#7F8490
-    hi MarkviewPalette0Sign guifg=#ffffff
-    hi MarkviewIcon0 guifg=#ffffff
-    hi MarkviewPalette1 guifg=#000000 guibg=#7F8490
-    hi MarkviewPalette1Sign guifg=#ffffff
-    hi MarkviewPalette2 guifg=#000000 guibg=#7F8490
-    hi MarkviewPalette2Sign guifg=#ffffff
-    hi MarkviewPalette3 guifg=#000000 guibg=#7F8490
-    hi MarkviewPalette3Sign guifg=#ffffff
-    hi MarkviewPalette4 guifg=#000000 guibg=#7F8490
-    hi MarkviewPalette4Sign guifg=#ffffff
-    hi MarkviewPalette5 guifg=#000000 guibg=#7F8490
-    hi MarkviewPalette5Sign guifg=#ffffff
-    hi MarkviewPalette6 guifg=#000000 guibg=#7F8490
-    hi MarkviewPalette6Sign guifg=#ffffff
+    hi MarkviewPalette0 guifg=#ffffff guibg=NONE
+    hi MarkviewPalette0Sign guifg=#e5e5e5
+    hi MarkviewIcon0 guifg=#7F8490
+    hi MarkviewPalette1 guifg=#ffffff guibg=NONE
+    hi MarkviewPalette1Sign guifg=#999999
+    hi MarkviewPalette2 guifg=#ffffff guibg=NONE
+    hi MarkviewPalette2Sign guifg=#666666
+    hi MarkviewPalette3 guifg=#ffffff guibg=NONE
+    hi MarkviewPalette3Sign guifg=#4c4c4c
+    hi MarkviewPalette4 guifg=#ffffff guibg=NONE
+    hi MarkviewPalette4Sign guifg=#323232
+    hi MarkviewPalette5 guifg=#ffffff guibg=NONE
+    hi MarkviewPalette5Sign guifg=#191919
+    hi MarkviewPalette6 guifg=#ffffff guibg=NONE
+    hi MarkviewPalette6Sign guifg=#7F8490
 
 ]])
 
 -- Debugging area for plugs that cause issues
--- Plug 'nvim-neo-tree/neo-tree.nvim'
 
 -- =========================================================
 -- LSP CONFIGURATION
@@ -352,35 +351,6 @@ cmp.setup({
 -- PLUGIN CONFIGURATIONS
 -- =========================================================
 
--- move lines
--- vim.keymap.set("n", "<leader>J", ":m +1<CR>")
--- vim.keymap.set("n", "<leader>K", ":m -2<CR>")
-
--- scrollbar
-require("scrollbar").setup({
-	show_in_active_only = true,
-	hide_if_all_visible = true,
-	handle = {
-		text = " ",
-		blend = 90,
-		color = nil,
-		color_nr = nil,
-		highlight = "CursorColumn",
-		hide_if_all_visible = true,
-	},
-	marks = {
-		Cursor = {
-			text = "•",
-			priority = 0,
-			gui = nil,
-			color = nil,
-			cterm = nil,
-			color_nr = nil,
-			highlight = "Normal",
-		},
-	},
-})
-
 -- snacks (scratch buffer)
 vim.keymap.set("n", "<leader>.", function()
 	Snacks.scratch()
@@ -388,8 +358,8 @@ end, { desc = "Scratch buffer" })
 
 -- which-key
 require("which-key").setup({
-	-- preset = "modern",
-	preset = "helix",
+	preset = "modern",
+	-- preset = "helix",
 })
 
 -- toggleterm
@@ -450,7 +420,7 @@ local presets = require("markview.presets")
 require("markview").setup({
 	markdown = {
 		headings = presets.headings.marker,
-		horizontal_rules = presets.horizontal_rules.solid,
+		horizontal_rules = presets.horizontal_rules.thin,
 	},
 })
 
@@ -462,6 +432,8 @@ require("markview").setup({
 		},
 	},
 })
+
+vim.keymap.set("n", "<leader>mt", "<cmd>Markview toggle<CR>", { desc = "Markview Toggle" })
 
 -- Formatter (conform/stylua)
 require("conform").setup({
@@ -591,15 +563,13 @@ require("nvim-tree").setup({
 			enable = false,
 		},
 		icons = {
-			webdev_colors = true,
-			git_placement = "before",
-			padding = " ",
-			symlink_arrow = " ➛ ",
 			show = {
+				-- file = false,
+				-- folder = false,
 				file = true,
 				folder = true,
 				folder_arrow = true,
-				git = true,
+				git = false,
 			},
 		},
 	},
@@ -720,6 +690,14 @@ vim.keymap.del("n", "F")
 -- Noice
 if not vim.g._noice_loaded then
 	require("noice").setup({
+		views = {
+			cmdline_popup = {
+				size = {
+					width = 35,
+					height = "auto",
+				},
+			},
+		},
 		lsp = {
 			override = {
 				["vim.lsp.util.convert_input_to_markdown_lines"] = true,
@@ -747,7 +725,7 @@ end
 -- Lualine
 local custom_codedark = require("lualine.themes.codedark")
 
-local modes = { "normal", "insert", "visual", "command", "terminal", "inactive" }
+local modes = { "normal", "insert", "visual" }
 local sections = { "a", "b", "c" }
 
 for _, mode in ipairs(modes) do
@@ -766,10 +744,12 @@ end
 custom_codedark.normal.a.gui = "bold"
 custom_codedark.insert.a.gui = "bold"
 
+-- LuaLine
 require("lualine").setup({
 	options = {
 		theme = custom_codedark,
 		globalstatus = true,
+		component_separators = { right = "" },
 	},
 	sections = {
 		lualine_a = { "mode" },
@@ -788,12 +768,14 @@ require("lualine").setup({
 			function()
 				local clients = vim.lsp.get_clients({ bufnr = 0 })
 				if next(clients) == nil then
-					return "No LSP"
+					-- return "No LSP"
+					return ""
 				end
 				return clients[1].name
 			end,
 		},
-		lualine_z = { "location" },
+		-- lualine_z = { "location"},
+		lualine_z = { "location", "progress" },
 	},
 })
 
