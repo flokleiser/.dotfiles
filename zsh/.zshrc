@@ -7,9 +7,7 @@ export KEYTIMEOUT=1
 
 DEFAULT_VI_MODE=viins
 
-# export EDITOR=vim
 export EDITOR=nvim
-# export TERM=screen-256color
 export TERM=xterm-256color
 export PIP_REQUIRE_VIRTUALENV=true
 
@@ -27,7 +25,6 @@ export LESSHISTFILE=-
 
 export GROFF_NO_SGR=1
 export MANROFFOPT="-c"
-# export MANPAGER="/usr/bin/less -R --use-color -Ddg -Du+y"
 export MANPAGER='nvim +Man!'
 
 ### --- PLUGINS & THEMES ---
@@ -58,7 +55,8 @@ source $ZSH/completion.zsh
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#626262"
 
 ### --- USER INPUT PROMPT ---
-PROMPT="%F{241}flo@mac %1~ |%f "
+# PROMPT="%F{241}flo@mac %1~ |%f "
+PROMPT="%F{245}flo@mac %1~ |%f "
 
 ### --- use nvim instead of vim --- 
 alias vim=nvim
@@ -75,31 +73,15 @@ alias tk="tmux kill-server"
 
 ### --- ncspot/spotify_player alias --- 
 alias ncsp='~/Code/Rust/ncspot/target/release/ncspot'
-# alias sp='spotify_player'
-# alias sp='~/Code/Rust/spotify-player-old/target/debug/spotify_player'
 alias sp='~/Code/Rust/spotify-player/target/debug/spotify_player'
 
 ### --- ALIASES FOR PATHS ---
 alias obsidian="cd /Users/flo/Library/Mobile\ Documents/iCloud\~md\~obsidian/Documents/Flo"
 alias home="cd ~"
 alias config="cd ~/.dotfiles"
-alias dot="cd ~/.dotfiles"
+alias zhdk="cd ~/ZHdK/HS25"
 
 export HOMEBREW_AUTO_UPDATE_SECS=604800
-
-lf() {
-    (command lf "$@")
-    clear
-}
-
-lfcd() {
-	local tmp="$(mktemp)"
-	lf -last-dir-path="$tmp" "$@"
-	if [[ -f "$tmp" ]] && [[ -r "$tmp" ]]; then
-	cd -- "$(cat "$tmp")"
-	fi
-	rm -f "$tmp"
-}
 
 eval $(thefuck --alias)
 
