@@ -62,7 +62,8 @@ keymap = [
     { on = [ "s", "f" ], run = [ "sort mtime --reverse", "linemode mtime" ],    desc = "Sort by modified time (reverse)" },
 	{ on = [ "s", "n" ], run = "sort alphabetical --reverse=no",                desc = "Sort alphabetically" },
 	{ on = [ "s", "N" ], run = "sort alphabetical --reverse",                   desc = "Sort alphabetically (reverse)" },
-
+	{ on = [ "s", "s" ], run = "linemode size",                desc = "Show size" },
+	{ on = [ "s", "S" ], run = "linemode none",                desc = "Hide size" },
 	{ on = ".",    run = "hidden toggle",                   desc = "hide/show dot files" },
 
 ]

@@ -18,6 +18,8 @@ vim.opt.linebreak = true
 vim.opt.fillchars = { eob = " " }
 vim.opt.splitbelow = true
 vim.opt.splitright = true
+vim.opt.undofile = true
+vim.opt.timeoutlen = 100
 
 vim.opt.formatoptions:remove({ "r", "o" })
 
@@ -27,9 +29,6 @@ vim.opt.expandtab = true
 
 vim.opt.winborder = "rounded"
 vim.g.tmux_navigator_no_wrap = 1
-
--- maybe cursor fix
-vim.opt.guicursor = "n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50"
 
 -- =========================================================
 -- LEADER KEY SETUP
@@ -78,6 +77,8 @@ vim.cmd([[
 		Plug 'folke/noice.nvim'
         Plug 'folke/flash.nvim'
 
+        Plug 'rcarriga/nvim-notify'
+
 		Plug 'MunifTanjim/nui.nvim'
 
 		Plug 'echasnovski/mini.nvim'
@@ -88,14 +89,13 @@ vim.cmd([[
 		Plug 'nvim-lualine/lualine.nvim'
 		Plug 'nvim-tree/nvim-web-devicons'
 
-		Plug 'akinsho/bufferline.nvim', { 'tag': '*' }
-		Plug 'gbprod/cutlass.nvim'
+        Plug 'neovim/nvim-lspconfig', { 'tag': 'v0.10.0' }
 
         Plug 'OXY2DEV/markview.nvim'
+        Plug 'MeanderingProgrammer/render-markdown.nvim'
 
 		Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
-		Plug 'neovim/nvim-lspconfig'
 		Plug 'hrsh7th/nvim-cmp'
 		Plug 'hrsh7th/cmp-nvim-lsp'
 		Plug 'hrsh7th/cmp-buffer'
@@ -104,7 +104,6 @@ vim.cmd([[
 		Plug 'saadparwaiz1/cmp_luasnip'
 
 		Plug 'nvim-lua/lsp-status.nvim'
-		Plug 'glepnir/lspsaga.nvim'
 
 		Plug 'windwp/nvim-autopairs'
 		Plug 'wojciech-kulik/xcodebuild.nvim'
@@ -115,20 +114,13 @@ vim.cmd([[
 
 		Plug 'kevinhwang91/nvim-ufo', {'do': ':UpdateRemotePlugins'}
 		Plug 'kevinhwang91/promise-async'
-		Plug 'luukvbaal/statuscol.nvim'
-
-        Plug 'sphamba/smear-cursor.nvim'
 
         Plug 'folke/which-key.nvim'
 
         Plug 'folke/snacks.nvim'
         Plug 'brenoprata10/nvim-highlight-colors'
 
-        Plug 'knubie/vim-kitty-navigator', {'do': 'cp ./*.py ~/.config/kitty/'}
-
 		Plug 'tomasiser/vim-code-dark'
-
-        Plug 'petertriho/nvim-scrollbar'
 
         Plug '0x00-ketsu/maximizer.nvim'
 
@@ -139,7 +131,7 @@ vim.cmd([[
         Plug 'nvim-tree/nvim-tree.lua'
 
 	call plug#end()
-
+    
     colorscheme codedark
 
     highlight Comment cterm=italic gui=italic
@@ -168,56 +160,77 @@ vim.cmd([[
     hi MarkviewCodeInfo guifg=#7F8490
     hi MarkviewBlockQuoteDefault guifg=#7F8490
 
-    hi MarkviewPalette0 guifg=#ffffff guibg=NONE
-    hi MarkviewPalette0Sign guifg=#e5e5e5
     hi MarkviewIcon0 guifg=#7F8490
-    hi MarkviewPalette1 guifg=#ffffff guibg=NONE
-    hi MarkviewPalette1Sign guifg=#999999
-    hi MarkviewPalette2 guifg=#ffffff guibg=NONE
-    hi MarkviewPalette2Sign guifg=#666666
-    hi MarkviewPalette3 guifg=#ffffff guibg=NONE
-    hi MarkviewPalette3Sign guifg=#4c4c4c
-    hi MarkviewPalette4 guifg=#ffffff guibg=NONE
-    hi MarkviewPalette4Sign guifg=#323232
-    hi MarkviewPalette5 guifg=#ffffff guibg=NONE
-    hi MarkviewPalette5Sign guifg=#191919
-    hi MarkviewPalette6 guifg=#ffffff guibg=NONE
-    hi MarkviewPalette6Sign guifg=#7F8490
+
+    hi MarkviewPalette0 guifg=#000000 guibg=#F8F9FA
+    hi MarkviewPalette1 guifg=#000000 guibg=#E9ECEF
+    hi MarkviewPalette2 guifg=#000000 guibg=#DEE2E6
+    hi MarkviewPalette3 guifg=#000000 guibg=#CED4DA
+    hi MarkviewPalette4 guifg=#000000 guibg=#ADB5BD
+    hi MarkviewPalette5 guifg=#000000 guibg=#6C757D
+    hi MarkviewPalette6 guifg=#000000 guibg=#495057
+
+    hi MarkviewPalette0Sign guifg=#F8F9FA
+    hi MarkviewPalette1Sign guifg=#E9ECEF
+    hi MarkviewPalette2Sign guifg=#DEE2E6
+    hi MarkviewPalette3Sign guifg=#CED4DA
+    hi MarkviewPalette4Sign guifg=#ADB5BD
+    hi MarkviewPalette5Sign guifg=#6C757D
+    hi MarkviewPalette6Sign guifg=#495057
+
+    hi RenderMarkdownH0Bg guibg=#F8F9FA guifg=#000000
+    hi RenderMarkdownH1Bg guibg=#E9ECEF guifg=#000000
+    hi RenderMarkdownH2Bg guibg=#DEE2E6 guifg=#000000
+    hi RenderMarkdownH3Bg guibg=#CED4DA guifg=#000000
+    hi RenderMarkdownH4Bg guibg=#ADB5BD guifg=#000000
+    hi RenderMarkdownH5Bg guibg=#6C757D guifg=#000000
+    hi RenderMarkdownH6Bg guibg=#495057 guifg=#000000
+
+    highlight NotifyERRORBorder guifg=#8A1F1F
+    highlight NotifyWARNBorder guifg=#79491D
+    highlight NotifyINFOBorder guifg=#4F6752
+    highlight NotifyDEBUGBorder guifg=#8B8B8B
+    highlight NotifyTRACEBorder guifg=#4F3552
+    highlight NotifyERRORIcon guifg=#F70067
+    highlight NotifyWARNIcon guifg=#F79000
+    highlight NotifyINFOIcon guifg=#ffffff
+    highlight NotifyDEBUGIcon guifg=#8B8B8B
+    highlight NotifyTRACEIcon guifg=#D484FF
+    highlight NotifyERRORTitle  guifg=#F70067
+    highlight NotifyWARNTitle guifg=#F79000
+    highlight NotifyINFOTitle guifg=#ffffff
+    highlight NotifyDEBUGTitle  guifg=#8B8B8B
+    highlight NotifyTRACETitle  guifg=#D484FF
+    highlight NotifyERRORBody guifg=#ffffff
+    highlight NotifyWARNBody guifg=#ffffff
+    highlight NotifyINFOBody guifg=#ffffff
+    highlight NotifyDEBUGBody guifg=#ffffff
+    highlight NotifyTRACEBody guifg=#ffffff
 
 ]])
 
 -- Debugging area for plugs that cause issues
+-- highlight link NotifyERRORBody Normal
+-- highlight link NotifyWARNBody Normal
+-- highlight link NotifyINFOBody Normal
+-- highlight link NotifyDEBUGBody Normal
+-- highlight link NotifyTRACEBody Normal
 
 -- =========================================================
 -- LSP CONFIGURATION
 -- =========================================================
-local lspconfig = require("lspconfig")
-
--- glsl_analyzer
-local function setup_glsl_analyzer()
-	local lspconfig = require("lspconfig")
-
-	lspconfig.glsl_analyzer.setup({
-		cmd = { "glsl_analyzer" },
-		on_attach = function(client, bufnr)
-			print("GLSL Analyzer attached to buffer " .. bufnr)
-		end,
-	})
-end
-vim.api.nvim_create_autocmd("FileType", {
-	pattern = { "glsl" },
-	callback = function()
-		setup_glsl_analyzer()
+vim.lsp.config.glsl_analyzer = {
+	cmd = { "glsl_analyzer" },
+	filetypes = { "glsl" },
+	on_attach = function(client, bufnr)
+		print("GLSL Analyzer attached to buffer " .. bufnr)
 	end,
-})
+}
 
--- SourceKit LSP (Swift)
-lspconfig.sourcekit.setup({
+vim.lsp.config.sourcekit = {
 	cmd = { "sourcekit-lsp" },
 	filetypes = { "swift", "objective-c", "objective-cpp" },
-	root_dir = function(fname)
-		return lspconfig.util.root_pattern("Package.swift", ".git")(fname) or lspconfig.util.path.dirname(fname)
-	end,
+	root_markers = { "Package.swift", ".git" },
 	capabilities = {
 		workspace = {
 			didChangeWatchedFiles = {
@@ -225,14 +238,12 @@ lspconfig.sourcekit.setup({
 			},
 		},
 	},
-})
+}
 
--- Go-lsp
-lspconfig.gopls.setup({
-	on_attach = on_attach,
+vim.lsp.config.gopls = {
 	cmd = { "gopls" },
 	filetypes = { "go", "gomod", "gowork", "gotmpl" },
-	root_dir = lspconfig.util.root_pattern("go.work", "go.mod", ".git"),
+	root_markers = { "go.work", "go.mod", ".git" },
 	settings = {
 		gopls = {
 			completeUnimported = true,
@@ -243,56 +254,72 @@ lspconfig.gopls.setup({
 			staticcheck = true,
 			gofumpt = true,
 		},
-		Search = {
-			text = { "-", "=" },
-			priority = 1,
-			gui = nil,
-			color = nil,
-			cterm = nil,
-			color_nr = nil,
-			highlight = "Search",
+	},
+}
+
+vim.lsp.config.lua_ls = {
+	cmd = { "lua-language-server" },
+	filetypes = { "lua" },
+	root_markers = {
+		".luarc.json",
+		".luarc.jsonc",
+		".luacheckrc",
+		".stylua.toml",
+		"stylua.toml",
+		"selene.toml",
+		"selene.yml",
+		".git",
+	},
+	settings = {
+		Lua = {
+			runtime = {
+				version = "LuaJIT",
+			},
+			diagnostics = {
+				globals = { "vim" },
+			},
+			workspace = {
+				library = vim.api.nvim_get_runtime_file("", true),
+				checkThirdParty = false,
+			},
+			telemetry = {
+				enable = false,
+			},
 		},
 	},
-})
+}
 
-vim.lsp.enable("ts_ls")
-
--- Rust Analyzer LSP (Rust)
-lspconfig.rust_analyzer.setup({
+vim.lsp.config.rust_analyzer = {
 	cmd = { "rust-analyzer" },
 	filetypes = { "rust" },
-	root_dir = lspconfig.util.root_pattern("Cargo.toml", ".git"),
-})
+	root_markers = { "Cargo.toml", ".git" },
+}
+
+vim.lsp.enable("ts_ls")
+vim.lsp.enable("glsl_analyzer")
+vim.lsp.enable("sourcekit")
+vim.lsp.enable("gopls")
+vim.lsp.enable("rust_analyzer")
+-- vim.lsp.enable("lua_ls")
 
 vim.api.nvim_create_autocmd("LspAttach", {
 	desc = "LSP Actions",
 	callback = function(args)
-		vim.keymap.set("n", "gh", function()
-			vim.lsp.buf.hover()
-			vim.defer_fn(function()
-				for _, win in ipairs(vim.api.nvim_list_wins()) do
-					local config = vim.api.nvim_win_get_config(win)
-					if config.relative ~= "" and config.focusable then
-						local buf = vim.api.nvim_win_get_buf(win)
-						local line_count = vim.api.nvim_buf_line_count(buf)
-						local win_height = vim.api.nvim_win_get_height(win)
+		local bufnr = args.buf
 
-						if line_count > win_height then
-							vim.api.nvim_set_current_win(win)
-						end
-						return
-					end
-				end
-			end, 100)
-		end, { noremap = true, silent = true }, { desc = "Hover description" })
+		vim.keymap.set("n", "gh", vim.lsp.buf.hover, {
+			buffer = bufnr,
+			noremap = true,
+			silent = true,
+			desc = "Hover description",
+		})
 
-		vim.keymap.set(
-			"n",
-			"gd",
-			vim.lsp.buf.definition,
-			{ noremap = true, silent = true },
-			{ desc = "Go to definition" }
-		)
+		vim.keymap.set("n", "gd", vim.lsp.buf.definition, {
+			buffer = bufnr,
+			noremap = true,
+			silent = false,
+			desc = "Go to definition",
+		})
 	end,
 })
 
@@ -301,6 +328,8 @@ vim.api.nvim_create_autocmd("LspAttach", {
 -- =========================================================
 local cmp = require("cmp")
 local luasnip = require("luasnip")
+
+luasnip.config.setup({})
 
 cmp.setup({
 	snippet = {
@@ -313,8 +342,10 @@ cmp.setup({
 		documentation = cmp.config.window.bordered(),
 	},
 	mapping = cmp.mapping.preset.insert({
-		["<C-d>"] = cmp.mapping.scroll_docs(-4),
-		["<C-f>"] = cmp.mapping.scroll_docs(4),
+		["<C-k>"] = cmp.mapping.select_prev_item(),
+		["<C-j>"] = cmp.mapping.select_next_item(),
+		["<C-u>"] = cmp.mapping.scroll_docs(-4),
+		["<C-d>"] = cmp.mapping.scroll_docs(4),
 		["<C-Space>"] = cmp.mapping.complete(),
 		["<CR>"] = cmp.mapping(function(fallback)
 			fallback()
@@ -351,23 +382,38 @@ cmp.setup({
 -- PLUGIN CONFIGURATIONS
 -- =========================================================
 
+-- yank and keep selection
+vim.keymap.set("v", "y", "ygv", { desc = "yank and keep selection" })
+
+-- move lines
+vim.keymap.set("n", "<D-S-j>", "<Nop>")
+vim.keymap.set("n", "<D-S-k>", "<Nop>")
+vim.keymap.set("v", "<D-S-j>", "<Nop>")
+vim.keymap.set("v", "<D-S-k>", "<Nop>")
+
+vim.keymap.set("v", "<D-S-j>", ":m '>+1<CR>gv=gv", { desc = "move line down" })
+vim.keymap.set("v", "<D-S-k>", ":m '<-2<CR>gv=gv", { desc = "move selection up" })
+
 -- snacks (scratch buffer)
 vim.keymap.set("n", "<leader>.", function()
 	Snacks.scratch()
 end, { desc = "Scratch buffer" })
+
+-- snacks file explorer
+vim.keymap.set("n", "<leader>es", function()
+	Snacks.explorer()
+end, { desc = "Snacks file explorer" })
+
+vim.keymap.set("n", "<leader>nh", "<cmd>:Telescope notify<CR>", { desc = "Notification history" })
+-- vim.keymap.set("n", "<leader>nh", function()
+-- 	require("snacks").notifier.show_history()
+-- end)
 
 -- which-key
 require("which-key").setup({
 	preset = "modern",
 	-- preset = "helix",
 })
-
--- toggleterm
-require("toggleterm").setup()
-vim.keymap.set("t", "<C-h>", [[<Cmd>wincmd h<CR>]], opts)
-vim.keymap.set("t", "<C-j>", [[<Cmd>wincmd j<CR>]], opts)
-vim.keymap.set("t", "<C-k>", [[<Cmd>wincmd k<CR>]], opts)
-vim.keymap.set("t", "<C-l>", [[<Cmd>wincmd l<CR>]], opts)
 
 -- maximizer
 require("maximizer").setup()
@@ -415,9 +461,10 @@ require("mini.indentscope").setup({
 	symbol = "│",
 })
 
--- markdown/markview
+-- markview
 local presets = require("markview.presets")
 require("markview").setup({
+	enabled = false,
 	markdown = {
 		headings = presets.headings.marker,
 		horizontal_rules = presets.horizontal_rules.thin,
@@ -433,7 +480,42 @@ require("markview").setup({
 	},
 })
 
-vim.keymap.set("n", "<leader>mt", "<cmd>Markview toggle<CR>", { desc = "Markview Toggle" })
+-- render-markdown
+require("render-markdown").setup({
+	enabled = false,
+	sign = {
+		enabled = false,
+	},
+	heading = {
+		icons = {},
+	},
+	-- ft = {
+	-- 	"markdown",
+	-- 	"norg",
+	-- 	"rmd",
+	-- 	"org",
+	-- },
+})
+
+vim.keymap.set(
+	"n",
+	"<leader>mv",
+	"<cmd>Markview enable<CR><cmd>RenderMarkdown disable<CR>",
+	{ desc = "Markview Toggle" }
+)
+vim.keymap.set(
+	"n",
+	"<leader>md",
+	"<cmd>RenderMarkdown enable<CR><cmd>Markview disable<CR>",
+	{ desc = "RenderMarkdown Toggle" }
+)
+
+vim.keymap.set(
+	"n",
+	"<leader>mt",
+	"<cmd>RenderMarkdown disable<CR><cmd>Markview disable<CR>",
+	{ desc = "Disable RenderMarkdown & Markview" }
+)
 
 -- Formatter (conform/stylua)
 require("conform").setup({
@@ -453,7 +535,10 @@ require("cutlass").setup()
 -- Treesitter
 require("nvim-treesitter.configs").setup({
 	ensure_installed = { "javascript", "typescript", "tsx", "glsl", "markdown", "markdown_inline" },
-	highlight = { enable = true },
+	highlight = {
+		enable = true,
+		-- disable = { "markdown", "markdown_inline" },
+	},
 	auto_install = true,
 	indent = { enable = true },
 	autopairs = { enable = true },
@@ -699,6 +784,9 @@ if not vim.g._noice_loaded then
 			},
 		},
 		lsp = {
+			hover = {
+				enabled = false,
+			},
 			override = {
 				["vim.lsp.util.convert_input_to_markdown_lines"] = true,
 				["vim.lsp.util.stylize_markdown"] = true,
@@ -712,15 +800,32 @@ if not vim.g._noice_loaded then
 		},
 		routes = {
 			{
-				view = "mini",
+				-- view = "mini",
+				view = "notify",
 				filter = {
 					event = "msg_show",
+					["not"] = { kind = { "search_count", "echo" } },
 				},
 			},
 		},
+		-- notify = {
+		-- 	enabled = true,
+		-- 	view = "notify",
+		-- },
+		-- messages = {
+		-- 	enabled = false,
+		-- },
 	})
 	vim.g._noice_loaded = true
 end
+
+require("notify").setup({
+	background_colour = "#ffffff",
+	stages = "fade",
+	render = "minimal",
+	max_width = 40,
+	timeout = 20,
+})
 
 -- Lualine
 local custom_codedark = require("lualine.themes.codedark")
@@ -802,15 +907,8 @@ end
 
 require("telescope").setup({
 	defaults = {
+		initial_mode = "normal",
 		mappings = {
-			i = {
-				["<C-j>"] = function(prompt_bufnr)
-					move_down(prompt_bufnr, 5)
-				end,
-				["<C-k>"] = function(prompt_bufnr)
-					move_up(prompt_bufnr, 5)
-				end,
-			},
 			n = {
 				["J"] = function(prompt_bufnr)
 					move_down(prompt_bufnr, 5)
@@ -818,6 +916,12 @@ require("telescope").setup({
 				["K"] = function(prompt_bufnr)
 					move_up(prompt_bufnr, 5)
 				end,
+				["i"] = function()
+					vim.cmd("startinsert")
+				end,
+
+				["q"] = "close",
+				["<Esc>"] = "close",
 			},
 		},
 	},
@@ -883,6 +987,13 @@ vim.keymap.set("v", "L", "5l")
 vim.keymap.set("v", "H", "5h")
 
 -- Toggleterm keybinds
+
+require("toggleterm").setup()
+vim.keymap.set("t", "<C-h>", [[<Cmd>wincmd h<CR>]], opts)
+vim.keymap.set("t", "<C-j>", [[<Cmd>wincmd j<CR>]], opts)
+vim.keymap.set("t", "<C-k>", [[<Cmd>wincmd k<CR>]], opts)
+vim.keymap.set("t", "<C-l>", [[<Cmd>wincmd l<CR>]], opts)
+
 local Terminal = require("toggleterm.terminal").Terminal
 local term1 = Terminal:new({ direction = "horizontal", id = 1 })
 local term2 = Terminal:new({ direction = "horizontal", id = 2 })
@@ -900,9 +1011,9 @@ vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Clear search highl
 
 -- Telescope mappings
 local builtin = require("telescope.builtin")
-vim.keymap.set("n", "<leader>fi", builtin.find_files, { desc = "Telescope find files" })
-vim.keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "Telescope live grep" })
-vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Telescope buffers" })
+vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Telescope find files" })
+-- vim.keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "Telescope live grep" })
+-- vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Telescope buffers" })
 vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "Telescope help tags" })
 vim.keymap.set("n", "<leader>fx", "<cmd>Telescope diagnostics<CR>", { desc = "Telescope diagnostics" })
 

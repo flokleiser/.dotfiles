@@ -18,6 +18,7 @@ liked_icon = "♥"
 border_type = "Rounded"
 # progress_bar_type = "Rectangle"
 progress_bar_type = "Line"
+shuffle = "true"
 
 cover_img_length = 9
 cover_img_width = 5

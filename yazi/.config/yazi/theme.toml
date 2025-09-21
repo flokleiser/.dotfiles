@@ -9,13 +9,15 @@ light = ""
 [mgr]
 cwd = { fg = "white" }
 
-hovered         = { reversed = true }
+# hovered         = { reversed = true }
+# preview_hovered = { underline = false}
+hovered         = { reversed = true}
 preview_hovered = { underline = false}
 
 find_keyword  = { fg = "yellow", bold = true, italic = true, underline = true }
-find_position = { fg = "magenta", bg = "reset", bold = true, italic = true }
+find_position = { fg = "magenta", bg = "lightcyan", bold = true, italic = true }
 
-# symlink_target = { fg= "#555555", italic = true }
+# symlink_target = { fg= "#555555", bg = "reset", italic = true }
 symlink_target = { italic = true }
 
 marker_copied   = { fg = "lightgreen",  bg = "lightgreen" }
@@ -35,12 +37,13 @@ border_style  = { fg = "white" }
 
 [which]
 cols            = 3
-mask            = { bg = "black" }
+mask            = { bg = "reset" }
 cand            = { fg = "lightcyan" }
 rest            = { fg = "darkgray" }
 desc            = { fg = "lightmagenta" }
-separator       = "  "
-separator_style = { fg = "darkgray" }
+separator       = "   "
+# separator_style = { fg = "darkgray" }
+separator_style = { fg = "lightcyan" }
 
 # : }}}
 

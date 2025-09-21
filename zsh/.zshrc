@@ -33,21 +33,30 @@ export BAT_THEME="Visual Studio Dark+"
 
 ### --- AUTOCOMPLETE ---
 
+autoload -Uz compinit && compinit
+source $ZSH/fzf-tab/fzf-tab.plugin.zsh
+
 source $ZSH/zsh-autosuggestions/zsh-autosuggestions.zsh
 source $ZSH/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source $ZSH/completion.zsh
 
-autoload -Uz compinit && compinit
 
 bindkey '^I' autosuggest-accept
-# bindkey '\033[1;2C' expand-or-complete #opt+shift+l
-bindkey -M viins '^[[25~' expand-or-complete #opt+tab, mapped in karabiner elements to f13
-bindkey -M vicmd '^[[25~' expand-or-complete #opt+tab, mapped in karabiner elements to f13
 
-bindkey -M viins "^[[1;2P" expand-or-complete #dumb fix for tmux not receiving the correct esc sequence
-bindkey -M vicmd "^[[1;2P" expand-or-complete
+bindkey "^[[Z" fzf-tab-complete
+# bindkey "^[[1;5I" fzf-tab-complete
+# bindkey "^[[27;5;9~" fzf-tab-complete
 
-bindkey -M viins "^[[Z" expand-or-complete #shift+tab for ghostty
-bindkey -M vicmd "^[[Z" expand-or-complete 
+# bindkey "^I" expand-or-complete
+
+# bindkey -M viins '^[[25~' expand-or-complete #opt+tab, mapped in karabiner elements to f13
+# bindkey -M vicmd '^[[25~' expand-or-complete #opt+tab, mapped in karabiner elements to f13
+
+# bindkey -M viins "^[[1;2P" expand-or-complete #dumb fix for tmux not receiving the correct esc sequence
+# bindkey -M vicmd "^[[1;2P" expand-or-complete
+
+# bindkey -M viins "^[[Z" expand-or-complete #shift+tab for ghostty
+# bindkey -M vicmd "^[[Z" expand-or-complete 
 
 source $ZSH/completion.zsh
 
@@ -64,6 +73,7 @@ alias vi=nvim
 alias n="nvim $1"
 
 alias yz=yazi
+alias z=zoxide
 
 # --- tmux alias ---
 alias tk="tmux kill-server"
@@ -80,10 +90,13 @@ alias obsidian="cd /Users/flo/Library/Mobile\ Documents/iCloud\~md\~obsidian/Doc
 alias home="cd ~"
 alias config="cd ~/.dotfiles"
 alias zhdk="cd ~/ZHdK/HS25"
+alias hs="cd ~/ZHdK/HS25/SoftArchitecture"
+alias ghostty="nvim ~/.dotfiles/ghostty/.config/ghostty/config"
 
 export HOMEBREW_AUTO_UPDATE_SECS=604800
 
 eval $(thefuck --alias)
+eval "$(zoxide init zsh)"
 
 ### --- LazyGit function ---
 function lazygit() {
@@ -91,6 +104,14 @@ function lazygit() {
 	git commit -a -m "$*"
 	git push
 }
+
+### --- color and stuff --- 
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+zstyle ':completion:*' menu no
+zstyle ':fzf-tab:*' fzf-bindings 'tab:accept'
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
+zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
 # --- Yazi cd thing
 

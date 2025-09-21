@@ -14,26 +14,38 @@ font-variation-bold = wght=700
 # =========================================================
 macos-titlebar-proxy-icon = hidden
 title = ""
+macos-titlebar-style = tabs
 
 # macos-icon = glass
 macos-icon = custom-style
-
-macos-titlebar-style = tabs
 maximize = true
 
 # =========================================================
 # WINDOW
 # =========================================================
 window-padding-x = 10
-window-padding-y = 5
+window-padding-y = 4
 window-decoration = auto
-background-opacity = 0.5
-# background-opacity = 1
-background-blur = 20
+
+# background-opacity = 0.5
+background-opacity = 0.6
+# background-blur = 20
+background-blur = 30
 window-colorspace = display-p3
 alpha-blending = linear-corrected
 
 unfocused-split-opacity = 0.9
+
+macos-window-shadow = false
+
+
+# =========================================================
+# QUICK TERMINAL
+# =========================================================
+quick-terminal-position = center
+quick-terminal-size = 70% 
+
+
 
 # =========================================================
 # THEME
@@ -48,6 +60,8 @@ cursor-style = bar
 cursor-style-blink = false
 shell-integration-features = no-cursor 
 
+mouse-hide-while-typing = true
+
 
 # =========================================================
 # REST
@@ -61,7 +75,14 @@ copy-on-select = true
 # =========================================================
 # KEYBINDS
 # =========================================================
-# keybind = cmd+¿
+keybind = super+equal=unbind
+keybind = shift+cmd+j=unbind
+# keybind = shift+cmd+k=ignore
+# keybind = shift+cmd+j=ignore
+
+# keybind = super+equal=toggle_quick_terminal
+keybind = super+§=toggle_quick_terminal
+
 keybind = cmd+'=text:¿
 keybind = shift+cmd+7=text:¿
 keybind = shift+cmd+b=text: fe\r
@@ -73,13 +94,17 @@ keybind = cmd+2=next_tab
 keybind = cmd+9=increase_font_size:1
 keybind = cmd+8=decrease_font_size:1
 keybind = cmd+zero=reset_font_size
-keybind = opt+tab=text:\t
 
+# keybind = alt+tab=text:h
+keybind = ctrl+tab=esc:\u001b[27;5;9~
+
+keybind = alt+tab=text:\t
 
 keybind = left=goto_split:left
 keybind = right=goto_split:right
 keybind = down=goto_split:bottom
 keybind = up=goto_split:top
+
 keybind = ctrl+x=close_surface
 
 keybind = opt+s>i=new_split:right
@@ -93,3 +118,4 @@ keybind = ctrl+cmd+k=resize_split:up,100
 keybind = ctrl+cmd+l=resize_split:right,100
 
 quit-after-last-window-closed = true
+
