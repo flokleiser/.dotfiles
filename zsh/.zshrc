@@ -93,6 +93,10 @@ alias zhdk="cd ~/ZHdK/HS25"
 alias hs="cd ~/ZHdK/HS25/SoftArchitecture"
 alias ghostty="nvim ~/.dotfiles/ghostty/.config/ghostty/config"
 
+alias code="cd ~/Code/"
+alias vscode="/usr/local/bin/code"
+
+
 export HOMEBREW_AUTO_UPDATE_SECS=604800
 
 eval $(thefuck --alias)

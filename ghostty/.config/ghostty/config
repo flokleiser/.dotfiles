@@ -1,8 +1,8 @@
 # =========================================================
 # FONT
 # =========================================================
-# font-family = "SF Mono"
 font-family = "SFMono Nerd Font"
+# font-family = "JetBrainsMono Nerd Font"
 font-size = 15.5
 # font-style = semibold 
 font-style = regular 

@@ -21,6 +21,8 @@ vim.opt.splitright = true
 vim.opt.undofile = true
 vim.opt.timeoutlen = 100
 
+vim.opt.hlsearch = false
+
 vim.opt.formatoptions:remove({ "r", "o" })
 
 vim.opt.autoindent = true
@@ -130,6 +132,12 @@ vim.cmd([[
 
         Plug 'nvim-tree/nvim-tree.lua'
 
+        Plug 'zbirenbaum/copilot.lua'
+
+        Plug 'kdheepak/lazygit.nvim'
+
+        Plug 'sophieforrest/processing.nvim'
+
 	call plug#end()
     
     colorscheme codedark
@@ -162,13 +170,13 @@ vim.cmd([[
 
     hi MarkviewIcon0 guifg=#7F8490
 
-    hi MarkviewPalette0 guifg=#000000 guibg=#F8F9FA
-    hi MarkviewPalette1 guifg=#000000 guibg=#E9ECEF
-    hi MarkviewPalette2 guifg=#000000 guibg=#DEE2E6
-    hi MarkviewPalette3 guifg=#000000 guibg=#CED4DA
-    hi MarkviewPalette4 guifg=#000000 guibg=#ADB5BD
-    hi MarkviewPalette5 guifg=#000000 guibg=#6C757D
-    hi MarkviewPalette6 guifg=#000000 guibg=#495057
+    hi MarkviewPalette0 guifg=#F8F9FA guibg=NONE
+    hi MarkviewPalette1 guifg=#E9ECEF guibg=NONE
+    hi MarkviewPalette2 guifg=#DEE2E6 guibg=NONE
+    hi MarkviewPalette3 guifg=#CED4DA guibg=NONE
+    hi MarkviewPalette4 guifg=#ADB5BD guibg=NONE
+    hi MarkviewPalette5 guifg=#6C757D guibg=NONE
+    hi MarkviewPalette6 guifg=#495057 guibg=NONE
 
     hi MarkviewPalette0Sign guifg=#F8F9FA
     hi MarkviewPalette1Sign guifg=#E9ECEF
@@ -178,43 +186,53 @@ vim.cmd([[
     hi MarkviewPalette5Sign guifg=#6C757D
     hi MarkviewPalette6Sign guifg=#495057
 
-    hi RenderMarkdownH0Bg guibg=#F8F9FA guifg=#000000
-    hi RenderMarkdownH1Bg guibg=#E9ECEF guifg=#000000
-    hi RenderMarkdownH2Bg guibg=#DEE2E6 guifg=#000000
-    hi RenderMarkdownH3Bg guibg=#CED4DA guifg=#000000
-    hi RenderMarkdownH4Bg guibg=#ADB5BD guifg=#000000
-    hi RenderMarkdownH5Bg guibg=#6C757D guifg=#000000
-    hi RenderMarkdownH6Bg guibg=#495057 guifg=#000000
+    hi RenderMarkdownH0Bg guibg=NONE guifg=#F8F9FA
+    hi RenderMarkdownH1Bg guibg=NONE guifg=#E9ECEF
+    hi RenderMarkdownH2Bg guibg=NONE guifg=#DEE2E6
+    hi RenderMarkdownH3Bg guibg=NONE guifg=#CED4DA
+    hi RenderMarkdownH4Bg guibg=NONE guifg=#ADB5BD
+    hi RenderMarkdownH5Bg guibg=NONE guifg=#6C757D
+    hi RenderMarkdownH6Bg guibg=NONE guifg=#495057
 
-    highlight NotifyERRORBorder guifg=#8A1F1F
-    highlight NotifyWARNBorder guifg=#79491D
-    highlight NotifyINFOBorder guifg=#4F6752
-    highlight NotifyDEBUGBorder guifg=#8B8B8B
-    highlight NotifyTRACEBorder guifg=#4F3552
-    highlight NotifyERRORIcon guifg=#F70067
-    highlight NotifyWARNIcon guifg=#F79000
-    highlight NotifyINFOIcon guifg=#ffffff
-    highlight NotifyDEBUGIcon guifg=#8B8B8B
-    highlight NotifyTRACEIcon guifg=#D484FF
-    highlight NotifyERRORTitle  guifg=#F70067
-    highlight NotifyWARNTitle guifg=#F79000
-    highlight NotifyINFOTitle guifg=#ffffff
-    highlight NotifyDEBUGTitle  guifg=#8B8B8B
-    highlight NotifyTRACETitle  guifg=#D484FF
-    highlight NotifyERRORBody guifg=#ffffff
-    highlight NotifyWARNBody guifg=#ffffff
-    highlight NotifyINFOBody guifg=#ffffff
-    highlight NotifyDEBUGBody guifg=#ffffff
-    highlight NotifyTRACEBody guifg=#ffffff
+    hi NotifyERRORBorder guifg=#8A1F1F
+    hi NotifyWARNBorder guifg=#79491D
+    hi NotifyINFOBorder guifg=#4F6752
+    hi NotifyDEBUGBorder guifg=#8B8B8B
+    hi NotifyTRACEBorder guifg=#4F3552
+    hi NotifyERRORIcon guifg=#F70067
+    hi NotifyWARNIcon guifg=#F79000
+    hi NotifyINFOIcon guifg=#ffffff
+    hi NotifyDEBUGIcon guifg=#8B8B8B
+    hi NotifyTRACEIcon guifg=#D484FF
+    hi NotifyERRORTitle  guifg=#F70067
+    hi NotifyWARNTitle guifg=#F79000
+    hi NotifyINFOTitle guifg=#ffffff
+    hi NotifyDEBUGTitle  guifg=#8B8B8B
+    hi NotifyTRACETitle  guifg=#D484FF
+    hi NotifyERRORBody guifg=#ffffff
+    hi NotifyWARNBody guifg=#ffffff
+    hi NotifyINFOBody guifg=#ffffff
+    hi NotifyDEBUGBody guifg=#ffffff
+    hi NotifyTRACEBody guifg=#ffffff
 
 ]])
 
--- Debugging area for plugs that cause issues
--- highlight link NotifyERRORBody Normal
--- highlight link NotifyWARNBody Normal
--- highlight link NotifyINFOBody Normal
--- highlight link NotifyDEBUGBody Normal
--- highlight link NotifyTRACEBody Normal
+-- hi RenderMarkdownH0Bg guibg=#F8F9FA guifg=#000000
+-- hi RenderMarkdownH1Bg guibg=#E9ECEF guifg=#000000
+-- hi RenderMarkdownH2Bg guibg=#DEE2E6 guifg=#000000
+-- hi RenderMarkdownH3Bg guibg=#CED4DA guifg=#000000
+-- hi RenderMarkdownH4Bg guibg=#ADB5BD guifg=#000000
+-- hi RenderMarkdownH5Bg guibg=#6C757D guifg=#000000
+-- hi RenderMarkdownH6Bg guibg=#495057 guifg=#000000
+--
+--
+-- hi MarkviewPalette0 guifg=#000000 guibg=#F8F9FA
+-- hi MarkviewPalette1 guifg=#000000 guibg=#E9ECEF
+-- hi MarkviewPalette2 guifg=#000000 guibg=#DEE2E6
+-- hi MarkviewPalette3 guifg=#000000 guibg=#CED4DA
+-- hi MarkviewPalette4 guifg=#000000 guibg=#ADB5BD
+-- hi MarkviewPalette5 guifg=#000000 guibg=#6C757D
+-- hi MarkviewPalette6 guifg=#000000 guibg=#495057
 
 -- =========================================================
 -- LSP CONFIGURATION
@@ -382,6 +400,32 @@ cmp.setup({
 -- PLUGIN CONFIGURATIONS
 -- =========================================================
 
+-- copilot?
+-- require("copilot").setup({
+-- 	suggestion = {
+-- 		enabled = true,
+-- 		auto_trigger = false,
+-- 		debounce = 75,
+-- 		keymap = {
+-- 			accept = "<D-l>",
+-- 			next = "<D-]>",
+-- 			prev = "<D-[>",
+-- 			dismiss = "<D-]>",
+-- 		},
+-- 	},
+-- 	panel = {
+-- 		enabled = false,
+-- 	},
+-- })
+
+-- processing
+--  require("processing").setup()
+
+-- lazygit
+vim.keymap.set("n", "<leader>gg", "<cmd>LazyGit<CR>", { desc = "lazygit" })
+
+vim.keymap.set("n", "<leader>cp", "<cmd>Copilot suggestion toggle_auto_trigger<CR>")
+
 -- yank and keep selection
 vim.keymap.set("v", "y", "ygv", { desc = "yank and keep selection" })
 
@@ -405,9 +449,6 @@ vim.keymap.set("n", "<leader>es", function()
 end, { desc = "Snacks file explorer" })
 
 vim.keymap.set("n", "<leader>nh", "<cmd>:Telescope notify<CR>", { desc = "Notification history" })
--- vim.keymap.set("n", "<leader>nh", function()
--- 	require("snacks").notifier.show_history()
--- end)
 
 -- which-key
 require("which-key").setup({
@@ -489,12 +530,6 @@ require("render-markdown").setup({
 	heading = {
 		icons = {},
 	},
-	-- ft = {
-	-- 	"markdown",
-	-- 	"norg",
-	-- 	"rmd",
-	-- 	"org",
-	-- },
 })
 
 vim.keymap.set(
@@ -534,10 +569,9 @@ require("cutlass").setup()
 
 -- Treesitter
 require("nvim-treesitter.configs").setup({
-	ensure_installed = { "javascript", "typescript", "tsx", "glsl", "markdown", "markdown_inline" },
+	ensure_installed = { "javascript", "typescript", "tsx", "glsl", "markdown", "markdown_inline", "java" },
 	highlight = {
 		enable = true,
-		-- disable = { "markdown", "markdown_inline" },
 	},
 	auto_install = true,
 	indent = { enable = true },
@@ -649,8 +683,6 @@ require("nvim-tree").setup({
 		},
 		icons = {
 			show = {
-				-- file = false,
-				-- folder = false,
 				file = true,
 				folder = true,
 				folder_arrow = true,
@@ -765,12 +797,15 @@ require("nvim-tree").setup({
 
 -- flash
 require("flash").setup()
-vim.keymap.set("n", "s", function()
+vim.keymap.set("n", "<leader>s", function()
 	require("flash").jump()
 end, { desc = "Flash" })
 
 vim.keymap.del("n", "f")
 vim.keymap.del("n", "F")
+
+vim.keymap.set({ "n", "x", "o" }, ",", ",")
+vim.keymap.set({ "n", "x", "o" }, ";", ";")
 
 -- Noice
 if not vim.g._noice_loaded then
@@ -800,21 +835,14 @@ if not vim.g._noice_loaded then
 		},
 		routes = {
 			{
-				-- view = "mini",
-				view = "notify",
+				view = "mini",
+				-- view = "notify",
 				filter = {
 					event = "msg_show",
-					["not"] = { kind = { "search_count", "echo" } },
+					-- ["not"] = { kind = { "search_count", "echo" } },
 				},
 			},
 		},
-		-- notify = {
-		-- 	enabled = true,
-		-- 	view = "notify",
-		-- },
-		-- messages = {
-		-- 	enabled = false,
-		-- },
 	})
 	vim.g._noice_loaded = true
 end
@@ -998,16 +1026,23 @@ local Terminal = require("toggleterm.terminal").Terminal
 local term1 = Terminal:new({ direction = "horizontal", id = 1 })
 local term2 = Terminal:new({ direction = "horizontal", id = 2 })
 
-local function open_terms()
+local function open_term()
+	term1:open()
+	vim.cmd("wincmd =")
+end
+
+local function open_two_terms()
 	term1:open()
 	term2:open()
 	vim.cmd("wincmd =")
 end
 
-vim.keymap.set("n", "<leader>tt", open_terms, { desc = "Open two quick terminals" })
+vim.keymap.set("n", "<leader>tt", open_term, { desc = "Open one terminal" })
+vim.keymap.set("n", "<leader>t2", open_two_terms, { desc = "Open two terminals" })
+vim.keymap.set("n", "<leader>th", "<cmd>ToggleTermToggleAll<CR>")
 
 -- Utility mappings
-vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Clear search highlighting" })
+-- vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Clear search highlighting" })
 
 -- Telescope mappings
 local builtin = require("telescope.builtin")
@@ -1018,9 +1053,6 @@ vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "Telescope help ta
 vim.keymap.set("n", "<leader>fx", "<cmd>Telescope diagnostics<CR>", { desc = "Telescope diagnostics" })
 
 vim.keymap.set("n", "<leader>k", require("telescope.builtin").keymaps, { desc = "Telescope Keymaps" })
-
--- Neo-tree navigation
--- vim.keymap.set("n", "<leader>fe", "<cmd>Neotree toggle<CR>", { desc = "Neotree Toggle" })
 
 -- Commentary plugin
 vim.keymap.set("n", "\\", "<Plug>CommentaryLine", { noremap = false })
