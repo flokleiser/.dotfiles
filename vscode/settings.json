@@ -1,6 +1,5 @@
 {
 	"python.defaultInterpreterPath": "/usr/local/bin/python3",
-	"window.commandCenter": true,
 	"python.terminal.focusAfterLaunch": true,
 	"liveServer.settings.donotShowInfoMsg": true,
 	"workbench.colorCustomizations": {
@@ -12,24 +11,31 @@
 	"explorer.compactFolders": false,
 
 	"vim.normalModeKeyBindingsNonRecursive": [
-		{
-			"before": ["J"],
-			"after": ["5", "j"]
-		},
-		{
-			"before": ["K"],
-			"after": ["5", "k"]
-		},
-		{
-			"before": ["H"],
-			"after": ["5", "h"]
-		},
         {
-			"before": ["L"],
-			"after": ["5", "l"]
-		}
-
-	],
+            "before": ["J"],
+            "after": ["5", "j"]
+        },
+        {
+            "before": ["K"],
+            "after": ["5", "k"]
+        },
+        {
+            "before": ["H"],
+            "after": ["5", "h"]
+        },
+        {
+            "before": ["L"],
+            "after": ["5", "l"]
+        },
+        {
+            "before": ["d", "d"],
+            "after": ["\"", "_", "d", "d"]
+        },
+        {
+            "before": ["d"],
+            "after": ["\"", "_", "d"]
+        }
+    ],
 
 	"vim.visualModeKeyBindingsNonRecursive": [
 		{
@@ -47,7 +53,11 @@
         {
 			"before": ["L"],
 			"after": ["5", "l"]
-		}
+		},
+        {
+            "before": ["d"],
+            "after": ["\"", "_", "d"]
+        }
 	],
 
 	"files.associations": {
@@ -151,5 +161,6 @@
     "vim.autoindent": false,
     "editor.formatOnPaste": true,
     "workbench.navigationControl.enabled": false,
-    "workbench.secondarySideBar.defaultVisibility": "hidden"
+    "workbench.secondarySideBar.defaultVisibility": "hidden",
+    "vim.useSystemClipboard": true
 }

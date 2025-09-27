@@ -93,6 +93,8 @@ alias zhdk="cd ~/ZHdK/HS25"
 alias hs="cd ~/ZHdK/HS25/SoftArchitecture"
 alias ghostty="nvim ~/.dotfiles/ghostty/.config/ghostty/config"
 
+alias neofetch="fastfetch"
+
 alias code="cd ~/Code/"
 alias vscode="/usr/local/bin/code"
 

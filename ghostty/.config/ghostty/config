@@ -81,7 +81,7 @@ keybind = shift+cmd+j=unbind
 # keybind = shift+cmd+j=ignore
 
 # keybind = super+equal=toggle_quick_terminal
-keybind = super+§=toggle_quick_terminal
+# keybind = super+§=toggle_quick_terminal
 
 keybind = cmd+'=text:¿
 keybind = shift+cmd+7=text:¿
@@ -107,10 +107,10 @@ keybind = up=goto_split:top
 
 keybind = ctrl+x=close_surface
 
-keybind = opt+s>i=new_split:right
-keybind = opt+s>-=new_split:down
+keybind = ctrl+s>i=new_split:right
+keybind = ctrl+s>-=new_split:down
 
-keybind = opt+s>x=close_surface
+keybind = ctrl+s>x=close_surface
 
 keybind = ctrl+cmd+h=resize_split:left,100
 keybind = ctrl+cmd+j=resize_split:down,100
