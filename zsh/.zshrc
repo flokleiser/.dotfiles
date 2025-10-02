@@ -18,6 +18,7 @@ export RUSTUP_HOME="$HOME/Code/Rust/.rustup"
 export GEM_HOME="$HOME/Code/Ruby/.gem"
 export PLATFORMIO_CORE_DIR="$HOME/Code/Arduino/.platformio"
 export ANDROID_HOME="$HOME/Code/Android/.android"
+export STARSHIP_CONFIG=~/.config/starship/starship.toml
 
 export PATH="/opt/homebrew/bin:$HOME/.local/bin:$CARGO_HOME/bin:$GEM_HOME/bin:$(go env GOPATH)/bin:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$ANDROID_HOME/tools/bin:$PATH"
 
@@ -40,23 +41,9 @@ source $ZSH/zsh-autosuggestions/zsh-autosuggestions.zsh
 source $ZSH/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source $ZSH/completion.zsh
 
-
 bindkey '^I' autosuggest-accept
 
 bindkey "^[[Z" fzf-tab-complete
-# bindkey "^[[1;5I" fzf-tab-complete
-# bindkey "^[[27;5;9~" fzf-tab-complete
-
-# bindkey "^I" expand-or-complete
-
-# bindkey -M viins '^[[25~' expand-or-complete #opt+tab, mapped in karabiner elements to f13
-# bindkey -M vicmd '^[[25~' expand-or-complete #opt+tab, mapped in karabiner elements to f13
-
-# bindkey -M viins "^[[1;2P" expand-or-complete #dumb fix for tmux not receiving the correct esc sequence
-# bindkey -M vicmd "^[[1;2P" expand-or-complete
-
-# bindkey -M viins "^[[Z" expand-or-complete #shift+tab for ghostty
-# bindkey -M vicmd "^[[Z" expand-or-complete 
 
 source $ZSH/completion.zsh
 
@@ -92,6 +79,8 @@ alias config="cd ~/.dotfiles"
 alias zhdk="cd ~/ZHdK/HS25"
 alias hs="cd ~/ZHdK/HS25/SoftArchitecture"
 alias ghostty="nvim ~/.dotfiles/ghostty/.config/ghostty/config"
+alias x="clear"
+alias .="open ."
 
 alias neofetch="fastfetch"
 
@@ -103,6 +92,7 @@ export HOMEBREW_AUTO_UPDATE_SECS=604800
 
 eval $(thefuck --alias)
 eval "$(zoxide init zsh)"
+eval "$(starship init zsh)"
 
 ### --- LazyGit function ---
 function lazygit() {

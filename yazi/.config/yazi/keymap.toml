@@ -35,12 +35,6 @@ keymap = [
 	{ on = "L", run = "forward", desc = "Forward to next directory" },
 
 
-	# { on = "o",         run = "open",                        desc = "Open selected files" },
-	# { on = "O",         run = "open --interactive",          desc = "Open selected files interactively" },
-	# { on = "<Enter>",   run = "open",                        desc = "Open selected files" },
-	# { on = "<S-Enter>", run = "open --interactive",          desc = "Open selected files interactively" },
-
-
     # make yazi like lf
     { on = [ "x" ], run = "remove", desc = "Delete" },
     { on = [ "w" ], run = "shell 'pwd | wl-copy' --confirm", desc = "Copy current directory to clipboard" },
@@ -59,9 +53,12 @@ keymap = [
     {on = "y",     run = "yank", desc = "Copy file"},
     {on = "p",     run = "paste", desc = "Paste file"},
 
-    { on = [ "s", "f" ], run = [ "sort mtime --reverse", "linemode mtime" ],    desc = "Sort by modified time (reverse)" },
-	{ on = [ "s", "n" ], run = "sort alphabetical --reverse=no",                desc = "Sort alphabetically" },
-	{ on = [ "s", "N" ], run = "sort alphabetical --reverse",                   desc = "Sort alphabetically (reverse)" },
+    { on = [ ",", "f" ], run = [ "sort mtime --reverse", "linemode mtime" ],    desc = "Sort by modified time (reverse)" },
+	{ on = [ ",", "n" ], run = "sort alphabetical --reverse=no",                desc = "Sort alphabetically" },
+	{ on = [ ",", "N" ], run = "sort alphabetical --reverse",                   desc = "Sort alphabetically (reverse)" },
+	{ on = [ ",", "s" ], run = ["sort size", "linemode size"],                  desc = "Sort by size" },
+	{ on = [ ",", "S" ], run = ["sort size --reverse", "linemode size"],         desc = "Sort by size (reverse)" },
+
 	{ on = [ "s", "s" ], run = "linemode size",                desc = "Show size" },
 	{ on = [ "s", "S" ], run = "linemode none",                desc = "Hide size" },
 	{ on = ".",    run = "hidden toggle",                   desc = "hide/show dot files" },

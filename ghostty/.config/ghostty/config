@@ -12,8 +12,9 @@ font-variation-bold = wght=700
 # =========================================================
 # TITLEBAR & ICON 
 # =========================================================
-macos-titlebar-proxy-icon = hidden
-title = ""
+# macos-titlebar-proxy-icon = hidden
+macos-titlebar-proxy-icon = visible
+# title = ""
 macos-titlebar-style = tabs
 
 # macos-icon = glass
@@ -28,13 +29,14 @@ window-padding-y = 4
 window-decoration = auto
 
 # background-opacity = 0.5
-background-opacity = 0.6
+background-opacity = 0.4
 # background-blur = 20
 background-blur = 30
 window-colorspace = display-p3
 alpha-blending = linear-corrected
 
-unfocused-split-opacity = 0.9
+# unfocused-split-opacity = 0.9
+unfocused-split-opacity = 0.8
 
 macos-window-shadow = false
 

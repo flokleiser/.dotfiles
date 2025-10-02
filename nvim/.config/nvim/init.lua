@@ -19,11 +19,12 @@ vim.opt.fillchars = { eob = " " }
 vim.opt.splitbelow = true
 vim.opt.splitright = true
 vim.opt.undofile = true
-vim.opt.timeoutlen = 100
+vim.opt.timeoutlen = 300
 
 vim.opt.hlsearch = false
 
-vim.opt.formatoptions:remove({ "r", "o" })
+-- vim.opt.formatoptions:remove({ "r", "o" })
+vim.opt_local.formatoptions:remove({ "r", "o" })
 
 vim.opt.autoindent = true
 vim.opt.smartindent = true
@@ -56,7 +57,7 @@ vim.g.codedark_transparent = 1
 -- =========================================================
 
 vim.cmd([[
-	syntax on
+    syntax on
 	filetype plugin indent on
 
 	hi Normal guibg=NONE ctermbg=NONE
@@ -138,7 +139,9 @@ vim.cmd([[
 
         Plug 'sophieforrest/processing.nvim'
 
-        Plug 'anurag3301/nvim-platformio.lua',
+        Plug 'anurag3301/nvim-platformio.lua'
+
+        Plug 'goolord/alpha-nvim'
 
 	call plug#end()
     
@@ -449,17 +452,109 @@ cmp.setup({
 -- 	},
 -- })
 
+-- alpha
+require("alpha").setup(require("alpha.themes.dashboard").config)
+
+local alpha = require("alpha")
+local dashboard = require("alpha.themes.dashboard")
+
+dashboard.section.header.val = {
+	-- "                                                     ",
+	-- "  ███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗ ",
+	-- "  ████╗  ██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║ ",
+	-- "  ██╔██╗ ██║█████╗  ██║   ██║██║   ██║██║██╔████╔██║ ",
+	-- "  ██║╚██╗██║██╔══╝  ██║   ██║╚██╗ ██╔╝██║██║╚██╔╝██║ ",
+	-- "  ██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║ ",
+	-- "  ╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝ ",
+
+	-- "                                                     ",
+	-- "                                                                               ",
+	-- "                                                                               ",
+	-- "                                                                               ",
+	-- "                                                                               ",
+	-- "                                     ██████                                    ",
+	-- "                                 ████▒▒▒▒▒▒████                                ",
+	-- "                               ██▒▒▒▒▒▒▒▒▒▒▒▒▒▒██                              ",
+	-- "                             ██▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒██                            ",
+	-- "                           ██▒▒▒▒▒▒▒▒    ▒▒▒▒▒▒▒▒                              ",
+	-- "                           ██▒▒▒▒▒▒  ▒▒▓▓▒▒▒▒▒▒  ▓▓▓▓                          ",
+	-- "                           ██▒▒▒▒▒▒  ▒▒▓▓▒▒▒▒▒▒  ▒▒▓▓                          ",
+	-- "                         ██▒▒▒▒▒▒▒▒▒▒    ▒▒▒▒▒▒▒▒    ██                        ",
+	-- "                         ██▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒██                        ",
+	-- "                         ██▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒██                        ",
+	-- "                         ██▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒██                        ",
+	-- "                         ██▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒██                        ",
+	-- "                         ██▒▒██▒▒▒▒▒▒██▒▒▒▒▒▒▒▒██▒▒▒▒██                        ",
+	-- "                         ████  ██▒▒██  ██▒▒▒▒██  ██▒▒██                        ",
+	-- "                         ██      ██      ████      ████                        ",
+
+	-- "                        ..'           ",
+	-- "                    ,xNMM.            ",
+	-- "                  .OMMMMo             ",
+	-- "                  lMM'                ",
+	-- "        .;loddo:.  .olloddol;.        ",
+	-- "      cKMMMMMMMMMMNWMMMMMMMMMM0:      ",
+	-- "    .KMMMMMMMMMMMMMMMMMMMMMMMWd.      ",
+	-- "    XMMMMMMMMMMMMMMMMMMMMMMMX.        ",
+	-- "   ;MMMMMMMMMMMMMMMMMMMMMMMM:         ",
+	-- "   :MMMMMMMMMMMMMMMMMMMMMMMM:         ",
+	-- "   .MMMMMMMMMMMMMMMMMMMMMMMMX.        ",
+	-- "    kMMMMMMMMMMMMMMMMMMMMMMMMWd.      ",
+	-- "    'XMMMMMMMMMMMMMMMMMMMMMMMMMMk     ",
+	-- "     'XMMMMMMMMMMMMMMMMMMMMMMMMK.     ",
+	-- "       kMMMMMMMMMMMMMMMMMMMMMMd       ",
+	-- "        ;KMMMMMMMWXXWMMMMMMMk.        ",
+	-- "          'cooc*'    '*coo''          ",
+
+    "                           ",
+    "                           ",
+    "                           ",
+    "   ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣀⠀⠀⠀⠀⠀⠀  ",
+    "   ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣴⣿⣿⡿⠀⠀⠀⠀⠀⠀  ",
+    "   ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣾⣿⣿⠟⠁⠀⠀⠀⠀⠀⠀  ",
+    "   ⠀⠀⠀⢀⣠⣤⣤⣤⣀⣀⠈⠋⠉⣁⣠⣤⣤⣤⣀⡀⠀⠀  ",
+    "   ⠀⢠⣶⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⡀  ",
+    "   ⣠⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠟⠋⠀  ",
+    "   ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡏⠀⠀⠀  ",
+    "   ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇⠀⠀⠀  ",
+    "   ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⠀⠀⠀  ",
+    "   ⠹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣤⣀  ",
+    "   ⠀⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠁  ",
+    "   ⠀⠀⠙⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡟⠁⠀  ",
+    "   ⠀⠀⠀⠈⠙⢿⣿⣿⣿⠿⠟⠛⠻⠿⣿⣿⣿⡿⠋     ",⠀
+
+}
+
+dashboard.section.buttons.val = {
+	dashboard.button("f", "  Find file", ":Telescope find_files <CR>"),
+	dashboard.button("e", "  New file", ":ene <BAR> startinsert <CR>"),
+	dashboard.button("r", "  Recently used files", ":Telescope oldfiles <CR>"),
+	dashboard.button("t", "  Find text", ":Telescope live_grep <CR>"),
+	dashboard.button("c", "  Configuration", ":e ~/.config/nvim/init.lua <CR>"),
+	dashboard.button("q", "  Quit Neovim", ":qa<CR>"),
+}
+
+dashboard.section.footer.opts.hl = "Type"
+dashboard.section.header.opts.hl = "Include"
+dashboard.section.buttons.opts.hl = "Keyword"
+
+dashboard.opts.opts.noautocmd = true
+
+alpha.setup(dashboard.opts)
+
+-- platformio
 local pok, platformio = pcall(require, "platformio")
 if pok then
 	platformio.setup({
-		lsp = "ccls", --default: ccls, other option: clangd
-		-- If you pick clangd, it also creates compile_commands.json
+		lsp = "clangd",
+		-- lsp = {
+		--     enable_clangd = true,
+		--     enable ccls = false,
+		-- },
 
-		-- Uncomment out following line to enable platformio menu.
-		menu_key = "<leader>p", -- replace this menu key  to your convenience
-		menu_name = "PlatformIO", -- replace this menu name to your convenience
+		menu_key = "<leader>p",
+		menu_name = "PlatformIO",
 
-		-- Following are the default keybindings, you can overwrite them in the config
 		menu_bindings = {
 			{ node = "item", desc = "[L]ist terminals", shortcut = "l", command = "PioTermList" },
 			{ node = "item", desc = "[T]erminal Core CLI", shortcut = "t", command = "Piocmdf" },
@@ -475,6 +570,12 @@ if pok then
 					{ node = "item", desc = "[F]ull clean", shortcut = "f", command = "Piocmdf run -t fullclean" },
 					{ node = "item", desc = "[D]evice list", shortcut = "d", command = "Piocmdf device list" },
 				},
+			},
+			{
+				node = "item",
+				desc = "Build + Upload + Monitor",
+				shortcut = "x",
+				command = "PioBuildUploadMonitor",
 			},
 			{
 				node = "menu",
@@ -578,11 +679,12 @@ if pok then
 	})
 end
 
--- platformio
--- require("platformio").setup()
-
--- processing
---  require("processing").setup()
+vim.api.nvim_create_user_command("PioBuildUploadMonitor", function()
+	vim.cmd("Piocmdf run -t upload")
+	vim.defer_fn(function()
+		vim.cmd("Piocmdh run -t monitor")
+	end, 2000)
+end, {})
 
 -- lazygit
 vim.keymap.set("n", "<leader>gg", "<cmd>LazyGit<CR>", { desc = "lazygit" })
@@ -1081,6 +1183,13 @@ require("nvim-autopairs").setup({
 	ignored_next_char = "[%w%.]",
 })
 
+-- ultimate-autopair.nvim
+-- require("ultimate-autopair").setup()
+
+
+-- nvim-surround
+-- require("nvim-surround").setup()
+
 -- Telescope
 local actions = require("telescope.actions")
 
@@ -1229,6 +1338,13 @@ vim.api.nvim_set_keymap("n", "mt", '<cmd>lua require("maximizer").toggle()<CR>',
 -- splits --
 vim.api.nvim_set_keymap("n", "<leader>|", "<cmd>vnew<CR>", { silent = true, noremap = true })
 vim.api.nvim_set_keymap("n", "<leader>-", "<cmd>new<CR>", { silent = true, noremap = true })
+-- vim.keymap.set("n", "<C-Up>", ":resize -2<CR>", { silent = true })
+-- vim.keymap.set("n", "<C-Down>", ":resize +2<CR>", { silent = true })
+vim.keymap.set("n", "<D-C-j>", ":resize -2<CR>", { silent = true })
+vim.keymap.set("n", "<D-C-k>", ":resize +2<CR>", { silent = true })
+
+vim.keymap.set("n", "<C-Left>", ":vertical resize -2<CR>", { silent = true })
+vim.keymap.set("n", "<C-Right>", ":vertical resize +2<CR>", { silent = true })
 
 -- =========================================================
 -- AUTOCOMMANDS
