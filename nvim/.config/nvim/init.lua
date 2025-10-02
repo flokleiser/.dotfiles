@@ -23,7 +23,6 @@ vim.opt.timeoutlen = 300
 
 vim.opt.hlsearch = false
 
--- vim.opt.formatoptions:remove({ "r", "o" })
 vim.opt_local.formatoptions:remove({ "r", "o" })
 
 vim.opt.autoindent = true
@@ -79,8 +78,6 @@ vim.cmd([[
 
 		Plug 'folke/noice.nvim'
         Plug 'folke/flash.nvim'
-
-        Plug 'rcarriga/nvim-notify'
 
 		Plug 'MunifTanjim/nui.nvim'
 
@@ -199,45 +196,7 @@ vim.cmd([[
     hi RenderMarkdownH5Bg guibg=NONE guifg=#6C757D
     hi RenderMarkdownH6Bg guibg=NONE guifg=#495057
 
-    hi NotifyERRORBorder guifg=#8A1F1F
-    hi NotifyWARNBorder guifg=#79491D
-    hi NotifyINFOBorder guifg=#4F6752
-    hi NotifyDEBUGBorder guifg=#8B8B8B
-    hi NotifyTRACEBorder guifg=#4F3552
-    hi NotifyERRORIcon guifg=#F70067
-    hi NotifyWARNIcon guifg=#F79000
-    hi NotifyINFOIcon guifg=#ffffff
-    hi NotifyDEBUGIcon guifg=#8B8B8B
-    hi NotifyTRACEIcon guifg=#D484FF
-    hi NotifyERRORTitle  guifg=#F70067
-    hi NotifyWARNTitle guifg=#F79000
-    hi NotifyINFOTitle guifg=#ffffff
-    hi NotifyDEBUGTitle  guifg=#8B8B8B
-    hi NotifyTRACETitle  guifg=#D484FF
-    hi NotifyERRORBody guifg=#ffffff
-    hi NotifyWARNBody guifg=#ffffff
-    hi NotifyINFOBody guifg=#ffffff
-    hi NotifyDEBUGBody guifg=#ffffff
-    hi NotifyTRACEBody guifg=#ffffff
-
 ]])
-
--- hi RenderMarkdownH0Bg guibg=#F8F9FA guifg=#000000
--- hi RenderMarkdownH1Bg guibg=#E9ECEF guifg=#000000
--- hi RenderMarkdownH2Bg guibg=#DEE2E6 guifg=#000000
--- hi RenderMarkdownH3Bg guibg=#CED4DA guifg=#000000
--- hi RenderMarkdownH4Bg guibg=#ADB5BD guifg=#000000
--- hi RenderMarkdownH5Bg guibg=#6C757D guifg=#000000
--- hi RenderMarkdownH6Bg guibg=#495057 guifg=#000000
---
---
--- hi MarkviewPalette0 guifg=#000000 guibg=#F8F9FA
--- hi MarkviewPalette1 guifg=#000000 guibg=#E9ECEF
--- hi MarkviewPalette2 guifg=#000000 guibg=#DEE2E6
--- hi MarkviewPalette3 guifg=#000000 guibg=#CED4DA
--- hi MarkviewPalette4 guifg=#000000 guibg=#ADB5BD
--- hi MarkviewPalette5 guifg=#000000 guibg=#6C757D
--- hi MarkviewPalette6 guifg=#000000 guibg=#495057
 
 -- =========================================================
 -- LSP CONFIGURATION
@@ -434,24 +393,6 @@ cmp.setup({
 -- PLUGIN CONFIGURATIONS
 -- =========================================================
 
--- copilot?
--- require("copilot").setup({
--- 	suggestion = {
--- 		enabled = true,
--- 		auto_trigger = false,
--- 		debounce = 75,
--- 		keymap = {
--- 			accept = "<D-l>",
--- 			next = "<D-]>",
--- 			prev = "<D-[>",
--- 			dismiss = "<D-]>",
--- 		},
--- 	},
--- 	panel = {
--- 		enabled = false,
--- 	},
--- })
-
 -- alpha
 require("alpha").setup(require("alpha.themes.dashboard").config)
 
@@ -459,70 +400,24 @@ local alpha = require("alpha")
 local dashboard = require("alpha.themes.dashboard")
 
 dashboard.section.header.val = {
-	-- "                                                     ",
-	-- "  ███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗ ",
-	-- "  ████╗  ██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║ ",
-	-- "  ██╔██╗ ██║█████╗  ██║   ██║██║   ██║██║██╔████╔██║ ",
-	-- "  ██║╚██╗██║██╔══╝  ██║   ██║╚██╗ ██╔╝██║██║╚██╔╝██║ ",
-	-- "  ██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║ ",
-	-- "  ╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝ ",
 
-	-- "                                                     ",
-	-- "                                                                               ",
-	-- "                                                                               ",
-	-- "                                                                               ",
-	-- "                                                                               ",
-	-- "                                     ██████                                    ",
-	-- "                                 ████▒▒▒▒▒▒████                                ",
-	-- "                               ██▒▒▒▒▒▒▒▒▒▒▒▒▒▒██                              ",
-	-- "                             ██▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒██                            ",
-	-- "                           ██▒▒▒▒▒▒▒▒    ▒▒▒▒▒▒▒▒                              ",
-	-- "                           ██▒▒▒▒▒▒  ▒▒▓▓▒▒▒▒▒▒  ▓▓▓▓                          ",
-	-- "                           ██▒▒▒▒▒▒  ▒▒▓▓▒▒▒▒▒▒  ▒▒▓▓                          ",
-	-- "                         ██▒▒▒▒▒▒▒▒▒▒    ▒▒▒▒▒▒▒▒    ██                        ",
-	-- "                         ██▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒██                        ",
-	-- "                         ██▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒██                        ",
-	-- "                         ██▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒██                        ",
-	-- "                         ██▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒██                        ",
-	-- "                         ██▒▒██▒▒▒▒▒▒██▒▒▒▒▒▒▒▒██▒▒▒▒██                        ",
-	-- "                         ████  ██▒▒██  ██▒▒▒▒██  ██▒▒██                        ",
-	-- "                         ██      ██      ████      ████                        ",
-
-	-- "                        ..'           ",
-	-- "                    ,xNMM.            ",
-	-- "                  .OMMMMo             ",
-	-- "                  lMM'                ",
-	-- "        .;loddo:.  .olloddol;.        ",
-	-- "      cKMMMMMMMMMMNWMMMMMMMMMM0:      ",
-	-- "    .KMMMMMMMMMMMMMMMMMMMMMMMWd.      ",
-	-- "    XMMMMMMMMMMMMMMMMMMMMMMMX.        ",
-	-- "   ;MMMMMMMMMMMMMMMMMMMMMMMM:         ",
-	-- "   :MMMMMMMMMMMMMMMMMMMMMMMM:         ",
-	-- "   .MMMMMMMMMMMMMMMMMMMMMMMMX.        ",
-	-- "    kMMMMMMMMMMMMMMMMMMMMMMMMWd.      ",
-	-- "    'XMMMMMMMMMMMMMMMMMMMMMMMMMMk     ",
-	-- "     'XMMMMMMMMMMMMMMMMMMMMMMMMK.     ",
-	-- "       kMMMMMMMMMMMMMMMMMMMMMMd       ",
-	-- "        ;KMMMMMMMWXXWMMMMMMMk.        ",
-	-- "          'cooc*'    '*coo''          ",
-
-    "                           ",
-    "                           ",
-    "                           ",
-    "   ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣀⠀⠀⠀⠀⠀⠀  ",
-    "   ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣴⣿⣿⡿⠀⠀⠀⠀⠀⠀  ",
-    "   ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣾⣿⣿⠟⠁⠀⠀⠀⠀⠀⠀  ",
-    "   ⠀⠀⠀⢀⣠⣤⣤⣤⣀⣀⠈⠋⠉⣁⣠⣤⣤⣤⣀⡀⠀⠀  ",
-    "   ⠀⢠⣶⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⡀  ",
-    "   ⣠⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠟⠋⠀  ",
-    "   ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡏⠀⠀⠀  ",
-    "   ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇⠀⠀⠀  ",
-    "   ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⠀⠀⠀  ",
-    "   ⠹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣤⣀  ",
-    "   ⠀⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠁  ",
-    "   ⠀⠀⠙⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡟⠁⠀  ",
-    "   ⠀⠀⠀⠈⠙⢿⣿⣿⣿⠿⠟⠛⠻⠿⣿⣿⣿⡿⠋     ",⠀
-
+	"                        ..'           ",
+	"                    ,xNMM.            ",
+	"                  .OMMMMo             ",
+	"                  lMM'                ",
+	"        .;loddo:.  .olloddol;.        ",
+	"      cKMMMMMMMMMMNWMMMMMMMMMM0:      ",
+	"    .KMMMMMMMMMMMMMMMMMMMMMMMWd.      ",
+	"    XMMMMMMMMMMMMMMMMMMMMMMMX.        ",
+	"   ;MMMMMMMMMMMMMMMMMMMMMMMM:         ",
+	"   :MMMMMMMMMMMMMMMMMMMMMMMM:         ",
+	"   .MMMMMMMMMMMMMMMMMMMMMMMMX.        ",
+	"    kMMMMMMMMMMMMMMMMMMMMMMMMWd.      ",
+	"    'XMMMMMMMMMMMMMMMMMMMMMMMMMMk     ",
+	"     'XMMMMMMMMMMMMMMMMMMMMMMMMK.     ",
+	"       kMMMMMMMMMMMMMMMMMMMMMMd       ",
+	"        ;KMMMMMMMWXXWMMMMMMMk.        ",
+	"          'cooc*'    '*coo''          ",
 }
 
 dashboard.section.buttons.val = {
@@ -541,6 +436,22 @@ dashboard.section.buttons.opts.hl = "Keyword"
 dashboard.opts.opts.noautocmd = true
 
 alpha.setup(dashboard.opts)
+
+-- harpoon
+-- local harpoon = require("harpoon")
+
+-- harpoon:setup()
+
+-- vim.keymap.set("n", "<leader>a", function() harpoon:list():add() end)
+-- vim.keymap.set("n", "<C-e>", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
+
+-- vim.keymap.set("n", "<C-h>", function() harpoon:list():select(1) end)
+-- vim.keymap.set("n", "<C-t>", function() harpoon:list():select(2) end)
+-- vim.keymap.set("n", "<C-n>", function() harpoon:list():select(3) end)
+-- vim.keymap.set("n", "<C-s>", function() harpoon:list():select(4) end)
+
+-- vim.keymap.set("n", "<C-S-P>", function() harpoon:list():prev() end)
+-- vim.keymap.set("n", "<C-S-N>", function() harpoon:list():next() end)
 
 -- platformio
 local pok, platformio = pcall(require, "platformio")
@@ -712,8 +623,6 @@ end, { desc = "Scratch buffer" })
 vim.keymap.set("n", "<leader>es", function()
 	Snacks.explorer()
 end, { desc = "Snacks file explorer" })
-
-vim.keymap.set("n", "<leader>nh", "<cmd>:Telescope notify<CR>", { desc = "Notification history" })
 
 -- which-key
 require("which-key").setup({
@@ -1018,7 +927,7 @@ require("nvim-tree").setup({
 				picker = "default",
 				chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890",
 				exclude = {
-					filetype = { "notify", "packer", "qf", "diff", "fugitive", "fugitiveblame" },
+					filetype = { "packer", "qf", "diff", "fugitive", "fugitiveblame" },
 					buftype = { "nofile", "terminal", "help" },
 				},
 			},
@@ -1040,9 +949,6 @@ require("nvim-tree").setup({
 			close = false,
 			ignore = {},
 		},
-	},
-	notify = {
-		threshold = vim.log.levels.INFO,
 	},
 	log = {
 		enable = false,
@@ -1101,24 +1007,14 @@ if not vim.g._noice_loaded then
 		routes = {
 			{
 				view = "mini",
-				-- view = "notify",
 				filter = {
 					event = "msg_show",
-					-- ["not"] = { kind = { "search_count", "echo" } },
 				},
 			},
 		},
 	})
 	vim.g._noice_loaded = true
 end
-
-require("notify").setup({
-	background_colour = "#ffffff",
-	stages = "fade",
-	render = "minimal",
-	max_width = 40,
-	timeout = 20,
-})
 
 -- Lualine
 local custom_codedark = require("lualine.themes.codedark")
@@ -1185,7 +1081,6 @@ require("nvim-autopairs").setup({
 
 -- ultimate-autopair.nvim
 -- require("ultimate-autopair").setup()
-
 
 -- nvim-surround
 -- require("nvim-surround").setup()
