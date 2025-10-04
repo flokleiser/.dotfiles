@@ -6,3 +6,5 @@ thefuck/.config/thefuck/__pycache__/
 yazi/.config/yazi/plugins/easyjump.yazi/
 yazi/.config/yazi/plugins/icons-brew.yazi/
 yazi/.config/yazi/plugins/searchjump.yazi/
+zsh/.zsh/zsh-syntax-highlighting/
+zsh/.zsh/zsh-completions/

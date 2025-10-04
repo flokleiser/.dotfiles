@@ -130,8 +130,6 @@ vim.cmd([[
 
         Plug 'nvim-tree/nvim-tree.lua'
 
-        Plug 'zbirenbaum/copilot.lua'
-
         Plug 'kdheepak/lazygit.nvim'
 
         Plug 'sophieforrest/processing.nvim'
@@ -622,8 +620,6 @@ end, {})
 
 -- lazygit
 vim.keymap.set("n", "<leader>gg", "<cmd>LazyGit<CR>", { desc = "lazygit" })
-
-vim.keymap.set("n", "<leader>cp", "<cmd>Copilot suggestion toggle_auto_trigger<CR>")
 
 -- yank and keep selection
 vim.keymap.set("v", "y", "ygv", { desc = "yank and keep selection" })
