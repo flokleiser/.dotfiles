@@ -37,7 +37,7 @@ keymap = [
 
     # make yazi like lf
     { on = [ "x" ], run = "remove", desc = "Delete" },
-    { on = [ "w" ], run = "shell 'pwd | wl-copy' --confirm", desc = "Copy current directory to clipboard" },
+    # { on = [ "w" ], run = "shell 'pwd | wl-copy' --confirm", desc = "Copy current directory to clipboard" },
     { on = [ "A" ], run = "create --file", desc = "Create file" },
     { on = [ "a" ], run = "create --dir", desc = "Create directory" },
     { on = [ "r" ], run = "rename", desc = "Rename" },

@@ -35,8 +35,8 @@ background-blur = 30
 window-colorspace = display-p3
 alpha-blending = linear-corrected
 
-# unfocused-split-opacity = 0.9
-unfocused-split-opacity = 0.8
+unfocused-split-opacity = 0.9
+# unfocused-split-opacity = 0.8
 
 macos-window-shadow = false
 

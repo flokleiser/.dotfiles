@@ -277,6 +277,45 @@ vim.lsp.config.rust_analyzer = {
 	root_markers = { "Cargo.toml", ".git" },
 }
 
+-- vim.lsp.config.ts_ls = {
+
+-- 	filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
+-- 	settings = {
+-- 		typescript = {
+-- 			inlayHints = {
+-- 				includeInlayParameterNameHints = "all",
+-- 				includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+-- 				includeInlayFunctionParameterTypeHints = true,
+-- 				includeInlayVariableTypeHints = true,
+-- 				includeInlayPropertyDeclarationTypeHints = true,
+-- 				includeInlayFunctionLikeReturnTypeHints = true,
+-- 				includeInlayEnumMemberValueHints = true,
+-- 			},
+-- 		},
+-- 		javascript = {
+-- 			inlayHints = {
+-- 				includeInlayParameterNameHints = "all",
+-- 				includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+-- 				includeInlayFunctionParameterTypeHints = true,
+-- 				includeInlayVariableTypeHints = true,
+-- 				includeInlayPropertyDeclarationTypeHints = true,
+-- 				includeInlayFunctionLikeReturnTypeHints = true,
+-- 				includeInlayEnumMemberValueHints = true,
+-- 			},
+-- 		},
+-- 	},
+-- 	handlers = {
+-- 		["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+-- 			underline = true,
+-- 			virtual_text = {
+-- 				severity = { min = vim.diagnostic.severity.WARN },
+-- 			},
+-- 			signs = true,
+-- 			update_in_insert = false,
+-- 		}),
+-- 	},
+-- }
+
 vim.lsp.config.clangd = {
 	cmd = {
 		"clangd",
@@ -436,22 +475,6 @@ dashboard.section.buttons.opts.hl = "Keyword"
 dashboard.opts.opts.noautocmd = true
 
 alpha.setup(dashboard.opts)
-
--- harpoon
--- local harpoon = require("harpoon")
-
--- harpoon:setup()
-
--- vim.keymap.set("n", "<leader>a", function() harpoon:list():add() end)
--- vim.keymap.set("n", "<C-e>", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
-
--- vim.keymap.set("n", "<C-h>", function() harpoon:list():select(1) end)
--- vim.keymap.set("n", "<C-t>", function() harpoon:list():select(2) end)
--- vim.keymap.set("n", "<C-n>", function() harpoon:list():select(3) end)
--- vim.keymap.set("n", "<C-s>", function() harpoon:list():select(4) end)
-
--- vim.keymap.set("n", "<C-S-P>", function() harpoon:list():prev() end)
--- vim.keymap.set("n", "<C-S-N>", function() harpoon:list():next() end)
 
 -- platformio
 local pok, platformio = pcall(require, "platformio")
