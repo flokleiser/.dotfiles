@@ -18,7 +18,7 @@ liked_icon = "♥"
 border_type = "Rounded"
 # progress_bar_type = "Rectangle"
 progress_bar_type = "Line"
-shuffle = "true"
+# shuffle = "true"
 
 cover_img_length = 9
 cover_img_width = 5
@@ -45,7 +45,8 @@ body = "{album}"
 [layout]
 playback_window_position = "Top"
 # playback_window_position = "Bottom"
-playback_window_height = 4
+# playback_window_height = 4
+playback_window_height = 6 
 
 [layout.library]
 playlist_percent = 70

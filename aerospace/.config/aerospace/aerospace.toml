@@ -47,6 +47,7 @@ automatically-unhide-macos-hidden-apps = true
 	# Resize
     alt-shift-8= 'resize smart -50'
     alt-shift-9= 'resize smart +50'
+    alt-shift-0= 'balance-sizes'
     # alt-8= 'resize smart -50'
     # alt-9= 'resize smart +50'
 
@@ -54,6 +55,9 @@ automatically-unhide-macos-hidden-apps = true
     alt-shift-1 = 'move-node-to-workspace 1'
     alt-2 = 'workspace 2'
     alt-shift-2 = 'move-node-to-workspace 2'
+
+    cmd-alt-l = 'workspace next'
+    cmd-alt-h = 'workspace prev'
 
     alt-tab = 'workspace-back-and-forth'
     # alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
@@ -71,3 +75,9 @@ automatically-unhide-macos-hidden-apps = true
     alt-shift-j = ['join-with down', 'mode main']
     alt-shift-k = ['join-with up', 'mode main']
     alt-shift-l = ['join-with right', 'mode main']
+
+[[on-window-detected]]
+if.app-id="com.mitchellh.ghostty"
+run= [
+  "layout tiling",
+]

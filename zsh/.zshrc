@@ -5,6 +5,11 @@ bindkey -v
 bindkey '^?' backward-delete-char #this fixes the backspace for some reason
 export KEYTIMEOUT=1
 
+setopt SHARE_HISTORY
+setopt INC_APPEND_HISTORY
+# export HISTFILE = ~/.zsh_history
+# export SAVEHIST = 10000
+
 DEFAULT_VI_MODE=viins
 
 export EDITOR=nvim

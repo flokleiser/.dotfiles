@@ -82,6 +82,8 @@ vim.cmd([[
 		Plug 'MunifTanjim/nui.nvim'
 
 		Plug 'echasnovski/mini.nvim'
+
+
 		Plug 'gbprod/cutlass.nvim'
 		Plug 'nvim-lua/plenary.nvim'
         Plug 'nvim-telescope/telescope.nvim'
@@ -91,7 +93,6 @@ vim.cmd([[
 
         Plug 'neovim/nvim-lspconfig', { 'tag': 'v0.10.0' }
 
-        Plug 'OXY2DEV/markview.nvim'
         Plug 'MeanderingProgrammer/render-markdown.nvim'
 
 		Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
@@ -102,6 +103,8 @@ vim.cmd([[
 		Plug 'hrsh7th/cmp-path'
 		Plug 'L3MON4D3/LuaSnip'
 		Plug 'saadparwaiz1/cmp_luasnip'
+
+        Plug 'rafamadriz/friendly-snippets'
 
 		Plug 'nvim-lua/lsp-status.nvim'
 
@@ -164,28 +167,6 @@ vim.cmd([[
 
     hi MiniIndentscopeSymbol guifg=#7F8490
 
-    hi MarkviewListItemMinus guifg=#7F8490
-    hi MarkviewCodeInfo guifg=#7F8490
-    hi MarkviewBlockQuoteDefault guifg=#7F8490
-
-    hi MarkviewIcon0 guifg=#7F8490
-
-    hi MarkviewPalette0 guifg=#F8F9FA guibg=NONE
-    hi MarkviewPalette1 guifg=#E9ECEF guibg=NONE
-    hi MarkviewPalette2 guifg=#DEE2E6 guibg=NONE
-    hi MarkviewPalette3 guifg=#CED4DA guibg=NONE
-    hi MarkviewPalette4 guifg=#ADB5BD guibg=NONE
-    hi MarkviewPalette5 guifg=#6C757D guibg=NONE
-    hi MarkviewPalette6 guifg=#495057 guibg=NONE
-
-    hi MarkviewPalette0Sign guifg=#F8F9FA
-    hi MarkviewPalette1Sign guifg=#E9ECEF
-    hi MarkviewPalette2Sign guifg=#DEE2E6
-    hi MarkviewPalette3Sign guifg=#CED4DA
-    hi MarkviewPalette4Sign guifg=#ADB5BD
-    hi MarkviewPalette5Sign guifg=#6C757D
-    hi MarkviewPalette6Sign guifg=#495057
-
     hi RenderMarkdownH0Bg guibg=NONE guifg=#F8F9FA
     hi RenderMarkdownH1Bg guibg=NONE guifg=#E9ECEF
     hi RenderMarkdownH2Bg guibg=NONE guifg=#DEE2E6
@@ -193,6 +174,10 @@ vim.cmd([[
     hi RenderMarkdownH4Bg guibg=NONE guifg=#ADB5BD
     hi RenderMarkdownH5Bg guibg=NONE guifg=#6C757D
     hi RenderMarkdownH6Bg guibg=NONE guifg=#495057
+
+    hi Special guibg=NONE guifg=#d4d4d4
+
+    hi FlashBackdrop guibg=NONE guifg=#d4d4d4
 
 ]])
 
@@ -275,45 +260,6 @@ vim.lsp.config.rust_analyzer = {
 	root_markers = { "Cargo.toml", ".git" },
 }
 
--- vim.lsp.config.ts_ls = {
-
--- 	filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
--- 	settings = {
--- 		typescript = {
--- 			inlayHints = {
--- 				includeInlayParameterNameHints = "all",
--- 				includeInlayParameterNameHintsWhenArgumentMatchesName = false,
--- 				includeInlayFunctionParameterTypeHints = true,
--- 				includeInlayVariableTypeHints = true,
--- 				includeInlayPropertyDeclarationTypeHints = true,
--- 				includeInlayFunctionLikeReturnTypeHints = true,
--- 				includeInlayEnumMemberValueHints = true,
--- 			},
--- 		},
--- 		javascript = {
--- 			inlayHints = {
--- 				includeInlayParameterNameHints = "all",
--- 				includeInlayParameterNameHintsWhenArgumentMatchesName = false,
--- 				includeInlayFunctionParameterTypeHints = true,
--- 				includeInlayVariableTypeHints = true,
--- 				includeInlayPropertyDeclarationTypeHints = true,
--- 				includeInlayFunctionLikeReturnTypeHints = true,
--- 				includeInlayEnumMemberValueHints = true,
--- 			},
--- 		},
--- 	},
--- 	handlers = {
--- 		["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
--- 			underline = true,
--- 			virtual_text = {
--- 				severity = { min = vim.diagnostic.severity.WARN },
--- 			},
--- 			signs = true,
--- 			update_in_insert = false,
--- 		}),
--- 	},
--- }
-
 vim.lsp.config.clangd = {
 	cmd = {
 		"clangd",
@@ -377,7 +323,44 @@ vim.api.nvim_create_autocmd("LspAttach", {
 local cmp = require("cmp")
 local luasnip = require("luasnip")
 
-luasnip.config.setup({})
+local s = luasnip.snippet
+local t = luasnip.text_node
+local i = luasnip.insert_node
+local f = luasnip.function_node
+local c = luasnip.choice_node
+local d = luasnip.dynamic_node
+local r = luasnip.restore_node
+local fmt = require("luasnip.extras.fmt").fmt
+
+luasnip.config.set_config({
+	history = true,
+	updateevents = "TextChanged,TextChangedI",
+	enable_autosnippets = true,
+})
+
+vim.keymap.set({ "i", "s" }, "<C-k>", function()
+	if luasnip.expand_or_jumpable() then
+		luasnip.expand_or_jump()
+	end
+end, { silent = true })
+
+vim.keymap.set({ "i", "s" }, "<C-j>", function()
+	if luasnip.jumpable(-1) then
+		luasnip.jump(-1)
+	end
+end, { silent = true })
+
+vim.keymap.set("i", "<C-l>", function()
+	if luasnip.choice_active() then
+		luasnip.change_choice(1)
+	end
+end)
+
+require("luasnip.loaders.from_lua").load({ paths = "~/.config/nvim/snippets/" })
+require("luasnip.loaders.from_vscode").load({ include = { "markdown" } })
+require("luasnip.loaders.from_snipmate").lazy_load()
+
+-- luasnip.config.setup({})
 
 cmp.setup({
 	snippet = {
@@ -643,6 +626,16 @@ vim.keymap.set("n", "<leader>es", function()
 	Snacks.explorer()
 end, { desc = "Snacks file explorer" })
 
+-- snacks keybinds
+vim.keymap.set("n", "<leader>pk", function()
+	Snacks.picker.keymaps({ layout = "ivy" })
+end, { desc = "Snacks Picker Keymaps" })
+
+-- snacks help tags
+vim.keymap.set("n", "<leader>vh", function()
+	Snacks.picker.help()
+end, { desc = "Snacks Help Tags" })
+
 -- which-key
 require("which-key").setup({
 	-- preset = "modern",
@@ -695,28 +688,12 @@ require("mini.indentscope").setup({
 	symbol = "│",
 })
 
--- markview
-local presets = require("markview.presets")
-require("markview").setup({
-	enabled = false,
-	markdown = {
-		headings = presets.headings.marker,
-		horizontal_rules = presets.horizontal_rules.thin,
-	},
-})
-
-require("markview").setup({
-	markdown = {
-		headings = {
-			heading_1 = { sign = "" },
-			heading_2 = { sign = "" },
-		},
-	},
-})
+-- mini.ai
+require("mini.ai").setup()
 
 -- render-markdown
 require("render-markdown").setup({
-	enabled = false,
+	enabled = true,
 	sign = {
 		enabled = false,
 	},
@@ -725,25 +702,9 @@ require("render-markdown").setup({
 	},
 })
 
-vim.keymap.set(
-	"n",
-	"<leader>mv",
-	"<cmd>Markview enable<CR><cmd>RenderMarkdown disable<CR>",
-	{ desc = "Markview Toggle" }
-)
-vim.keymap.set(
-	"n",
-	"<leader>md",
-	"<cmd>RenderMarkdown enable<CR><cmd>Markview disable<CR>",
-	{ desc = "RenderMarkdown Toggle" }
-)
+vim.keymap.set("n", "<leader>md", "<cmd>RenderMarkdown toggle<CR>", { desc = "RenderMarkdown Toggle" })
 
-vim.keymap.set(
-	"n",
-	"<leader>mt",
-	"<cmd>RenderMarkdown disable<CR><cmd>Markview disable<CR>",
-	{ desc = "Disable RenderMarkdown & Markview" }
-)
+vim.keymap.set("n", "<leader>mt", "<cmd>RenderMarkdown disable<CR>", { desc = "Disable RenderMarkdown" })
 
 -- Formatter (conform/stylua)
 require("conform").setup({
@@ -987,7 +948,8 @@ require("nvim-tree").setup({
 
 -- flash
 require("flash").setup()
-vim.keymap.set("n", "<leader>s", function()
+-- vim.keymap.set("n", "<leader>s", function()
+vim.keymap.set("n", "s", function()
 	require("flash").jump()
 end, { desc = "Flash" })
 
@@ -1133,6 +1095,20 @@ require("telescope").setup({
 				["i"] = function()
 					vim.cmd("startinsert")
 				end,
+
+				-- ["l"] = function(prompt_bufnr)
+				-- 	local action_state = require("telescope.actions.state")
+				-- 	local actions = require("telescope.actions")
+				-- 	local entry = action_state.get_selected_entry()
+
+				-- 	if entry.Path:is_dir() then
+				-- 		actions.select_default(prompt_bufnr)
+				-- 	else
+				-- 		actions.file_edit(prompt_bufnr)
+				-- 	end
+				-- end,
+
+				["l"] = "select_default",
 
 				["q"] = "close",
 				["<Esc>"] = "close",
