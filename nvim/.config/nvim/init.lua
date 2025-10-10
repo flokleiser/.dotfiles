@@ -678,7 +678,7 @@ vim.o.foldenable = true
 
 -- vim.keymap.set("n", "zR", require("ufo").toggleFold)
 vim.keymap.set("n", "za", "za", { desc = "Toggle fold under cursor" })
-vim.keymap.set("n", "\x1b[1;5P", "za", { desc = "Toggle fold under cursor" })
+-- vim.keymap.set("n", "\x1b[1;5P", "za", { desc = "Toggle fold under cursor" })
 
 vim.keymap.set("n", "zR", require("ufo").openAllFolds, { desc = "Open all folds" })
 vim.keymap.set("n", "zM", require("ufo").closeAllFolds, { desc = "Close all folds" })
@@ -1165,6 +1165,11 @@ vim.keymap.set("n", "<C-h>", "<cmd>TmuxNavigateLeft<cr>")
 vim.keymap.set("n", "<C-j>", "<cmd>TmuxNavigateDown<cr>")
 vim.keymap.set("n", "<C-k>", "<cmd>TmuxNavigateUp<cr>")
 vim.keymap.set("n", "<C-l>", "<cmd>TmuxNavigateRight<cr>")
+
+-- vim.keymap.set("n", "<C-h>", "<cmd>TmuxNavigateLeft<cr>")
+-- vim.keymap.set("n", "<C-j>", "<C-w>j")
+-- vim.keymap.set("n", "<C-k>", "<cmd>TmuxNavigateUp<cr>")
+-- vim.keymap.set("n", "<C-l>", "<cmd>TmuxNavigateRight<cr>")
 
 -- Enhanced movement keys
 vim.keymap.set("n", "J", "5j")

@@ -1,14 +1,11 @@
-# palette = "grey"
-
-# add_newline = false
+palette = "grey"
 
 format = """
 $username\
 @$hostname\
 $directory\
+$fill \
 $git_branch\
-$git_state\
-$git_status\
 $line_break\
 $character"""
 
@@ -31,9 +28,8 @@ style = '#d4d4d4'
 format = "[$hostname ]($style)"
 
 [directory]
-style = "blue"
+# style = "blue"
 # before_repo_root_style = ""
-truncation_length = 5
 repo_root_format = "[$before_root_path]($before_repo_root_style)[$repo_root]($repo_root_style)[$path]($style)[$read_only]($read_only_style) "
 
 

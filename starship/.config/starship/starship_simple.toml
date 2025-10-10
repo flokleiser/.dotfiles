@@ -1,0 +1,73 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+format = """
+$os\
+$username\
+$hostname\
+$directory\
+$git_branch\
+$git_state\
+$git_status\
+$line_break\
+$character"""
+
+# format = """
+# $os\
+# $username\
+# $hostname\
+# $directory\
+# $line_break\
+# $character"""
+
+
+# format = """
+# $os\
+# $username\
+# $hostname\
+# $directory\
+# $line_break\
+# $character"""
+
+[directory]
+style = "blue"
+truncation_length = 3
+
+[os]
+disabled = false
+style = ""
+
+[os.symbols]
+Macos = "󰀵"
+
+[username]
+show_always = true
+style_user = ""
+style_root = ""
+format = '[ $user ]($style)'
+
+[git_branch]
+format = "[$branch]($style)"
+# style = "bright-black"
+style = "white"
+
+[git_status]
+format = "[[(*$conflicted$untracked$modified$staged$renamed$deleted)](218) ($ahead_behind$stashed)]($style)"
+style = "cyan"
+conflicted = "​"
+untracked = "​"
+modified = "​"
+staged = "​"
+renamed = "​"
+deleted = "​"
+stashed = "≡"
+
+[git_state]
+format = '\([$state( $progress_current/$progress_total)]($style)\) '
+# style = "bright-black"
+style = "white"
+
+[character] # The name of the module we are configuring is 'character'
+success_symbol = '[➜](bold gray)' # The 'success_symbol' segment is being set to '➜' with the color 'bold green'
+error_symbol = "[➜](red)"
+vimcmd_symbol = "[➜](green)"
+

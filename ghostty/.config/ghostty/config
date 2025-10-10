@@ -2,7 +2,6 @@
 # FONT
 # =========================================================
 font-family = "SFMono Nerd Font"
-# font-family = "JetBrainsMono Nerd Font"
 font-size = 15.5
 # font-style = semibold 
 font-style = regular 
@@ -46,7 +45,6 @@ macos-window-shadow = false
 # =========================================================
 quick-terminal-position = center
 quick-terminal-size = 70% 
-
 
 
 # =========================================================
@@ -118,10 +116,14 @@ keybind = ctrl+s>-=new_split:down
 
 keybind = ctrl+s>x=close_surface
 
-keybind = ctrl+cmd+h=resize_split:left,100
-keybind = ctrl+cmd+j=resize_split:down,100
-keybind = ctrl+cmd+k=resize_split:up,100
-keybind = ctrl+cmd+l=resize_split:right,100
+# keybind = ctrl+cmd+h=resize_split:left,101
+# keybind = ctrl+cmd+j=resize_split:down,100
+# keybind = ctrl+cmd+k=resize_split:up,100
+# keybind = ctrl+cmd+l=resize_split:right,100
+keybind = ctrl+left=resize_split:left,100
+keybind = ctrl+down=resize_split:down,100
+keybind = ctrl+up=resize_split:up,100
+keybind = ctrl+right=resize_split:right,100
 
 quit-after-last-window-closed = true
 

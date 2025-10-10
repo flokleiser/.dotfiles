@@ -2,13 +2,11 @@
 
 ### --- TERMINAL SETUP ---
 bindkey -v
-bindkey '^?' backward-delete-char #this fixes the backspace for some reason
+bindkey '^?' backward-delete-char 
 export KEYTIMEOUT=1
 
 setopt SHARE_HISTORY
 setopt INC_APPEND_HISTORY
-# export HISTFILE = ~/.zsh_history
-# export SAVEHIST = 10000
 
 DEFAULT_VI_MODE=viins
 
@@ -52,7 +50,6 @@ bindkey "^[[Z" fzf-tab-complete
 
 source $ZSH/completion.zsh
 
-# ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#777777'
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#626262"
 
 ### --- USER INPUT PROMPT ---

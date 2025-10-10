@@ -43,7 +43,7 @@ keymap = [
     { on = [ "r" ], run = "rename", desc = "Rename" },
     { on = ["g", "<Space>"], run = "cd --interactive", desc = "Jump interactively" },
 
-    { on = "f",         run = "search --via=fd",             desc = "Search files by name via fd" },
+    # { on = "f",         run = "search --via=fd",             desc = "Search files by name via fd" },
 	{ on = "F",         run = "search --via=rg",             desc = "Search files by content via ripgrep" },
     
     { on = "~",    run = "help", desc = "Open help" },
@@ -82,6 +82,11 @@ desc = "Enter the child directory, or open the file"
 
 [[mgr.prepend_keymap]]
 on   = "/"
+run = "plugin searchjump"
+desc = "searchjump mode"
+
+[[mgr.prepend_keymap]]
+on   = "f"
 run = "plugin searchjump"
 desc = "searchjump mode"
 
