@@ -10,6 +10,9 @@ keymap = [
 	{ on = "<C-c>", run = "close",              desc = "Close the current tab, or quit if it's last" },
 	{ on = "<C-z>", run = "suspend",            desc = "Suspend the process" },
 
+    { on = "v", run = "visual_mode",         desc = "Enter visual mode (selection mode)" },   
+
+
     { on = [ "J" ], run = "arrow 5", desc = "Move down 5 lines" },
     { on = [ "K" ], run = "arrow -5", desc = "Move up 5 lines" },
 
@@ -53,14 +56,15 @@ keymap = [
     {on = "y",     run = "yank", desc = "Copy file"},
     {on = "p",     run = "paste", desc = "Paste file"},
 
-    { on = [ ",", "f" ], run = [ "sort mtime --reverse", "linemode mtime" ],    desc = "Sort by modified time (reverse)" },
 	{ on = [ ",", "n" ], run = "sort alphabetical --reverse=no",                desc = "Sort alphabetically" },
 	{ on = [ ",", "N" ], run = "sort alphabetical --reverse",                   desc = "Sort alphabetically (reverse)" },
 	{ on = [ ",", "s" ], run = ["sort size", "linemode size"],                  desc = "Sort by size" },
 	{ on = [ ",", "S" ], run = ["sort size --reverse", "linemode size"],         desc = "Sort by size (reverse)" },
 
 	{ on = [ "s", "s" ], run = "linemode size",                desc = "Show size" },
-	{ on = [ "s", "S" ], run = "linemode none",                desc = "Hide size" },
+	{ on = [ "s", "." ], run = "linemode none",                desc = "Hide size" },
+	# { on = [ "s", "t" ], run = "linemode mtime",                desc = "Show mtime" },
+    { on = [ "s", "t" ], run = [ "sort mtime --reverse", "linemode mtime" ],    desc = "Sort by modified time (reverse)" },
 	{ on = ".",    run = "hidden toggle",                   desc = "hide/show dot files" },
 
 ]

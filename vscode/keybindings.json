@@ -110,10 +110,6 @@
         "command": "-workbench.action.focusSecondEditorGroup"
     },
     {
-        "key": "shift+cmd+t",
-        "command": "workbench.action.terminal.new"
-    },
-    {
         "key": "shift+cmd+c",
         "command": "-workbench.action.terminal.openNativeConsole",
         "when": "!terminalFocus"
@@ -303,10 +299,6 @@
         "command": "-workbench.action.reopenClosedEditor"
     },
     {
-        "key": "shift+cmd+c",
-        "command": "workbench.panel.chatSidebar"
-    },
-    {
         "key": "ctrl+cmd+p",
         "command": "workbench.panel.markers.view.focus"
     },
@@ -375,19 +367,9 @@
         "command": "-workbench.action.toggleSidebarVisibility"
     },
     {
-        "key": "ctrl+h",
-        "command": "workbench.view.explorer",
-        "when": "viewContainer.workbench.view.explorer.enabled"
-    },
-    {
         "key": "ctrl+e",
         "command": "-cursorLineEnd",
         "when": "textInputFocus"
-    },
-    {
-        "key": "ctrl+h",
-        "command": "workbench.view.explorer",
-        "when": "viewContainer.workbench.view.explorer.enabled"
     },
     {
         "key": "cmd+k e",
@@ -417,13 +399,6 @@
         "key": "cmd+j",
         "command": "-workbench.action.togglePanel"
     },
-    {
-        "key": "ctrl+l",
-        "command": "workbench.view.explorer",
-        "when": "viewContainer.workbench.view.explorer.enabled"
-    },
-
-
     {
         "key": "shift+cmd+u",
         "command": "workbench.action.tasks.runTask",
@@ -483,6 +458,32 @@
         "key": "shift+cmd+j",
         "command": "-workbench.action.search.toggleQueryDetails",
         "when": "inSearchEditor || searchViewletFocus"
+    },
+    {
+        "key": "ctrl+l",
+        "command": "-workbench.action.chat.newChat",
+        "when": "chatIsEnabled && inChat"
+    },
+
+   {
+        "key": "ctrl+h",
+        "command": "workbench.action.navigateLeft"
+    },
+    {
+        "key": "ctrl+l",
+        "command": "workbench.action.navigateRight"
+    },
+    {
+        "key": "ctrl+k",
+        "command": "workbench.action.navigateUp"
+    },
+    {
+        "key": "ctrl+j",
+        "command": "workbench.action.navigateDown"
+    },
+    {
+        "key": "shift+cmd+t",
+        "command": "workbench.action.closePanel"
     }
 
 ]  

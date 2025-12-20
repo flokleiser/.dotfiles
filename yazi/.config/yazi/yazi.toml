@@ -11,7 +11,8 @@ sort_reverse   = true
 # sort_reverse   = false
 sort_dir_first = true
 sort_translit  = false
-linemode       = "none"
+# linemode       = "none"
+linemode       = "size"
 # linemode       = "size"
 show_hidden    = true
 # show_symlink   = false
@@ -105,6 +106,10 @@ fetchers = [
 	# Mimetype
 	{ id = "mime", name = "*", run = "mime", prio = "high" },
 ]
+preload = [
+    {mime = "inode/directory", run = "size"}
+]
+
 spotters = [
 	{ name = "*/", run = "folder" },
 	# Code
@@ -220,10 +225,10 @@ overwrite_origin  = "center"
 overwrite_offset  = [ 0, 0, 50, 15 ]
 
 # quit
-quit_title   = "Quit?"
-quit_content = "The following tasks are still running, are you sure you want to quit?"
-quit_origin  = "center"
-quit_offset  = [ 0, 0, 50, 15 ]
+# quit_title   = "Quit?"
+# quit_content = "The following tasks are still running, are you sure you want to quit?"
+# quit_origin  = "center"
+# quit_offset  = [ 0, 0, 50, 15 ]
 
 [pick]
 open_title  = "Open with:"

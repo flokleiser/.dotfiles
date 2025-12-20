@@ -11,6 +11,10 @@ command = "Search"
 key_sequence = "/"
 
 [[keymaps]]
+command = "Search"
+key_sequence = "f"
+
+[[keymaps]]
 command = "ResumePause"
 key_sequence = "space"
 

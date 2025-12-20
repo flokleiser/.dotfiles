@@ -62,7 +62,9 @@ alias vi=nvim
 alias n="nvim $1"
 
 alias yz=yazi
+alias lf=yazi
 alias z=zoxide
+alias ff=fastfetch
 
 # --- tmux alias ---
 alias tk="tmux kill-server"
@@ -79,7 +81,7 @@ alias obsidian="cd /Users/flo/Library/Mobile\ Documents/iCloud\~md\~obsidian/Doc
 alias home="cd ~"
 alias config="cd ~/.dotfiles"
 alias zhdk="cd ~/ZHdK/HS25"
-alias hs="cd ~/ZHdK/HS25/SoftArchitecture"
+alias hs="cd ~/ZHdK/HS25/DataVisualization/"
 alias ghostty="nvim ~/.dotfiles/ghostty/.config/ghostty/config"
 alias x="clear"
 alias .="open ."
@@ -97,7 +99,7 @@ eval "$(zoxide init zsh)"
 eval "$(starship init zsh)"
 
 ### --- LazyGit function ---
-function lazygit() {
+function flogit() {
 	git add .
 	git commit -a -m "$*"
 	git push

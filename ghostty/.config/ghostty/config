@@ -11,14 +11,19 @@ font-variation-bold = wght=700
 # =========================================================
 # TITLEBAR & ICON 
 # =========================================================
-# macos-titlebar-proxy-icon = hidden
-macos-titlebar-proxy-icon = visible
+macos-titlebar-proxy-icon = hidden
+# macos-titlebar-proxy-icon = visible
 # title = ""
 macos-titlebar-style = tabs
+# macos-titlebar-style = transparent
+# macos-titlebar-style = native
+
+# macos-window-buttons = hidden
 
 # macos-icon = glass
 macos-icon = custom-style
 maximize = true
+# maximize = false 
 
 # =========================================================
 # WINDOW
@@ -27,17 +32,22 @@ window-padding-x = 10
 window-padding-y = 4
 window-decoration = auto
 
-# background-opacity = 0.5
-background-opacity = 0.4
+background-opacity = 0.5
+# background-opacity = 0.4
 # background-blur = 20
 background-blur = 30
-window-colorspace = display-p3
-alpha-blending = linear-corrected
+# background-blur = 20
+# window-colorspace = display-p3
+window-colorspace = srgb
+# alpha-blending = linear-corrected
+alpha-blending = native
+# alpha-blending = linear
 
 unfocused-split-opacity = 0.9
 # unfocused-split-opacity = 0.8
 
 macos-window-shadow = false
+# macos-window-shadow = true
 
 
 # =========================================================
@@ -100,30 +110,21 @@ keybind = ctrl+tab=esc:\u001b[27;5;9~
 
 keybind = alt+tab=text:\t
 
-# keybind = left=goto_split:left
-# keybind = right=goto_split:right
-# keybind = down=goto_split:bottom
-# keybind = up=goto_split:top
 keybind = unconsumed:ctrl+h=goto_split:left
 keybind = unconsumed:ctrl+l=goto_split:right
 keybind = unconsumed:ctrl+j=goto_split:bottom
 keybind = unconsumed:ctrl+k=goto_split:top
 
-# keybind = ctrl+x=close_surface
 
 keybind = ctrl+s>i=new_split:right
 keybind = ctrl+s>-=new_split:down
 
 keybind = ctrl+s>x=close_surface
 
-# keybind = ctrl+cmd+h=resize_split:left,101
-# keybind = ctrl+cmd+j=resize_split:down,100
-# keybind = ctrl+cmd+k=resize_split:up,100
-# keybind = ctrl+cmd+l=resize_split:right,100
-keybind = ctrl+left=resize_split:left,100
-keybind = ctrl+down=resize_split:down,100
-keybind = ctrl+up=resize_split:up,100
-keybind = ctrl+right=resize_split:right,100
+keybind = cmd+left=resize_split:left,102
+keybind = cmd+down=resize_split:down,100
+keybind = cmd+up=resize_split:up,100
+keybind = cmd+right=resize_split:right,100
 
 quit-after-last-window-closed = true
 

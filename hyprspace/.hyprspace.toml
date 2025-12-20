@@ -1,0 +1,96 @@
+after-login-command = []
+# after-startup-command = [
+#   'exec-and-forget borders active_color=0xffe1e3e4 inactive_color=0xff494d64 width=5.0'
+# ]
+# after-startup-command = [
+#   'exec-and-forget borders active_color=0xffe1e3e4 inactive_color=0xff494d64 width=3.0'
+# ]
+after-startup-command = []
+start-at-login = false
+
+
+enable-normalization-flatten-containers = true
+enable-normalization-opposite-orientation-for-nested-containers = true
+accordion-padding = 30
+
+# default-root-container-layout = 'tiles'
+default-root-container-layout = 'dwindle'
+default-root-container-orientation = 'auto'
+on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
+# on-focus-changed = "move-mouse window-lazy-center"
+dwindle-default-split-ratio = 1.618
+
+automatically-unhide-macos-hidden-apps = true
+
+[key-mapping]
+    preset = 'qwerty'
+
+
+[gaps]
+    inner.horizontal 	= 15
+    inner.vertical 		= 15
+    outer.left 			= 15
+    outer.bottom 		= 15
+    outer.top 			= 15
+    # outer.top           = [
+    #     { monitor."built-in" = 25 },
+    # 55]
+    outer.right 		= 15
+
+
+[workspace-to-monitor-force-assignment]
+    1 = "OMEN 32q"
+    2 = "OMEN 32q"
+    3 = "OMEN 32q"
+    4 = "Built-in Retina Display"
+    5 = "DELL UP2516D"
+
+[mode.main.binding]
+
+    alt-slash = 'layout tiles horizontal vertical'
+    alt-comma = 'layout accordion horizontal vertical'
+
+    cmd-shift-1= 'move left'
+    cmd-shift-2= 'move right'
+
+    ctrl-1 = 'workspace 1'
+    ctrl-2 = 'workspace 2'
+    ctrl-3 = 'workspace 3'
+    ctrl-4 = 'workspace 4'
+    ctrl-5 = 'workspace 5'
+    # ctrl-6 = 'workspace 6'
+
+    cmd-ctrl-h = 'workspace prev'
+    cmd-ctrl-l = 'workspace next'
+
+    alt-shift-8= 'resize smart -50'
+    alt-shift-9= 'resize smart +50'
+    alt-shift-0= 'balance-sizes'
+
+    shift-left = ['move-node-to-monitor --wrap-around prev', 'focus-monitor --wrap-around prev']
+    shift-right = ['move-node-to-monitor --wrap-around next', 'focus-monitor --wrap-around next']
+
+
+    ctrl-left = ['move-node-to-workspace --wrap-around prev', 'workspace --wrap-around prev']
+    ctrl-right = ['move-node-to-workspace --wrap-around next', 'workspace --wrap-around next']
+
+    alt-tab = 'workspace-back-and-forth'
+
+    alt-shift-m= 'mode service'
+
+[mode.service.binding]
+    esc = ['reload-config', 'mode main']
+    # r = ['flatten-workspace-tree', 'mode main']
+    # f = ['layout floating tiling', 'mode main'] 
+    # backspace = ['close-all-windows-but-current', 'mode main']
+
+    ctrl-shift-h = ['swap left', 'mode main']
+    ctrl-shift-j = ['swap down', 'mode main']
+    ctrl-shift-k = ['swap up', 'mode main']
+    ctrl-shift-l = ['swap right', 'mode main']
+
+    shift-left = ['join-with left', 'mode main']
+    shift-down = ['join-with down', 'mode main']
+    shift-up = ['join-with up', 'mode main']
+    shift-right = ['join-with right', 'mode main']
+

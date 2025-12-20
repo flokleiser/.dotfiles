@@ -33,6 +33,7 @@ bright_white = "#FFFFFF"
 cwd = { fg = "cyan" }
 # Hovered
 hovered         = { fg = "#D4D4D4", bg = "#264F78" }
+# hovered         = { fg = "#264F78", bg = "#D4D4D4" }
 preview_hovered = { underline = true }
 # Find
 find_keyword  = { fg = "#DCDCAA", bold = true, italic = true, underline = true }

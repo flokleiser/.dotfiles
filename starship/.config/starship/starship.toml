@@ -6,6 +6,7 @@ format = """
 $username\
 @$hostname\
 $directory\
+$python\
 $git_branch\
 $git_state\
 $git_status\
@@ -31,15 +32,23 @@ style = '#d4d4d4'
 format = "[$hostname ]($style)"
 
 [directory]
+# style = "blue"
 style = "blue"
 # before_repo_root_style = ""
 truncation_length = 5
 repo_root_format = "[$before_root_path]($before_repo_root_style)[$repo_root]($repo_root_style)[$path]($style)[$read_only]($read_only_style) "
 
+[python]
+# format = "[$virtualenv]($style) "
+# format = "[( $virtualenv )]($style) "
+format = '[(\($virtualenv\))]($style) '
+style = "#777777"
+symbol = ""
 
 [git_branch]
 format = "[$branch]($style)"
-style = "white"
+# style = "white"
+style = '#777777'
 
 [git_status]
 format = "[[(*$conflicted$untracked$modified$staged$renamed$deleted)](218) ($ahead_behind$stashed)]($style)"

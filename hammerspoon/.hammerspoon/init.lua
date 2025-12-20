@@ -12,6 +12,8 @@ end
 local directions = {
 	h = "West",
 	l = "East",
+	j = "South",
+	k = "North",
 }
 
 for key, direction in pairs(directions) do
@@ -27,3 +29,27 @@ for key, direction in pairs(directions) do
 		local focused = win[method](win, candidateWindows, true, false)
 	end)
 end
+
+-- local function moveSpace(dir)
+-- 	local screen = hs.screen.mainScreen()
+-- 	local spaces = hs.spaces.spacesForScreen(screen)
+-- 	local current = hs.spaces.focusedSpace()
+
+-- 	for i, space in ipairs(spaces) do
+-- 		if space == current then
+-- 			local target = spaces[i + dir]
+-- 			if target then
+-- 				hs.spaces.gotoSpace(target)
+-- 			end
+-- 			return
+-- 		end
+-- 	end
+-- end
+
+-- hs.hotkey.bind({ "cmd", "ctrl" }, "l", function()
+-- 	moveSpace(1)
+-- end)
+
+-- hs.hotkey.bind({ "cmd", "ctrl" }, "h", function()
+-- 	moveSpace(-1)
+-- end)

@@ -4,6 +4,7 @@
 
 [flavor]
 dark  = "vscode-dark-modern"
+# dark  = "vscode-light-plus"
 light = ""
 
 [mgr]
@@ -11,7 +12,8 @@ cwd = { fg = "white" }
 
 # hovered         = { reversed = true }
 # preview_hovered = { underline = false}
-hovered         = { reversed = true}
+# hovered         = { reversed = true}
+hovered         = { fg="white", bg="black",reversed = true}
 preview_hovered = { underline = false}
 
 find_keyword  = { fg = "yellow", bold = true, italic = true, underline = true }

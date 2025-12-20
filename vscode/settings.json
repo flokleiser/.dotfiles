@@ -157,10 +157,10 @@
     "editor.pasteAs.preferences": [],
     "vscode_vibrancy.theme": "GitHub Dark Default",
     "chat.commandCenter.enabled": false,
-    "workbench.activityBar.location": "top",
     "vim.autoindent": false,
     "editor.formatOnPaste": true,
     "workbench.navigationControl.enabled": false,
     "workbench.secondarySideBar.defaultVisibility": "hidden",
-    "vim.useSystemClipboard": true
+    "vim.useSystemClipboard": true,
+    "terminal.integrated.suggest.enabled": false
 }

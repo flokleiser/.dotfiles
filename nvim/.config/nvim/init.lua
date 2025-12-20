@@ -20,6 +20,9 @@ vim.opt.splitbelow = true
 vim.opt.splitright = true
 vim.opt.undofile = true
 vim.opt.timeoutlen = 300
+vim.opt.conceallevel = 1
+
+vim.g.copilot_enabled = 0
 
 vim.opt.hlsearch = false
 
@@ -121,6 +124,8 @@ vim.cmd([[
         Plug 'folke/which-key.nvim'
 
         Plug 'folke/snacks.nvim'
+
+        Plug 'norcalli/nvim-colorizer.lua'
         Plug 'brenoprata10/nvim-highlight-colors'
 
 		Plug 'tomasiser/vim-code-dark'
@@ -141,8 +146,15 @@ vim.cmd([[
 
         Plug 'goolord/alpha-nvim'
 
+        Plug 'epwalsh/obsidian.nvim'
+
+        Plug 'folke/trouble.nvim'
+
+        Plug 'github/copilot.vim'
+        
+
 	call plug#end()
-    
+
     colorscheme codedark
 
     highlight Comment cterm=italic gui=italic
@@ -601,8 +613,75 @@ vim.api.nvim_create_user_command("PioBuildUploadMonitor", function()
 	end, 2000)
 end, {})
 
+-- trouble
+require("trouble").setup({
+	{
+		modes = {
+			preview_float = {
+				mode = "diagnostics",
+				preview = {
+					type = "float",
+					relative = "editor",
+					border = "rounded",
+					title = "Preview",
+					title_pos = "center",
+					position = { 0, -2 },
+					size = { width = 0.3, height = 0.3 },
+					zindex = 200,
+				},
+			},
+		},
+	},
+})
+vim.keymap.set("n", "<leader>xx", "<cmd>Trouble diagnostics toggle<CR>", { desc = "Trouble diagnostics" })
+
+vim.keymap.set("n", "<leader>ct", function()
+	if vim.g.copilot_enabled == 1 then
+		vim.cmd("Copilot disable")
+	else
+		vim.cmd("Copilot enable")
+	end
+end, { silent = true })
+
 -- lazygit
 vim.keymap.set("n", "<leader>gg", "<cmd>LazyGit<CR>", { desc = "lazygit" })
+-- vim.keymap.set("n", "<leader>gg", function()
+-- require("telescope").extensions.lazygit.lazygit()
+-- end,
+-- )
+
+-- obsidian
+require("obsidian").setup({
+	workspaces = {
+		{
+			name = "personal",
+			-- path = "~/vaults/personal",
+			path = "/Users/flo/Library/Mobile Documents/iCloud~md~obsidian/Documents/Flo",
+			-- path = "/Users/flo/Library/Mobile\ Documents/iCloud\~md\~obsidian/Documents/Flo"
+		},
+	},
+
+	notes_subdir = "notes",
+
+	daily_notes = {
+		folder = "dailies",
+		date_format = "%Y-%m-%d",
+	},
+
+	completion = {
+		nvim_cmp = true,
+		min_chars = 2,
+	},
+
+	mappings = {
+		["gf"] = {
+			action = function()
+				return require("obsidian").util.gf_passthrough()
+			end,
+			opts = { noremap = false, expr = true, buffer = true },
+		},
+	},
+})
 
 -- yank and keep selection
 vim.keymap.set("v", "y", "ygv", { desc = "yank and keep selection" })
@@ -616,6 +695,14 @@ vim.keymap.set("v", "<D-S-k>", "<Nop>")
 vim.keymap.set("v", "<D-S-j>", ":m '>+1<CR>gv=gv", { desc = "move line down" })
 vim.keymap.set("v", "<D-S-k>", ":m '<-2<CR>gv=gv", { desc = "move selection up" })
 
+-- require("snacks").setup({
+-- 	explorer = {
+-- 		keys = {
+-- 			["p"] = "parent",
+-- 		},
+-- 	},
+-- })
+
 -- snacks (scratch buffer)
 vim.keymap.set("n", "<leader>.", function()
 	Snacks.scratch()
@@ -623,6 +710,7 @@ end, { desc = "Scratch buffer" })
 
 -- snacks file explorer
 vim.keymap.set("n", "<leader>es", function()
+	-- vim.keymap.set("n", "<leader>fe", function()
 	Snacks.explorer()
 end, { desc = "Snacks file explorer" })
 
@@ -652,6 +740,20 @@ end, { desc = "Yazi" })
 
 -- highlight-colors
 require("nvim-highlight-colors").setup({})
+-- require("colorizer").setup()
+-- require("colorizer").setup({
+-- 	"*",
+-- }, {
+-- 	RGB = true,
+-- 	RRGGBB = true,
+-- 	custom_patterns = {
+-- 		{
+-- 			label = "ARGB",
+-- 			pattern = "0x%x%x(%x%x%x%x%x%x)",
+-- 			group = 1,
+-- 		},
+-- 	},
+-- })
 
 -- XcodeBuild
 require("xcodebuild").setup({
@@ -815,7 +917,7 @@ require("nvim-tree").setup({
 		centralize_selection = false,
 		cursorline = true,
 		debounce_delay = 15,
-		width = 40,
+		width = 20,
 		preserve_window_proportions = false,
 		number = false,
 		relativenumber = false,
@@ -874,7 +976,7 @@ require("nvim-tree").setup({
 	},
 	git = {
 		enable = true,
-		ignore = true,
+		ignore = false,
 		show_on_dirs = true,
 		show_on_open_dirs = true,
 		timeout = 400,
@@ -946,6 +1048,18 @@ require("nvim-tree").setup({
 	},
 })
 
+vim.keymap.set({ "n", "i", "s" }, "<c-f>", function()
+	if not require("noice.lsp").scroll(4) then
+		return "<c-f>"
+	end
+end, { silent = true, expr = true })
+
+vim.keymap.set({ "n", "i", "s" }, "<c-b>", function()
+	if not require("noice.lsp").scroll(-4) then
+		return "<c-b>"
+	end
+end, { silent = true, expr = true })
+
 -- flash
 require("flash").setup()
 -- vim.keymap.set("n", "<leader>s", function()
@@ -972,11 +1086,22 @@ if not vim.g._noice_loaded then
 		},
 		lsp = {
 			hover = {
-				enabled = false,
+				enabled = true,
 			},
 			override = {
 				["vim.lsp.util.convert_input_to_markdown_lines"] = true,
 				["vim.lsp.util.stylize_markdown"] = true,
+			},
+			documentation = {
+				view = "hover",
+				opts = {
+					lang = "markdown",
+					replace = true,
+					render = "plain",
+					format = { "{message}" },
+					win_options = { concealcursor = "n", conceallevel = 3 },
+					-- scrollbar = false,
+				},
 			},
 		},
 		presets = {
@@ -1019,6 +1144,15 @@ end
 custom_codedark.normal.a.gui = "bold"
 custom_codedark.insert.a.gui = "bold"
 
+local copilot_component = function()
+	if vim.g.copilot_enabled == 1 then
+		-- return " "
+		return ""
+	else
+		return ""
+	end
+end
+
 -- LuaLine
 require("lualine").setup({
 	options = {
@@ -1031,6 +1165,7 @@ require("lualine").setup({
 		lualine_b = { "filename" },
 		lualine_c = {},
 		lualine_x = {
+			copilot_component,
 			{
 				"filetype",
 				"diagnostics",
@@ -1039,17 +1174,30 @@ require("lualine").setup({
 				colored = false,
 			},
 		},
+		-- lualine_y = {
+		-- 	function()
+		-- 		local clients = vim.lsp.get_clients({ bufnr = 0 })
+		-- 		if next(clients) == nil then
+		-- 			return ""
+		-- 		end
+		-- 		return clients[1].name
+		-- 	end,
+		-- },
+
 		lualine_y = {
+			-- copilot_component,
 			function()
 				local clients = vim.lsp.get_clients({ bufnr = 0 })
-				if next(clients) == nil then
-					-- return "No LSP"
-					return ""
+				local names = {}
+				for _, client in ipairs(clients) do
+					if client.name ~= "GitHub Copilot" then
+						table.insert(names, client.name)
+					end
 				end
-				return clients[1].name
+				return table.concat(names, ", ")
 			end,
 		},
-		-- lualine_z = { "location"},
+
 		lualine_z = { "location", "progress" },
 	},
 })
@@ -1065,6 +1213,9 @@ require("nvim-autopairs").setup({
 
 -- nvim-surround
 -- require("nvim-surround").setup()
+
+-- lazygit telescope
+require("telescope").load_extension("lazygit")
 
 -- Telescope
 local actions = require("telescope.actions")
