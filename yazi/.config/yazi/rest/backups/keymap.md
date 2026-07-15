@@ -1,0 +1,164 @@
+"$schema" = "https://yazi-rs.github.io/schemas/keymap.json"
+
+[mgr]
+
+keymap = [
+	# { on = "<Esc>", run = "escape",             desc = "Exit visual mode, clear selection, or cancel search" },
+	{ on = "<Esc>", run = "close",             desc = "Exit visual mode, clear selection, or cancel search" },
+	{ on = "<C-[>", run = "escape",             desc = "Exit visual mode, clear selection, or cancel search" },
+	# { on = "q",     run = "quit",               desc = "Quit the process" },
+	{ on = "q",     run = "close",               desc = "Quit the process" },
+	{ on = "Q",     run = "quit --no-cwd-file", desc = "Quit without outputting cwd-file" },
+	{ on = "<C-c>", run = "close",              desc = "Close the current tab, or quit if it's last" },
+	{ on = "<C-z>", run = "suspend",            desc = "Suspend the process" },
+
+    { on = "v", run = "visual_mode",         desc = "Enter visual mode (selection mode)" },   
+
+
+    { on = [ "J" ], run = "arrow 5", desc = "Move down 5 lines" },
+    { on = [ "K" ], run = "arrow -5", desc = "Move up 5 lines" },
+
+
+	# Hopping
+	{ on = "k", run = "arrow prev", desc = "Previous file" },
+	{ on = "j", run = "arrow next", desc = "Next file" },
+
+	{ on = "<Up>",   run = "arrow prev", desc = "Previous file" },
+	{ on = "<Down>", run = "arrow next", desc = "Next file" },
+
+	{ on = [ "g", "g" ], run = "arrow top", desc = "Go to top" },
+	{ on = "G",          run = "arrow bot", desc = "Go to bottom" },
+
+	# Navigation
+	{ on = "h", run = "leave", desc = "Back to the parent directory" },
+	{ on = "l", run = "plugin augment-command -- enter", desc = "Enter the child directory" },
+
+	{ on = "<Left>",  run = "leave", desc = "Back to the parent directory" },
+	{ on = "<Right>", run = "enter", desc = "Enter the child directory" },
+
+	# { on = "H", run = "back",    desc = "Back to previous directory" },
+	# { on = "L", run = "forward", desc = "Forward to next directory" },
+	{ on = "H", run = "plugin bypass reverse",    desc = "Back to previous directory bypass" },
+	{ on = "L", run = "plugin bypass", desc = "Forward to next directory bypass" },
+
+	{ on = "o",         run = "open",                        desc = "Open selected files" },
+
+    # make yazi like lf
+    { on = [ "x" ], run = "remove", desc = "Delete" },
+    # { on = [ "w" ], run = "shell 'pwd | wl-copy' --confirm", desc = "Copy current directory to clipboard" },
+    { on = [ "A" ], run = "create --file", desc = "Create file" },
+    { on = [ "a" ], run = "create --dir", desc = "Create directory" },
+    { on = [ "r" ], run = "rename", desc = "Rename" },
+    { on = ["g", "<Space>"], run = "cd --interactive", desc = "Jump interactively" },
+
+    # { on = "f",         run = "search --via=fd",             desc = "Search files by name via fd" },
+	{ on = "F",         run = "search --via=rg",             desc = "Search files by content via ripgrep" },
+	{ on = "/",         run = "search --via=fd",             desc = "Search files by content via ripgrep" },
+    
+    { on = "~",    run = "help", desc = "Open help" },
+    { on = "?",    run = "help", desc = "Open help" },
+
+    {on = "d",     run = "yank --cut", desc = "Cut file"},
+    {on = "y",     run = "yank", desc = "Copy file"},
+    {on = "p",     run = "paste", desc = "Paste file"},
+
+	{ on = [ "s", "n" ], run = "sort alphabetical --reverse=no",                desc = "Sort alphabetically" },
+	{ on = [ "s", "N" ], run = "sort alphabetical --reverse",                   desc = "Sort alphabetically (reverse)" },
+	{ on = [ "s", "s" ], run = ["sort size", "linemode size"],                  desc = "Sort by size" },
+	{ on = [ "s", "S" ], run = ["sort size --reverse", "linemode size"],         desc = "Sort by size (reverse)" },
+
+	{ on = [ ",", "s" ], run = "linemode size",                desc = "Show size" },
+	{ on = [ ",", "." ], run = "linemode none",                desc = "Hide size" },
+
+    
+	# { on = [ "s", "s" ], run = "plugin what-size",                desc = "Show size" },
+
+
+	# { on = [ "s", "t" ], run = "linemode mtime",                desc = "Show mtime" },
+    { on = [ "s", "t" ], run = [ "sort mtime --reverse", "linemode mtime" ],    desc = "Sort by modified time (reverse)" },
+	{ on = ".",    run = "hidden toggle",                   desc = "hide/show dot files" },
+
+	{ on = "v", run = "visual_mode",         desc = "Enter visual mode (selection mode)" },
+	{ on = "V", run = "visual_mode --unset", desc = "Enter visual mode (unset mode)" },
+
+    { on = "f", run = "plugin searchjump", desc = "searchjump mode"},
+
+	{ on = [ "t", "a" ], run = "plugin mactag add",                desc = "Mactag add" },
+	{ on = [ "t", "r" ], run = "plugin mactag remove",                desc = "Mactag remove" },
+
+    { on = ["T", "T"], run = "plugin toggle-pane max-current", desc = "toggle preview"},
+
+    { on = "b", run = "plugin whoosh jump_by_key", desc = "Jump bookmark by key"},
+
+	{ on = [ "b", "a" ], run = "plugin whoosh save_cwd_temp",                desc = "Temporary bookmark" },
+
+	{ on = [ "g", "i" ], run = "plugin lazygit",                desc = "Run lazygit" },
+
+    # { on = ["t", "n"], run = "tab_create --current", desc = "Create a new tab with CWD" },
+    # { on = ["t", "n"], run = "tab_create", desc = "Create a new tab with CWD" },
+    { on = ["t", "n"], run = "tab_create ~", desc = "New tab in home" },
+    { on = "<C-t>", run = "tab_create", desc = "Create a new tab with CWD" },
+    { on = ["t", "c"], run = "close", desc = "Close tab" },
+
+	{ on = "1", run = "tab_switch -1 --relative", desc = "Switch to previous tab" },
+	{ on = "2", run = "tab_switch 1 --relative",  desc = "Switch to next tab" },
+    { on = "<Tab>", run = "tab_switch -1 --relative", desc = "Switch to previous tab" },
+    { on = "<BackTab>", run = "tab_switch 1 --relative",  desc = "Switch to next tab" },
+
+
+    { on = "<Space>", run = "shell -- qlmanage -p %s", desc = "quicktime preview"}
+
+    # { on = "zd", run = "set sort_dir_first=toggle", desc = "Toggle dir-first sorting" },
+
+]
+
+
+[help]
+
+keymap = [
+	{ on = "<Esc>", run = "escape", desc = "Clear the filter, or hide the help" },
+	{ on = "<C-[>", run = "escape", desc = "Clear the filter, or hide the help" },
+	{ on = "<C-c>", run = "close",  desc = "Hide the help" },
+
+	# Navigation
+	{ on = "k", run = "arrow prev", desc = "Previous line" },
+	{ on = "j", run = "arrow next", desc = "Next line" },
+
+	{ on = "<Up>",   run = "arrow prev", desc = "Previous line" },
+	{ on = "<Down>", run = "arrow next", desc = "Next line" },
+
+	# Filtering
+	{ on = "f", run = "filter", desc = "Filter help items" },
+]
+
+# [[mgr.prepend_keymap]]
+# on   = [ "b", "a" ]
+# run  = "plugin mactag add"
+# desc = "Tag selected files"
+
+# [[mgr.prepend_keymap]]
+# on   = [ "b", "r" ]
+# run  = "plugin mactag remove"
+# desc = "Untag selected files"
+
+# [[mgr.prepend_keymap]]
+# on   = "l"
+# # run  = "plugin smart-enter"
+# run  = "enter"
+# desc = "Enter the child directory, or open the file"
+
+# [[mgr.prepend_keymap]]
+# on   = "/"
+# run = "plugin searchjump"
+# desc = "searchjump mode"
+
+# [[mgr.prepend_keymap]]
+# on   = "f"
+# run = "plugin searchjump"
+# desc = "searchjump mode"
+
+# [[mgr.prepend_keymap]]
+# on   = [ "i" ]
+# run = "plugin easyjump"
+# desc = "easyjump"
+

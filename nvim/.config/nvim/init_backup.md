@@ -1,0 +1,1891 @@
+-- =========================================================
+-- BASIC VIM OPTIONS
+-- =========================================================
+vim.opt.mouse = "a"
+vim.opt.number = true
+vim.opt.clipboard = "unnamedplus"
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
+vim.opt.termguicolors = true
+vim.opt.tabstop = 4
+vim.opt.shiftwidth = 4
+vim.opt.showcmd = false
+vim.opt.more = true
+vim.opt.showmode = false
+vim.opt.scrolloff = 12
+vim.opt.wrap = true
+vim.opt.linebreak = true
+vim.opt.fillchars = { eob = " " }
+vim.opt.splitbelow = true
+vim.opt.splitright = true
+vim.opt.undofile = true
+vim.opt.timeoutlen = 300
+vim.opt.conceallevel = 1
+
+vim.opt.shortmess:append("A")
+
+vim.g.copilot_enabled = 0
+
+vim.opt.hlsearch = false
+
+vim.opt_local.formatoptions:remove({ "r", "o" })
+
+vim.opt.autoindent = true
+vim.opt.smartindent = true
+vim.opt.expandtab = true
+
+vim.opt.winborder = "rounded"
+vim.g.tmux_navigator_no_wrap = 1
+
+-- =========================================================
+-- LEADER KEY SETUP
+-- =========================================================
+vim.keymap.set("n", "<Space>", "<Nop>", { silent = true, remap = false })
+vim.g.mapleader = " "
+
+-- =========================================================
+-- STATUSLINE CONFIGURATION
+-- =========================================================
+vim.opt.statusline = table.concat({
+	"%f",
+	" %h%m%r",
+})
+
+-- =========================================================
+-- THEME AND APPEARANCE
+-- =========================================================
+vim.g.codedark_transparent = 1
+
+-- =========================================================
+-- PLUGIN MANAGEMENT
+-- =========================================================
+
+vim.cmd([[
+    syntax on
+	filetype plugin indent on
+
+	hi Normal guibg=NONE ctermbg=NONE
+	hi NonText guibg=NONE ctermbg=NONE
+	hi SignColumn guibg=NONE ctermbg=NONE
+	hi LineNr guibg=NONE ctermbg=NONE
+	hi CursorLineNr guibg=NONE ctermbg=NONE
+	hi EndOfBuffer guibg=NONE ctermbg=NONE
+	hi FoldColumn guibg=NONE ctermbg=NONE
+	hi ColorColumn guibg=NONE ctermbg=NONE
+	hi VertSplit guibg=NONE ctermbg=NONE
+	hi Folded guibg=NONE ctermbg=NONE
+    hi CursorLine guibg=NONE ctermbg=NONE
+    hi CursorColumn guibg=NONE ctermbg=NONE
+
+	call plug#begin('~/.config/nvim/plugged')
+
+		Plug 'tpope/vim-commentary'
+
+		Plug 'folke/noice.nvim'
+        Plug 'folke/flash.nvim'
+
+		Plug 'MunifTanjim/nui.nvim'
+
+		Plug 'echasnovski/mini.nvim'
+
+		Plug 'gbprod/cutlass.nvim'
+		Plug 'nvim-lua/plenary.nvim'
+        Plug 'nvim-telescope/telescope.nvim'
+
+		Plug 'nvim-lualine/lualine.nvim'
+		Plug 'nvim-tree/nvim-web-devicons'
+
+        Plug 'neovim/nvim-lspconfig', { 'tag': 'v0.10.0' }
+
+        Plug 'MeanderingProgrammer/render-markdown.nvim'
+
+		Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+
+		Plug 'hrsh7th/nvim-cmp'
+		Plug 'hrsh7th/cmp-nvim-lsp'
+		Plug 'hrsh7th/cmp-buffer'
+		Plug 'hrsh7th/cmp-path'
+		Plug 'L3MON4D3/LuaSnip'
+		Plug 'saadparwaiz1/cmp_luasnip'
+
+        Plug 'rafamadriz/friendly-snippets'
+
+		Plug 'nvim-lua/lsp-status.nvim'
+
+		Plug 'windwp/nvim-autopairs'
+		Plug 'wojciech-kulik/xcodebuild.nvim'
+		Plug 'christoomey/vim-tmux-navigator'
+
+		Plug 'stevearc/conform.nvim'
+		Plug 'wesleimp/stylua.nvim'
+
+		Plug 'kevinhwang91/nvim-ufo', {'do': ':UpdateRemotePlugins'}
+		Plug 'kevinhwang91/promise-async'
+
+        Plug 'folke/which-key.nvim'
+
+        Plug 'folke/snacks.nvim'
+
+        Plug 'norcalli/nvim-colorizer.lua'
+        Plug 'brenoprata10/nvim-highlight-colors'
+
+		Plug 'tomasiser/vim-code-dark'
+
+        Plug '0x00-ketsu/maximizer.nvim'
+
+        Plug 'akinsho/toggleterm.nvim', {'tag' : '*'}
+
+        Plug 'mikavilpas/yazi.nvim'
+
+        Plug 'nvim-tree/nvim-tree.lua'
+
+        Plug 'kdheepak/lazygit.nvim'
+
+        Plug 'sophieforrest/processing.nvim'
+
+        Plug 'anurag3301/nvim-platformio.lua'
+
+        Plug 'goolord/alpha-nvim'
+
+        Plug 'epwalsh/obsidian.nvim'
+
+        Plug 'folke/trouble.nvim'
+
+        Plug 'github/copilot.vim'
+
+        Plug 'petertriho/nvim-scrollbar'
+
+        Plug 'wfxr/minimap.vim'
+
+        Plug 'Isrothy/neominimap.nvim'
+
+        Plug 'CopilotC-Nvim/CopilotChat.nvim'
+
+        Plug 'rcarriga/nvim-notify'
+
+        Plug 'ej-shafran/compile-mode.nvim'
+
+        Plug 'karb94/neoscroll.nvim'
+
+	call plug#end()
+
+    colorscheme codedark
+
+    highlight Comment cterm=italic gui=italic
+
+    hi NeoTreeNormal guifg=#d4d4d4
+    hi NeoTreeGitUntracked guifg=#99d5fb
+    hi NeoTreeGitUnstaged guifg=#71c6b1
+    hi NeoTreeGitConflict guifg=#c5947c
+    hi NeoTreeGitModified guifg=#ffffff
+    hi NeoTreeGitDeleted guifg=#71c6b1
+    hi NeoTreeGitStaged guifg=#74985c
+    hi NeoTreeGitAdded guifg=#74985c
+    hi NeoTreeFileIcon guifg=#99d5fb
+    hi NeoTreeDirectoryName guifg=#d4d4d4
+
+    hi DiffText guibg=#005f87
+
+    hi NeoTreeTitleBar guibg=NONE
+    hi NeoTreeCursorLine guibg=NONE
+    hi NeoTreeRootName guibg=NONE
+    hi NeoTreeDirectoryIcon guifg=#99d5fb
+
+    hi MiniIndentscopeSymbol guifg=#7F8490
+
+    hi RenderMarkdownH0Bg guibg=NONE guifg=#F8F9FA
+    hi RenderMarkdownH1Bg guibg=NONE guifg=#E9ECEF
+    hi RenderMarkdownH2Bg guibg=NONE guifg=#DEE2E6
+    hi RenderMarkdownH3Bg guibg=NONE guifg=#CED4DA
+    hi RenderMarkdownH4Bg guibg=NONE guifg=#ADB5BD
+    hi RenderMarkdownH5Bg guibg=NONE guifg=#6C757D
+    hi RenderMarkdownH6Bg guibg=NONE guifg=#495057
+
+    hi Special guibg=NONE guifg=#d4d4d4
+
+    hi FlashBackdrop guibg=NONE guifg=#d4d4d4
+
+    hi CursorColumn guibg=NONE guifg=#7F8490
+    hi CursorLine guibg=NONE guifg=#7F8490
+
+    hi MinimapCursor guibg=#6C757D
+    hi MinimapRange guibg=#495057 guifg=#d4d4d4
+
+    hi NotifyERRORBorder guifg=#8A1F1F
+    hi NotifyWARNBorder guifg=#79491D
+    hi NotifyINFOBorder guifg=#4F6752
+
+    hi NotifyERRORBody guifg=#8A1F1F
+    hi NotifyWARNBody  guifg=#79491D
+    hi NotifyINFOBody guifg=#4F6752
+
+    hi AlphaHeader guifg=#ffffff 
+    hi LineNr guifg=#777777
+
+]])
+
+-- =========================================================
+-- LSP CONFIGURATION
+-- =========================================================
+
+vim.filetype.add({ extension = { ino = "cpp" } })
+
+vim.lsp.config.glsl_analyzer = {
+	cmd = { "glsl_analyzer" },
+	filetypes = { "glsl" },
+	on_attach = function(client, bufnr)
+		print("GLSL Analyzer attached to buffer " .. bufnr)
+	end,
+}
+
+vim.lsp.config.sourcekit = {
+	cmd = { "sourcekit-lsp" },
+	filetypes = { "swift", "objective-c", "objective-cpp" },
+	root_markers = { "Package.swift", ".git" },
+	capabilities = {
+		workspace = {
+			didChangeWatchedFiles = {
+				dynamicRegistration = true,
+			},
+		},
+	},
+}
+
+vim.lsp.config.gopls = {
+	cmd = { "gopls" },
+	filetypes = { "go", "gomod", "gowork", "gotmpl" },
+	root_markers = { "go.work", "go.mod", ".git" },
+	settings = {
+		gopls = {
+			completeUnimported = true,
+			usePlaceholders = true,
+			analyses = {
+				unusedparams = true,
+			},
+			staticcheck = true,
+			gofumpt = true,
+		},
+	},
+}
+
+local orig = vim.lsp.handlers["window/showMessageRequest"]
+
+vim.lsp.handlers["window/showMessageRequest"] = function(err, result, ctx, config)
+	local c = ctx and vim.lsp.get_client_by_id(ctx.client_id) or nil
+	if c and c.name == "lua_ls" then
+		return vim.NIL
+	end
+	return orig(err, result, ctx, config)
+end
+
+vim.lsp.handlers["$/progress"] = function() end
+
+vim.lsp.config.lua_ls = {
+	cmd = { "lua-language-server" },
+	filetypes = { "lua" },
+	root_markers = {
+		".luarc.json",
+		".luarc.jsonc",
+		".luacheckrc",
+		".stylua.toml",
+		"stylua.toml",
+		"selene.toml",
+		"selene.yml",
+		".git",
+	},
+	settings = {
+		Lua = {
+			runtime = {
+				version = "LuaJIT",
+			},
+			diagnostics = {
+				globals = { "vim" },
+				disable = {
+					"incomplete-signature-doc",
+					"lowercase-global",
+					"undefined-global",
+					"workspace-too-large",
+				},
+			},
+			workspace = {
+				checkThirdParty = false,
+				library = {},
+				maxPreload = 100,
+				-- maxPreload = 2000,
+				preloadFileSize = 100,
+				-- preloadFileSize = 500,
+			},
+			telemetry = {
+				enable = false,
+			},
+		},
+	},
+}
+
+vim.lsp.enable("lua_ls")
+
+vim.api.nvim_create_autocmd("VimEnter", {
+	once = true,
+	callback = function()
+		if vim.bo.filetype == "lua" then
+			vim.cmd("LspStart lua_ls")
+		end
+	end,
+})
+
+vim.lsp.config.rust_analyzer = {
+	cmd = { "rust-analyzer" },
+	filetypes = { "rust" },
+	root_markers = { "Cargo.toml", ".git" },
+}
+
+vim.lsp.config.clangd = {
+	cmd = {
+		"clangd",
+		"--background-index",
+		"--clang-tidy",
+		"--header-insertion=iwyu",
+		"--completion-style=detailed",
+		"--function-arg-placeholders",
+		"--fallback-style=llvm",
+		"--query-driver=**/*gcc*,**/*g++*,**/*clang*,**/*clang++*",
+	},
+	filetypes = { "c", "cpp", "objc", "objcpp", "cuda", "proto" },
+	root_markers = {
+		"compile_commands.json",
+		"compile_flags.txt",
+		".clangd",
+		"CMakeLists.txt",
+		"Makefile",
+		"platformio.ini",
+		".git",
+	},
+	init_options = {
+		usePlaceholders = true,
+		completeUnimported = true,
+		clangdFileStatus = true,
+	},
+}
+
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
+
+vim.lsp.config("html", {
+	capabilities = capabilities,
+})
+
+vim.lsp.enable("clangd")
+vim.lsp.enable("ts_ls")
+vim.lsp.enable("glsl_analyzer")
+vim.lsp.enable("sourcekit")
+vim.lsp.enable("gopls")
+vim.lsp.enable("rust_analyzer")
+vim.lsp.enable("html")
+
+vim.api.nvim_create_autocmd("LspAttach", {
+	desc = "LSP Actions",
+	callback = function(args)
+		local bufnr = args.buf
+
+		vim.keymap.set("n", "gh", function()
+			local width = math.floor(vim.o.columns * 0.6)
+			vim.lsp.buf.hover({
+				-- max_width = width,
+				-- max_height = 30,
+				border = "rounded",
+			})
+		end, {
+			buffer = bufnr,
+			noremap = true,
+			silent = true,
+			desc = "Hover description",
+		})
+
+		-- vim.keymap.set("n", "gh", vim.lsp.buf.hover, {
+		-- 	buffer = bufnr,
+		-- 	noremap = true,
+		-- 	silent = true,
+		-- 	desc = "Hover description",
+		-- })
+
+		vim.keymap.set("n", "gd", vim.lsp.buf.definition, {
+			buffer = bufnr,
+			noremap = true,
+			silent = false,
+			desc = "Go to definition",
+		})
+		vim.keymap.set("n", "gD", function()
+			vim.cmd("vsplit")
+			vim.lsp.buf.definition()
+		end, {
+			buffer = bufnr,
+			noremap = true,
+			silent = true,
+			desc = "Go to definition in split",
+		})
+	end,
+})
+
+-- =========================================================
+-- COMPLETION SETUP (CMP)
+-- =========================================================
+local cmp = require("cmp")
+local luasnip = require("luasnip")
+
+local s = luasnip.snippet
+local t = luasnip.text_node
+local i = luasnip.insert_node
+local f = luasnip.function_node
+local c = luasnip.choice_node
+local d = luasnip.dynamic_node
+local r = luasnip.restore_node
+local fmt = require("luasnip.extras.fmt").fmt
+
+luasnip.config.set_config({
+	history = true,
+	updateevents = "TextChanged,TextChangedI",
+	enable_autosnippets = true,
+})
+
+vim.keymap.set({ "i", "s" }, "<C-k>", function()
+	if luasnip.expand_or_jumpable() then
+		luasnip.expand_or_jump()
+	end
+end, { silent = true })
+
+vim.keymap.set({ "i", "s" }, "<C-j>", function()
+	if luasnip.jumpable(-1) then
+		luasnip.jump(-1)
+	end
+end, { silent = true })
+
+vim.keymap.set("i", "<C-l>", function()
+	if luasnip.choice_active() then
+		luasnip.change_choice(1)
+	end
+end)
+
+require("luasnip.loaders.from_lua").load({ paths = "~/.config/nvim/snippets/" })
+require("luasnip.loaders.from_vscode").load({ include = { "markdown" } })
+require("luasnip.loaders.from_snipmate").lazy_load()
+
+-- luasnip.config.setup({})
+
+cmp.setup({
+	snippet = {
+		expand = function(args)
+			luasnip.lsp_expand(args.body)
+		end,
+	},
+	window = {
+		completion = cmp.config.window.bordered(),
+		documentation = cmp.config.window.bordered(),
+	},
+	mapping = cmp.mapping.preset.insert({
+		["<C-k>"] = cmp.mapping.select_prev_item(),
+		["<C-j>"] = cmp.mapping.select_next_item(),
+		["<C-u>"] = cmp.mapping.scroll_docs(-4),
+		["<C-d>"] = cmp.mapping.scroll_docs(4),
+		["<C-Space>"] = cmp.mapping.complete(),
+		["<CR>"] = cmp.mapping(function(fallback)
+			fallback()
+		end, { "i", "s" }),
+
+		["<Tab>"] = cmp.mapping(function(fallback)
+			if cmp.visible() then
+				cmp.confirm({ select = true })
+			else
+				fallback()
+			end
+		end, { "i", "s" }),
+
+		["<S-Tab>"] = cmp.mapping(function(fallback)
+			if cmp.visible() then
+				cmp.select_prev_item()
+			elseif luasnip.jumpable(-1) then
+				luasnip.jump(-1)
+			else
+				fallback()
+			end
+		end, { "i", "s" }),
+	}),
+	sources = cmp.config.sources({
+		{ name = "nvim_lsp" },
+		{ name = "luasnip" },
+	}, {
+		{ name = "buffer" },
+		{ name = "path" },
+	}),
+})
+
+local function toggle_line_numbers()
+	local win = vim.api.nvim_get_current_win()
+	local number = vim.wo[win].number
+	local relativenumber = vim.wo[win].relativenumber
+
+	if number or relativenumber then
+		vim.wo[win].number = false
+		vim.wo[win].relativenumber = false
+	else
+		vim.wo[win].number = true
+		vim.wo[win].relativenumber = relativenumber
+	end
+end
+
+vim.keymap.set("n", "<leader>ln", toggle_line_numbers, { desc = "Toggle line numbers" })
+
+-- =========================================================
+-- PLUGIN CONFIGURATIONS
+-- =========================================================
+
+-- require("compile-mode").setup({})
+
+require("CopilotChat").setup({
+	mappings = {
+		submit_prompt = {
+			normal = "<Enter>",
+			insert = "<leader>ss",
+		},
+		close = {
+			normal = "q",
+			insert = "q",
+		},
+	},
+})
+
+-- minimap/scrollbar
+-- vim.keymap.set("n", "<leader>mm", "<cmd>MinimapToggle<CR>", { desc = "Toggle Minimap" })
+
+vim.g.neominimap = {
+	auto_enable = false,
+	layout = "split",
+	-- layout = "float",
+	float = {
+		minimap_width = 12, -- width of the minimap
+		margin = {
+			right = 0,
+			bottom = 2,
+		},
+	},
+	split = {
+		minimap_width = 10,
+		direction = "right",
+		-- margin = {
+		-- 	right = 0,
+		-- 	bottom = 2,
+		-- },
+	},
+	exclude_filetypes = { "help", "NvimTree" },
+}
+
+vim.keymap.set("n", "<leader>mm", "<cmd>Neominimap Toggle<CR>", { desc = "Toggle Minimap" })
+
+require("scrollbar").setup({
+	show = false,
+	handle = {
+		text = " ",
+		blend = 80,
+		color = nil,
+		color_nr = nil,
+		highlight = "CursorColumn",
+		hide_if_all_visible = true,
+	},
+	marks = {
+		Cursor = {
+			text = "•",
+			priority = 0,
+			gui = nil,
+			color = nil,
+			cterm = nil,
+			color_nr = nil,
+			highlight = "Normal",
+		},
+	},
+})
+
+vim.keymap.set("n", "<leader>sb", "<cmd>ScrollbarToggle<CR>", { desc = "Toggle Scrollbar" })
+
+-- alpha
+require("alpha").setup(require("alpha.themes.dashboard").config)
+
+local alpha = require("alpha")
+local dashboard = require("alpha.themes.dashboard")
+
+-- dashboard.section.header.val = {
+
+-- 	"                        ..'           ",
+-- 	"                    ,xNMM.            ",
+-- 	"                  .OMMMMo             ",
+-- 	"                  lMM'                ",
+-- 	"        .;loddo:.  .olloddol;.        ",
+-- 	"      cKMMMMMMMMMMNWMMMMMMMMMM0:      ",
+-- 	"    .KMMMMMMMMMMMMMMMMMMMMMMMWd.      ",
+-- 	"    XMMMMMMMMMMMMMMMMMMMMMMMX.        ",
+-- 	"   ;MMMMMMMMMMMMMMMMMMMMMMMM:         ",
+-- 	"   :MMMMMMMMMMMMMMMMMMMMMMMM:         ",
+-- 	"   .MMMMMMMMMMMMMMMMMMMMMMMMX.        ",
+-- 	"    kMMMMMMMMMMMMMMMMMMMMMMMMWd.      ",
+-- 	"    'XMMMMMMMMMMMMMMMMMMMMMMMMMMk     ",
+-- 	"     'XMMMMMMMMMMMMMMMMMMMMMMMMK.     ",
+-- 	"       kMMMMMMMMMMMMMMMMMMMMMMd       ",
+-- 	"        ;KMMMMMMMWXXWMMMMMMMk.        ",
+-- 	"          'cooc*'    '*coo''          ",
+-- }
+
+dashboard.section.header.val = {
+
+	"         .          .         ",
+	"       ';;,.        ::'       ",
+	"     ,:::;,,        :ccc,     ",
+	"    ,::c::,,,,.     :cccc,    ",
+	"    ,cccc:;;;;;.    cllll,    ",
+	"    ,cccc;.;;;;;,   cllll;    ",
+	"    :cccc; .;;;;;;. coooo;    ",
+	"    ;llll;   ,:::::'loooo;    ",
+	"    ;llll:    ':::::loooo:    ",
+	"    :oooo:     .::::llodd:    ",
+	"    .;ooo:       ;cclooo:.    ",
+	"      .;oc        'coo;.      ",
+	"        .'         .,.        ",
+	"                              ",
+	"                              ",
+	"                              ",
+	"                              ",
+	"                              ",
+	"                              ",
+	"                              ",
+}
+
+dashboard.section.buttons.val = {
+	dashboard.button("f", "  Find file", ":Telescope find_files <CR>"),
+	dashboard.button("e", "  New file", ":ene <BAR> startinsert <CR>"),
+	dashboard.button("r", "  Recently used files", ":Telescope oldfiles <CR>"),
+	dashboard.button("t", "  Find text", ":Telescope live_grep <CR>"),
+	dashboard.button("c", "  Configuration", ":e ~/.dotfiles/nvim/.config/nvim/init.lua <CR>"),
+	dashboard.button("q", "  Quit Neovim", ":qa<CR>"),
+}
+
+-- dashboard.section.footer.opts.hl = "Type"
+-- dashboard.section.header.opts.hl = "Include"
+-- dashboard.section.buttons.opts.hl = "Keyword"
+dashboard.section.footer.opts.hl = "CmdLine"
+dashboard.section.header.opts.hl = "CmdLine"
+dashboard.section.buttons.opts.hl = "CmdLine"
+
+dashboard.opts.opts.noautocmd = true
+
+alpha.setup(dashboard.opts)
+
+-- platformio
+local pok, platformio = pcall(require, "platformio")
+if pok then
+	platformio.setup({
+		lsp = "clangd",
+		-- lsp = {
+		--     enable_clangd = true,
+		--     enable ccls = false,
+		-- },
+
+		menu_key = "<leader>p",
+		menu_name = "PlatformIO",
+
+		menu_bindings = {
+			{ node = "item", desc = "[L]ist terminals", shortcut = "l", command = "PioTermList" },
+			{ node = "item", desc = "[T]erminal Core CLI", shortcut = "t", command = "Piocmdf" },
+			{
+				node = "menu",
+				desc = "[G]eneral",
+				shortcut = "g",
+				items = {
+					{ node = "item", desc = "[B]uild", shortcut = "b", command = "Piocmdf run" },
+					{ node = "item", desc = "[U]pload", shortcut = "u", command = "Piocmdf run -t upload" },
+					{ node = "item", desc = "[M]onitor", shortcut = "m", command = "Piocmdh run -t monitor" },
+					{ node = "item", desc = "[C]lean", shortcut = "c", command = "Piocmdf run -t clean" },
+					{ node = "item", desc = "[F]ull clean", shortcut = "f", command = "Piocmdf run -t fullclean" },
+					{ node = "item", desc = "[D]evice list", shortcut = "d", command = "Piocmdf device list" },
+				},
+			},
+			{
+				node = "item",
+				desc = "Build + Upload + Monitor",
+				shortcut = "x",
+				command = "PioBuildUploadMonitor",
+			},
+			{
+				node = "menu",
+				desc = "[P]latform",
+				shortcut = "p",
+				items = {
+					{
+						node = "item",
+						desc = "[B]uild file system",
+						shortcut = "b",
+						command = "Piocmdf run -t buildfs",
+					},
+					{ node = "item", desc = "Program [S]ize", shortcut = "s", command = "Piocmdf run -t size" },
+					{
+						node = "item",
+						desc = "[U]pload file system",
+						shortcut = "u",
+						command = "Piocmdf run -t uploadfs",
+					},
+					{ node = "item", desc = "[E]rase Flash", shortcut = "e", command = "Piocmdf run -t erase" },
+				},
+			},
+			{
+				node = "menu",
+				desc = "[D]ependencies",
+				shortcut = "d",
+				items = {
+					{ node = "item", desc = "[L]ist packages", shortcut = "l", command = "Piocmdf pkg list" },
+					{ node = "item", desc = "[O]utdated packages", shortcut = "o", command = "Piocmdf pkg outdated" },
+					{ node = "item", desc = "[U]pdate packages", shortcut = "u", command = "Piocmdf pkg update" },
+				},
+			},
+			{
+				node = "menu",
+				desc = "[A]dvanced",
+				shortcut = "a",
+				items = {
+					{ node = "item", desc = "[T]est", shortcut = "t", command = "Piocmdf test" },
+					{ node = "item", desc = "[C]heck", shortcut = "c", command = "Piocmdf check" },
+					{ node = "item", desc = "[D]ebug", shortcut = "d", command = "Piocmdf debug" },
+					{
+						node = "item",
+						desc = "Compilation Data[b]ase",
+						shortcut = "b",
+						command = "Piocmdf run -t compiledb",
+					},
+					{
+						node = "menu",
+						desc = "[V]erbose",
+						shortcut = "v",
+						items = {
+							{ node = "item", desc = "Verbose [B]uild", shortcut = "b", command = "Piocmdf run -v" },
+							{
+								node = "item",
+								desc = "Verbose [U]pload",
+								shortcut = "u",
+								command = "Piocmdf run -v -t upload",
+							},
+							{ node = "item", desc = "Verbose [T]est", shortcut = "t", command = "Piocmdf test -v" },
+							{ node = "item", desc = "Verbose [C]heck", shortcut = "c", command = "Piocmdf check -v" },
+							{ node = "item", desc = "Verbose [D]ebug", shortcut = "d", command = "Piocmdf debug -v" },
+						},
+					},
+				},
+			},
+			{
+				node = "menu",
+				desc = "[R]emote",
+				shortcut = "r",
+				items = {
+					{
+						node = "item",
+						desc = "Remote [U]pload",
+						shortcut = "u",
+						command = "Piocmdf remote run -t upload",
+					},
+					{ node = "item", desc = "Remote [T]est", shortcut = "t", command = "Piocmdf remote test" },
+					{
+						node = "item",
+						desc = "Remote [M]onitor",
+						shortcut = "m",
+						command = "Piocmdh remote run -t monitor",
+					},
+					{
+						node = "item",
+						desc = "Remote [D]evices",
+						shortcut = "d",
+						command = "Piocmdf remote device list",
+					},
+				},
+			},
+			{
+				node = "menu",
+				desc = "[M]iscellaneous",
+				shortcut = "m",
+				items = {
+					{ node = "item", desc = "[U]pgrade PlatformIO Core", shortcut = "u", command = "Piocmdf upgrade" },
+				},
+			},
+		},
+	})
+end
+
+vim.api.nvim_create_user_command("PioBuildUploadMonitor", function()
+	vim.cmd("Piocmdf run -t upload")
+	vim.defer_fn(function()
+		vim.cmd("Piocmdh run -t monitor")
+	end, 2000)
+end, {})
+
+-- trouble
+-- require("trouble").setup({
+-- 	{
+-- 		modes = {
+-- 			preview_float = {
+-- 				mode = "diagnostics",
+-- 				preview = {
+-- 					type = "float",
+-- 					relative = "editor",
+-- 					border = "rounded",
+-- 					title = "Preview",
+-- 					title_pos = "center",
+-- 					position = { 0, -2 },
+-- 					size = { width = 0.3, height = 0.3 },
+-- 					zindex = 200,
+-- 				},
+-- 			},
+-- 		},
+--         },
+--     })
+-- vim.keymap.set("n", "<leader>xx", "<cmd>Trouble diagnostics toggle<CR>", { desc = "Trouble diagnostics" })
+
+vim.keymap.set("n", "<leader>ct", function()
+	if vim.g.copilot_enabled == 1 then
+		vim.cmd("Copilot disable")
+	else
+		vim.cmd("Copilot enable")
+	end
+end, { silent = true })
+
+vim.keymap.set("n", "<leader>cc", "<cmd>CopilotChatToggle<CR>", { desc = "copilot chat toggle" })
+
+-- lazygit
+vim.keymap.set("n", "<leader>gg", "<cmd>LazyGit<CR>", { desc = "lazygit" })
+-- vim.keymap.set("n", "<leader>gg", function()
+-- require("telescope").extensions.lazygit.lazygit()
+-- end,
+-- )
+
+-- obsidian
+require("obsidian").setup({
+	workspaces = {
+		{
+			name = "personal",
+			-- path = "~/vaults/personal",
+			path = "/Users/flo/Library/Mobile Documents/iCloud~md~obsidian/Documents/Flo",
+			-- path = "/Users/flo/Library/Mobile\ Documents/iCloud\~md\~obsidian/Documents/Flo"
+		},
+	},
+
+	notes_subdir = "notes",
+
+	daily_notes = {
+		folder = "dailies",
+		date_format = "%Y-%m-%d",
+	},
+
+	completion = {
+		nvim_cmp = true,
+		min_chars = 2,
+	},
+
+	mappings = {
+		["gf"] = {
+			action = function()
+				return require("obsidian").util.gf_passthrough()
+			end,
+			opts = { noremap = false, expr = true, buffer = true },
+		},
+	},
+})
+
+-- yank and keep selection
+vim.keymap.set("v", "y", "ygv", { desc = "yank and keep selection" })
+
+-- move lines
+-- ( shift opt hjkl)
+
+vim.keymap.set("n", "<D-S-j>", "<Nop>")
+vim.keymap.set("n", "<D-S-k>", "<Nop>")
+vim.keymap.set("v", "<D-S-j>", "<Nop>")
+vim.keymap.set("v", "<D-S-k>", "<Nop>")
+
+vim.keymap.set("n", "<S-Up>", "<Nop>")
+vim.keymap.set("n", "<S-Down>", "<Nop>")
+vim.keymap.set("v", "<S-Left>", "<Nop>")
+vim.keymap.set("v", "<S-Right>", "<Nop>")
+
+-- shift alt k/j
+vim.keymap.set("v", "<S-Down>", ":m '>+1<CR>gv=gv", { desc = "move line down" })
+vim.keymap.set("v", "<S-Up>", ":m '<-2<CR>gv=gv", { desc = "move selection up" })
+
+vim.keymap.set("n", "<C-Down>", "<Nop>")
+vim.keymap.set("n", "<C-Up>", "<Nop>")
+
+vim.keymap.set("v", "<C-Down>", ":m '>+1<CR>gv=gv")
+vim.keymap.set("v", "<C-Up>", ":m '<-2<CR>gv=gv")
+
+vim.keymap.set({ "n", "i" }, "<C-c>", function()
+	if #vim.fn.getbufinfo({ buflisted = 1 }) > 1 then
+		vim.cmd("bd")
+	else
+		vim.cmd("q")
+	end
+end, { silent = true })
+
+require("neoscroll").setup({
+	mappings = {
+		"<C-u>",
+		"<C-d>",
+		"<C-b>",
+		"<C-f>",
+		"<C-y>",
+		"<C-e>",
+		"zt",
+		"zz",
+		"zb",
+	},
+	hide_cursor = true, -- Hide cursor while scrolling
+	stop_eof = true, -- Stop at <EOF> when scrolling downwards
+	respect_scrolloff = false, -- Stop scrolling when the cursor reaches the scrolloff margin of the file
+	cursor_scrolls_alone = true, -- The cursor will keep on scrolling even if the window cannot scroll further
+	duration_multiplier = 1.0, -- Global duration multiplier
+	easing = "linear", -- Default easing function
+	pre_hook = nil, -- Function to run before the scrolling animation starts
+	post_hook = nil, -- Function to run after the scrolling animation ends
+	performance_mode = false, -- Disable "Performance Mode" on all buffers.
+	ignored_events = { -- Events ignored while scrolling
+		"WinScrolled",
+		"CursorMoved",
+	},
+})
+-- require("snacks").setup({
+-- 	-- notifier = {
+-- 	-- 	enabled = false,
+-- 	-- },
+-- 	scroll = {
+-- 		enabled = false,
+-- 	},
+-- })
+
+-- snacks (scratch buffer)
+vim.keymap.set("n", "<leader>.", function()
+	Snacks.scratch()
+end, { desc = "Scratch buffer" })
+
+-- snacks file explorer
+vim.keymap.set("n", "<leader>es", function()
+	-- vim.keymap.set("n", "<leader>fe", function()
+	Snacks.explorer()
+end, { desc = "Snacks file explorer" })
+
+-- snacks keybinds
+vim.keymap.set("n", "<leader>pk", function()
+	Snacks.picker.keymaps({ layout = "ivy" })
+end, { desc = "Snacks Picker Keymaps" })
+
+-- snacks help tags
+vim.keymap.set("n", "<leader>vh", function()
+	Snacks.picker.help()
+end, { desc = "Snacks Help Tags" })
+
+-- which-key
+require("which-key").setup({
+	-- -@type false | "classic" | "modern" | "helix"
+	preset = "helix",
+})
+
+-- maximizer
+require("maximizer").setup()
+
+-- yazi inside nvim
+vim.keymap.set("n", "<leader>yy", function()
+	require("yazi").yazi()
+end, { desc = "Yazi" })
+
+-- highlight-colors
+require("nvim-highlight-colors").setup({})
+-- require("colorizer").setup()
+-- require("colorizer").setup({
+-- 	"*",
+-- }, {
+-- 	RGB = true,
+-- 	RRGGBB = true,
+-- 	custom_patterns = {
+-- 		{
+-- 			label = "ARGB",
+-- 			pattern = "0x%x%x(%x%x%x%x%x%x)",
+-- 			group = 1,
+-- 		},
+-- 	},
+-- })
+
+-- XcodeBuild
+require("xcodebuild").setup({
+	auto_select_scheme = true,
+	auto_select_target = true,
+	show_build_progress = true,
+})
+
+-- nvim-ufo (foldable things)
+require("ufo").setup({
+	open_fold_hl_timeout = 150,
+	preview = {
+		win_config = {
+			border = { "", "─", "", "", "", "─", "", "" },
+			winhighlight = "Normal:Folded",
+			winblend = 100,
+		},
+	},
+})
+-- vim.o.foldcolumn = "1"
+vim.o.foldlevel = 99
+vim.o.foldlevelstart = 99
+vim.o.foldenable = true
+
+-- vim.keymap.set("n", "zR", require("ufo").toggleFold)
+vim.keymap.set("n", "za", "za", { desc = "Toggle fold under cursor" })
+-- vim.keymap.set("n", "\x1b[1;5P", "za", { desc = "Toggle fold under cursor" })
+
+vim.keymap.set("n", "zR", require("ufo").openAllFolds, { desc = "Open all folds" })
+vim.keymap.set("n", "zM", require("ufo").closeAllFolds, { desc = "Close all folds" })
+
+-- mini stuff --
+require("mini.indentscope").setup({
+	symbol = "│",
+})
+
+-- vim.api.nvim_create_autocmd("FileType", {
+-- 	pattern = "alpha",
+-- 	callback = function()
+-- 		vim.b.miniindentscope_disable = true
+-- 	end,
+-- })
+
+-- mini.ai
+require("mini.ai").setup()
+
+-- render-markdown
+require("render-markdown").setup({
+	enabled = true,
+	sign = {
+		enabled = false,
+	},
+	heading = {
+		icons = {},
+	},
+})
+
+vim.keymap.set("n", "<leader>md", "<cmd>RenderMarkdown toggle<CR>", { desc = "RenderMarkdown Toggle" })
+
+vim.keymap.set("n", "<leader>mt", "<cmd>RenderMarkdown disable<CR>", { desc = "Disable RenderMarkdown" })
+
+-- Formatter (conform/stylua)
+require("conform").setup({
+	format_on_save = {
+		timeout_ms = 500,
+		lsp_format = "fallback",
+	},
+	formatters_by_ft = {
+		lua = { "stylua" },
+		rust = { "rustfmt" },
+	},
+})
+
+-- Cutlass
+require("cutlass").setup()
+
+-- Treesitter
+require("nvim-treesitter.configs").setup({
+	ensure_installed = { "javascript", "typescript", "tsx", "glsl", "markdown", "markdown_inline", "java" },
+	highlight = {
+		enable = true,
+	},
+	auto_install = true,
+	indent = { enable = true },
+	autopairs = { enable = true },
+	autotag = { enable = true },
+})
+
+-- nvim-tree
+vim.keymap.set("n", "<leader>fe", "<cmd>NvimTreeToggle<CR>", { desc = "Neotree Toggle" })
+
+local function on_attach(bufnr)
+	local api = require("nvim-tree.api")
+
+	local function opts(desc)
+		return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
+	end
+
+	vim.keymap.set("n", "<space>", api.node.open.edit, opts("Toggle node"))
+	vim.keymap.set("n", "l", api.node.open.edit, opts("Open"))
+	vim.keymap.set("n", "h", api.node.navigate.parent_close, opts("Close node"))
+	vim.keymap.set("n", "<Esc>", api.node.open.preview, opts("Preview"))
+
+	vim.keymap.set("n", "H", function()
+		local winid = vim.api.nvim_get_current_win()
+		local cur_width = vim.api.nvim_win_get_width(winid)
+		vim.api.nvim_win_set_width(winid, cur_width - 5)
+	end, opts("Decrease width"))
+
+	vim.keymap.set("n", "L", function()
+		local winid = vim.api.nvim_get_current_win()
+		local cur_width = vim.api.nvim_win_get_width(winid)
+		vim.api.nvim_win_set_width(winid, cur_width + 5)
+	end, opts("Increase width"))
+
+	vim.keymap.set("n", "a", function()
+		local node = api.tree.get_node_under_cursor()
+		if not node then
+			return
+		end
+		local base_path = node.type == "directory" and node.absolute_path
+			or vim.fn.fnamemodify(node.absolute_path, ":h")
+		vim.ui.input({ prompt = "New directory name: " }, function(input)
+			if input and input ~= "" then
+				os.execute(string.format("mkdir -p '%s/%s'", base_path, input))
+				api.tree.reload()
+			end
+		end)
+	end, opts("Create directory"))
+
+	vim.keymap.set("n", "A", function()
+		local node = api.tree.get_node_under_cursor()
+		if not node then
+			return
+		end
+		local base_path = node.type == "directory" and node.absolute_path
+			or vim.fn.fnamemodify(node.absolute_path, ":h")
+		vim.ui.input({ prompt = "New file name: " }, function(input)
+			if input and input ~= "" then
+				os.execute(string.format("touch '%s/%s'", base_path, input))
+				api.tree.reload()
+			end
+		end)
+	end, opts("Create file"))
+
+	vim.keymap.set("n", "x", api.fs.remove, opts("Delete"))
+	vim.keymap.set("n", "r", api.fs.rename, opts("Rename"))
+	vim.keymap.set("n", "y", api.fs.copy.node, opts("Copy"))
+	vim.keymap.set("n", "d", api.fs.cut, opts("Cut"))
+	vim.keymap.set("n", "p", api.fs.paste, opts("Paste"))
+	vim.keymap.set("n", "w", api.tree.change_root_to_node, opts("Set root"))
+	vim.keymap.set("n", "u", api.tree.change_root_to_parent, opts("Navigate up"))
+	vim.keymap.set("n", "gh", api.tree.toggle_hidden_filter, opts("Toggle hidden"))
+end
+
+require("nvim-tree").setup({
+	on_attach = on_attach,
+	auto_reload_on_write = true,
+	disable_netrw = false,
+	hijack_netrw = true,
+	hijack_cursor = false,
+	hijack_unnamed_buffer_when_opening = false,
+	sort = {
+		sorter = "name",
+		folders_first = true,
+	},
+	view = {
+		centralize_selection = false,
+		cursorline = true,
+		debounce_delay = 15,
+		width = 20,
+		preserve_window_proportions = false,
+		number = false,
+		relativenumber = false,
+		signcolumn = "yes",
+		float = {
+			enable = false,
+		},
+	},
+	renderer = {
+		add_trailing = false,
+		group_empty = false,
+		highlight_git = false,
+		full_name = false,
+		highlight_opened_files = "none",
+		root_folder_label = ":~:s?$?/..?",
+		indent_width = 2,
+		indent_markers = {
+			enable = false,
+		},
+		icons = {
+			show = {
+				file = true,
+				folder = true,
+				folder_arrow = true,
+				git = false,
+			},
+		},
+	},
+	hijack_directories = {
+		enable = true,
+		auto_open = true,
+	},
+	update_focused_file = {
+		enable = false,
+		update_root = false,
+		ignore_list = {},
+	},
+	system_open = {
+		cmd = "",
+		args = {},
+	},
+	diagnostics = {
+		enable = false,
+	},
+	filters = {
+		dotfiles = false,
+		git_clean = false,
+		no_buffer = false,
+		custom = {},
+		exclude = {},
+	},
+	filesystem_watchers = {
+		enable = true,
+		debounce_delay = 50,
+		ignore_dirs = {},
+	},
+	git = {
+		enable = true,
+		ignore = false,
+		show_on_dirs = true,
+		show_on_open_dirs = true,
+		timeout = 400,
+	},
+	actions = {
+		use_system_clipboard = true,
+		change_dir = {
+			enable = true,
+			global = false,
+			restrict_above_cwd = false,
+		},
+		expand_all = {
+			max_folder_discovery = 300,
+			exclude = {},
+		},
+		file_popup = {
+			open_win_config = {
+				col = 1,
+				row = 1,
+				relative = "cursor",
+				border = "shadow",
+				style = "minimal",
+			},
+		},
+		open_file = {
+			quit_on_open = false,
+			resize_window = true,
+			window_picker = {
+				enable = true,
+				picker = "default",
+				chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890",
+				exclude = {
+					filetype = { "packer", "qf", "diff", "fugitive", "fugitiveblame" },
+					buftype = { "nofile", "terminal", "help" },
+				},
+			},
+		},
+		remove_file = {
+			close_window = true,
+		},
+	},
+	trash = {
+		cmd = "gio trash",
+	},
+	live_filter = {
+		prefix = "[FILTER]: ",
+		always_show_folders = true,
+	},
+	tab = {
+		sync = {
+			open = false,
+			close = false,
+			ignore = {},
+		},
+	},
+	log = {
+		enable = false,
+		truncate = false,
+		types = {
+			all = false,
+			config = false,
+			copy_paste = false,
+			dev = false,
+			diagnostics = false,
+			git = false,
+			profile = false,
+			watcher = false,
+		},
+	},
+})
+
+-- vim.keymap.set({ "n", "i", "s" }, "<c-f>", function()
+-- 	if not require("noice.lsp").scroll(4) then
+-- 		return "<c-f>"
+-- 	end
+-- end, { silent = true, expr = true })
+
+-- vim.keymap.set({ "n", "i", "s" }, "<c-b>", function()
+-- 	if not require("noice.lsp").scroll(-4) then
+-- 		return "<c-b>"
+-- 	end
+-- end, { silent = true, expr = true })
+
+vim.keymap.set({ "n", "i", "s" }, "<Down>", function()
+	if not require("noice.lsp").scroll(4) then
+		return "<c-f>"
+	end
+end, { silent = true, expr = true })
+
+vim.keymap.set({ "n", "i", "s" }, "<Up>", function()
+	if not require("noice.lsp").scroll(-4) then
+		return "<c-b>"
+	end
+end, { silent = true, expr = true })
+
+-- flash
+require("flash").setup()
+-- vim.keymap.set("n", "<leader>s", function()
+vim.keymap.set("n", "f", function()
+	require("flash").jump()
+end, { desc = "Flash" })
+
+-- vim.keymap.del("n", "f")
+-- vim.keymap.del("n", "F")
+
+vim.keymap.set({ "n", "x", "o" }, ",", ",")
+vim.keymap.set({ "n", "x", "o" }, ";", ";")
+
+-- vim.api.nvim_set_hl(0, "ModeMsg", { fg = "#98c379" })
+-- vim.api.nvim_set_hl(0, "ErrorMsg", { fg = "#e06c75" })
+-- vim.api.nvim_set_hl(0, "Search", { fg = "#e5c07b", bg = "NONE" })
+-- vim.api.nvim_set_hl(0, "MoreMsg", { fg = "#ffffff" })
+-- vim.api.nvim_set_hl(0, "Question", { fg = "#ffffff" })
+
+-- notify
+local notify = require("notify")
+
+notify.setup({
+	background_colour = "#000000",
+	fps = 60,
+	timeout = 3000,
+	-- max_width = 35,
+	minimum_width = 35,
+	render = "minimal",
+	stages = "static",
+})
+
+vim.api.nvim_set_hl(0, "NotifyBackground", { bg = "NONE" })
+vim.notify = notify
+
+if not vim.g._noice_loaded then
+	require("noice").setup({
+		views = {
+			cmdline_popup = {
+				size = {
+					width = 35,
+					height = "auto",
+				},
+			},
+
+			top_right = {
+				-- backend = "notify",
+				backend = "popup",
+				relative = "editor",
+				position = {
+					row = 0,
+					col = "100%",
+				},
+				size = {
+					-- width = 35,
+					width = "auto",
+					height = "auto",
+				},
+				border = {
+					style = "rounded",
+				},
+				timeout = 1500,
+				replace = true,
+				win_options = {
+					winblend = 0,
+				},
+			},
+		},
+		lsp = {
+			hover = {
+				enabled = true,
+			},
+			override = {
+				["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+				["vim.lsp.util.stylize_markdown"] = true,
+			},
+			documentation = {
+				view = "hover",
+				opts = {
+					lang = "markdown",
+					replace = true,
+					render = "plain",
+					format = { "{message}" },
+					win_options = { concealcursor = "n", conceallevel = 3 },
+					-- scrollbar = false,
+				},
+			},
+		},
+		presets = {
+			command_palette = true,
+			long_message_to_split = true,
+			inc_rename = false,
+			lsp_doc_border = true,
+		},
+		routes = {
+			{
+				-- view = "notify",
+				view = "top_right",
+				filter = {
+					event = "msg_show",
+				},
+			},
+		},
+	})
+	vim.g._noice_loaded = true
+end
+
+-- OLD Noice
+--if not vim.g._noice_loaded then
+--	require("noice").setup({
+--		views = {
+--			cmdline_popup = {
+--				size = {
+--					width = 35,
+--					height = "auto",
+--				},
+--			},
+
+--			top_right = {
+--				backend = "popup",
+--				relative = "editor",
+--				-- anchor = "NE",
+--				position = {
+--					-- row = 1,
+--					row = 0,
+--					col = "100%",
+--					--col = vim.o.colums,
+--				},
+--				size = {
+--					width = "auto",
+--					height = "auto",
+--				},
+--				border = {
+--					style = "rounded",
+--				},
+--				timeout = 1500,
+--				replace = true,
+--				win_options = {
+--					winblend = 0,
+--				},
+--			},
+--		},
+--		lsp = {
+--			hover = {
+--				enabled = true,
+--			},
+--			override = {
+--				["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+--				["vim.lsp.util.stylize_markdown"] = true,
+--			},
+--			documentation = {
+--				view = "hover",
+--				opts = {
+--					lang = "markdown",
+--					replace = true,
+--					render = "plain",
+--					format = { "{message}" },
+--					win_options = { concealcursor = "n", conceallevel = 3 },
+--					-- scrollbar = false,
+--				},
+--			},
+--		},
+--		presets = {
+--			command_palette = true,
+--			long_message_to_split = true,
+--			inc_rename = false,
+--			lsp_doc_border = true,
+--		},
+--		routes = {
+--			{
+--				view = "notify",
+--				-- view = "top_right",
+--				filter = {
+--					event = "msg_show",
+--				},
+--			},
+--		},
+--	})
+--	vim.g._noice_loaded = true
+--end
+
+-- Lualine
+local custom_codedark = require("lualine.themes.codedark")
+
+local modes = { "normal", "insert", "visual" }
+local sections = { "a", "b", "c" }
+
+for _, mode in ipairs(modes) do
+	if custom_codedark[mode] == nil then
+		custom_codedark[mode] = {}
+	end
+	for _, section in ipairs(sections) do
+		if custom_codedark[mode][section] == nil then
+			custom_codedark[mode][section] = {}
+		end
+		custom_codedark[mode][section].bg = "NONE"
+		custom_codedark[mode][section].fg = "#7F8490"
+	end
+end
+
+custom_codedark.normal.a.gui = "bold"
+custom_codedark.insert.a.gui = "bold"
+
+local copilot_component = function()
+	if vim.g.copilot_enabled == 1 then
+		-- return " "
+		return ""
+	else
+		return ""
+	end
+end
+
+-- LuaLine
+require("lualine").setup({
+	options = {
+		theme = custom_codedark,
+		globalstatus = true,
+		component_separators = { right = "" },
+	},
+	sections = {
+		lualine_a = { "mode" },
+		lualine_b = { "filename" },
+		lualine_c = {},
+		lualine_x = {
+			copilot_component,
+			{
+				"filetype",
+				"diagnostics",
+				symbols = { error = " ", warn = " ", info = " ", hint = " " },
+				separator = { right = " " },
+				colored = false,
+			},
+		},
+		-- lualine_y = {
+		-- 	function()
+		-- 		local clients = vim.lsp.get_clients({ bufnr = 0 })
+		-- 		if next(clients) == nil then
+		-- 			return ""
+		-- 		end
+		-- 		return clients[1].name
+		-- 	end,
+		-- },
+
+		lualine_y = {
+			-- copilot_component,
+			function()
+				local clients = vim.lsp.get_clients({ bufnr = 0 })
+				local names = {}
+				for _, client in ipairs(clients) do
+					if client.name ~= "GitHub Copilot" then
+						table.insert(names, client.name)
+					end
+				end
+				return table.concat(names, ", ")
+			end,
+		},
+
+		lualine_z = { "location", "progress" },
+	},
+})
+
+-- Autopairs
+require("nvim-autopairs").setup({
+	enable_check_bracket_line = false,
+	ignored_next_char = "[%w%.]",
+})
+
+-- ultimate-autopair.nvim
+-- require("ultimate-autopair").setup()
+
+-- nvim-surround
+-- require("nvim-surround").setup()
+
+-- lazygit telescope
+require("telescope").load_extension("lazygit")
+
+-- Telescope
+local actions = require("telescope.actions")
+
+local function move_down(prompt_bufnr, count)
+	for _ = 1, count do
+		actions.move_selection_next(prompt_bufnr)
+	end
+end
+
+local function move_up(prompt_bufnr, count)
+	for _ = 1, count do
+		actions.move_selection_previous(prompt_bufnr)
+	end
+end
+
+require("telescope").setup({
+	defaults = {
+		initial_mode = "normal",
+		mappings = {
+			n = {
+				["J"] = function(prompt_bufnr)
+					move_down(prompt_bufnr, 5)
+				end,
+				["K"] = function(prompt_bufnr)
+					move_up(prompt_bufnr, 5)
+				end,
+				["i"] = function()
+					vim.cmd("startinsert")
+				end,
+
+				-- ["l"] = function(prompt_bufnr)
+				-- 	local action_state = require("telescope.actions.state")
+				-- 	local actions = require("telescope.actions")
+				-- 	local entry = action_state.get_selected_entry()
+
+				-- 	if entry.Path:is_dir() then
+				-- 		actions.select_default(prompt_bufnr)
+				-- 	else
+				-- 		actions.file_edit(prompt_bufnr)
+				-- 	end
+				-- end,
+
+				["l"] = "select_default",
+
+				["q"] = "close",
+				["<Esc>"] = "close",
+			},
+		},
+	},
+})
+
+-- Config reload
+vim.keymap.set("n", "<leader>rr", function()
+	vim.cmd("luafile $MYVIMRC")
+	print("Config reloaded!")
+end, { desc = "Reload Neovim config" })
+-- vim.keymap.set("n", "<leader>rr", function()
+-- 	vim.cmd("luafile $MYVIMRC")
+-- 	vim.cmd("doautocmd FileType")
+-- 	print("Config reloaded!")
+-- end)
+
+-- =========================================================
+-- HIGHLIGHT GROUPS AND COLORS
+-- =========================================================
+vim.api.nvim_set_hl(0, "StatusLine", { bg = "NONE", fg = "#ffffff" })
+vim.api.nvim_set_hl(0, "NormalFloat", { bg = "NONE" })
+vim.api.nvim_set_hl(0, "FloatBorder", { bg = "NONE" })
+vim.api.nvim_set_hl(0, "WinSeparator", { bg = "NONE" })
+
+-- Noice highlight groups
+vim.api.nvim_set_hl(0, "NoiceCmdlinePopup", { bg = "NONE", fg = "#ffffff" })
+vim.api.nvim_set_hl(0, "NoiceCmdlinePopupBorder", { bg = "NONE", fg = "#ffffff" })
+vim.api.nvim_set_hl(0, "NoiceCmdline", { bg = "NONE", fg = "#ffffff" })
+vim.api.nvim_set_hl(0, "NoiceCmdlineIcon", { fg = "#ffffff", bold = true })
+vim.api.nvim_set_hl(0, "NoiceCmdlinePopupInput", { fg = "#ffffff", bg = "NONE" })
+vim.api.nvim_set_hl(0, "NoicePopup", { fg = "#ffffff", bg = "NONE" })
+vim.api.nvim_set_hl(0, "NoicePopupmenu", { fg = "#ffffff", bg = "NONE" })
+vim.api.nvim_set_hl(0, "NoicePopupmenuBorder", { fg = "#ffffff", bg = "NONE" })
+vim.api.nvim_set_hl(0, "NoiceCmdlinePrompt", { fg = "#ffffff", bg = "NONE" })
+vim.api.nvim_set_hl(0, "MsgArea", { fg = "white", bg = "NONE" })
+vim.api.nvim_set_hl(0, "MsgSeparator", { bg = "NONE" })
+vim.api.nvim_set_hl(0, "CmdLine", { bg = "NONE" })
+
+vim.api.nvim_set_hl(0, "DiagnosticVirtualTextHint", { fg = "#7F8490" })
+vim.api.nvim_set_hl(0, "DiagnosticVirtualLinesHint", { fg = "#7F8490" })
+
+-- vim.api.nvim_set_hl(0, "NotifyERRORBorder", { fg = "#8A1F1F" })
+-- vim.api.nvim_set_hl(0, "NotifyWARNBorder", { fg = "#79491D" })
+-- vim.api.nvim_set_hl(0, "NotifyINFOBorder", { fg = "#4F6752" })
+-- vim.api.nvim_set_hl(0, "NotifyDEBUGBorder", { fg = "#8B8B8B" })
+-- vim.api.nvim_set_hl(0, "NotifyTRACEBorder", { fg = "#4F3552" })
+
+-- =========================================================
+-- KEY MAPPINGS
+-- =========================================================
+
+-- Unset keys --
+vim.keymap.set("n", "?", "<Nop>")
+
+-- Command shortcuts
+vim.cmd.cnoreabbrev("msg messages")
+vim.cmd.cnoreabbrev("hl highlight")
+
+-- Window navigation
+vim.g.tmux_navigator_no_mappings = 1
+vim.keymap.set("n", "<C-h>", "<cmd>TmuxNavigateLeft<cr>")
+vim.keymap.set("n", "<C-j>", "<cmd>TmuxNavigateDown<cr>")
+vim.keymap.set("n", "<C-k>", "<cmd>TmuxNavigateUp<cr>")
+vim.keymap.set("n", "<C-l>", "<cmd>TmuxNavigateRight<cr>")
+
+-- vim.keymap.set("n", "<C-h>", "<cmd>TmuxNavigateLeft<cr>")
+-- vim.keymap.set("n", "<C-j>", "<C-w>j")
+-- vim.keymap.set("n", "<C-k>", "<cmd>TmuxNavigateUp<cr>")
+-- vim.keymap.set("n", "<C-l>", "<cmd>TmuxNavigateRight<cr>")
+
+-- Enhanced movement keys
+vim.keymap.set("n", "J", "5j")
+vim.keymap.set("n", "K", "5k")
+vim.keymap.set("n", "L", "5l")
+vim.keymap.set("n", "H", "5h")
+vim.keymap.set("v", "J", "5j")
+vim.keymap.set("v", "K", "5k")
+vim.keymap.set("v", "L", "5l")
+vim.keymap.set("v", "H", "5h")
+
+-- Toggleterm keybinds
+
+require("toggleterm").setup()
+vim.keymap.set("t", "<C-h>", [[<Cmd>wincmd h<CR>]], opts)
+vim.keymap.set("t", "<C-j>", [[<Cmd>wincmd j<CR>]], opts)
+vim.keymap.set("t", "<C-k>", [[<Cmd>wincmd k<CR>]], opts)
+vim.keymap.set("t", "<C-l>", [[<Cmd>wincmd l<CR>]], opts)
+
+local Terminal = require("toggleterm.terminal").Terminal
+local term1 = Terminal:new({ direction = "horizontal", id = 1 })
+local term2 = Terminal:new({ direction = "horizontal", id = 2 })
+
+local function open_term()
+	term1:open()
+	vim.cmd("wincmd =")
+end
+
+local function open_two_terms()
+	term1:open()
+	term2:open()
+	vim.cmd("wincmd =")
+end
+
+vim.keymap.set("n", "<leader>tt", open_term, { desc = "Open one terminal" })
+vim.keymap.set("n", "<leader>t2", open_two_terms, { desc = "Open two terminals" })
+vim.keymap.set("n", "<leader>th", "<cmd>ToggleTermToggleAll<CR>")
+
+-- Utility mappings
+-- vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Clear search highlighting" })
+
+-- Telescope mappings
+local builtin = require("telescope.builtin")
+vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Telescope find files" })
+-- vim.keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "Telescope live grep" })
+-- vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Telescope buffers" })
+vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "Telescope help tags" })
+vim.keymap.set("n", "<leader>fx", "<cmd>Telescope diagnostics<CR>", { desc = "Telescope diagnostics" })
+
+vim.keymap.set("n", "<leader>k", require("telescope.builtin").keymaps, { desc = "Telescope Keymaps" })
+
+-- Commentary plugin
+vim.keymap.set("n", "\\", "<Plug>CommentaryLine", { noremap = false })
+vim.keymap.set("x", "\\", "<Plug>Commentary", { noremap = false })
+vim.keymap.set("n", "¿", "<Plug>CommentaryLine", { noremap = false })
+vim.keymap.set("x", "¿", "<Plug>Commentary", { noremap = false })
+
+-- maximizer --
+vim.api.nvim_set_keymap("n", "mt", '<cmd>lua require("maximizer").toggle()<CR>', { silent = true, noremap = true })
+
+-- splits --
+vim.api.nvim_set_keymap("n", "<leader>|", "<cmd>vnew<CR>", { silent = true, noremap = true })
+vim.api.nvim_set_keymap("n", "<leader>-", "<cmd>new<CR>", { silent = true, noremap = true })
+-- vim.keymap.set("n", "<C-Up>", ":resize -2<CR>", { silent = true })
+-- vim.keymap.set("n", "<C-Down>", ":resize +2<CR>", { silent = true })
+vim.keymap.set("n", "<D-C-j>", ":resize -2<CR>", { silent = true })
+vim.keymap.set("n", "<D-C-k>", ":resize +2<CR>", { silent = true })
+
+vim.keymap.set("n", "<C-Left>", ":vertical resize -2<CR>", { silent = true })
+vim.keymap.set("n", "<C-Right>", ":vertical resize +2<CR>", { silent = true })
+
+-- =========================================================
+-- AUTOCOMMANDS
+-- =========================================================
+
+-- Help window behavior
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "help",
+	callback = function()
+		vim.cmd("wincmd L")
+	end,
+})
+
+-- Hover window thingy
+vim.api.nvim_create_autocmd("WinEnter", {
+	callback = function()
+		local win_config = vim.api.nvim_win_get_config(0)
+		if win_config.relative ~= "" then
+			vim.keymap.set("n", "K", "5k", { buffer = true, silent = true })
+			vim.keymap.set("n", "<Esc>", ":q<CR>", { buffer = true, silent = true })
+		end
+	end,
+})
+
+-- Error showing
+vim.diagnostic.config({
+	float = { border = "rounded" },
+	-- virtual_text = true,
+	virtual_lines = false,
+	-- virtual_text = false,
+	signs = false,
+	underline = true,
+	update_in_insert = false,
+	severity_sort = true,
+})
+
+vim.diagnostic.config({
+	float = { border = "rounded" },
+	virtual_text = true,
+	virtual_lines = false,
+})
+
+-- Command window escape behavior
+vim.api.nvim_create_autocmd("CmdwinEnter", {
+	callback = function()
+		vim.keymap.set("n", "<Esc>", "<C-c> <C-c>", { buffer = true })
+	end,
+})
+
+-- Search on <Esc>
+vim.api.nvim_create_autocmd("CmdlineEnter", {
+	-- pattern = { "/", "?" },
+	pattern = "/",
+	callback = function()
+		vim.keymap.set("c", "<Esc>", "<CR>", { buffer = true })
+	end,
+})
+
+-- GLSL filetype detection
+vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
+	pattern = { "*.frag", "*.vert", "*.glsl" },
+	callback = function()
+		vim.bo.filetype = "glsl"
+	end,
+})
+
+-- format on save(?)
+vim.api.nvim_create_autocmd("BufWritePre", {
+	pattern = "*",
+	callback = function(args)
+		require("conform").format({ bufnr = args.buf })
+	end,
+})
+
+vim.api.nvim_create_autocmd("BufWritePre", {
+	pattern = "*.go",
+	callback = function()
+		vim.lsp.buf.format({ async = false })
+	end,
+})
+
+-- =========================================================
+-- TERMINAL CURSOR CONFIGURATION
+-- =========================================================
+if vim.env.TERM and vim.env.TERM:match("xterm") then
+	vim.cmd([[
+    let &t_EI = "\e[2 q"
+    let &t_SI = "\e[5 q"
+    autocmd VimEnter * silent !echo -ne "\e[2 q"
+  ]])
+end

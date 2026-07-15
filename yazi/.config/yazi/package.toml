@@ -1,34 +1,37 @@
 [[plugin.deps]]
-use = "yazi-rs/plugins:smart-enter"
-rev = "b886025"
-hash = "56fdabc96fc1f4d53c96eb884b02a5be"
+use = "hankertrix/augment-command"
+rev = "f9b1513"
+hash = "edfd1f6460f06c2f70d08ab0ed8152bd"
 
 [[plugin.deps]]
-use = "yazi-rs/plugins:no-status"
-rev = "b886025"
-hash = "3e023d31f29201efdac2a6ae35fedb78"
+use = "yazi-rs/plugins:toggle-pane"
+rev = "5d5c480"
+hash = "9c7987da2d2a2120dac33abb64132004"
 
 [[plugin.deps]]
-use = "yazi-rs/plugins:jump-to-char"
-rev = "5d726c0"
-hash = "d2f04875bbd4ed3dd5696e8c4b094fde"
+use = "Lil-Dank/lazygit"
+rev = "e73fd74"
+hash = "6ea5f37c7f219671ec504cb8311f889d"
+
+[[plugin.deps]]
+use = "boydaihungst/pref-by-location"
+rev = "8d355f5"
+hash = "9ddac64e0db5178e2710fa6cfc2dd004"
+
+[[plugin.deps]]
+use = "Rolv-Apneseth/bypass"
+rev = "c1e5fcf"
+hash = "208e77480824f62558a5b037c8569d61"
+
+[[plugin.deps]]
+use = "Ape/smart-enter"
+rev = "778839f"
+hash = "7429078f60e02543c8b7b9213c2b22d3"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:full-border"
-rev = "5d726c0"
-hash = "3996fc74044bc44144b323686f887e1"
+rev = "5d5c480"
+hash = "7b625412411be411153886894d9acaf"
 
-[[plugin.deps]]
-use = "yazi-rs/plugins:mactag"
-rev = "de53d90"
-hash = "72dfb25e9d0c015365827431e28df322"
-
-[[flavor.deps]]
-use = "956MB/vscode-dark-modern"
-rev = "cd60541"
-hash = "f970182bee3543831796629ccf078553"
-
-[[flavor.deps]]
-use = "956MB/vscode-light-plus"
-rev = "83c8be6"
-hash = "3b7e1e867311745f1335449b9a9cdfd3"
+[flavor]
+deps = []

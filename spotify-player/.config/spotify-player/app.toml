@@ -18,7 +18,7 @@ liked_icon = "♥"
 border_type = "Rounded"
 # progress_bar_type = "Rectangle"
 progress_bar_type = "Line"
-# shuffle = "true"
+shuffle = "true"
 
 cover_img_length = 9
 cover_img_width = 5
@@ -35,12 +35,13 @@ enable_notify = false
 enable_cover_image_cache = true
 default_device = "spotify-player"
 notify_streaming_only = false
-seek_duration_secs = 7
+seek_duration_secs = 10
 sort_artist_albums_by_type = false
+enable_audio_visualization = true
 
-[notify_format]
-summary = "{track} • {artists}"
-body = "{album}"
+# [notify_format]
+# summary = "{track} • {artists}"
+# body = "{album}"
 
 [layout]
 playback_window_position = "Top"
@@ -50,7 +51,9 @@ playback_window_height = 6
 
 [layout.library]
 playlist_percent = 70
-album_percent = 29
+album_percent = 25
+# playlist_percent = 98
+# album_percent = 1
 
 [device]
 name = "spotify-player"

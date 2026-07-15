@@ -17,8 +17,7 @@ accordion-padding = 30
 default-root-container-layout = 'dwindle'
 default-root-container-orientation = 'auto'
 on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
-# on-focus-changed = "move-mouse window-lazy-center"
-dwindle-default-split-ratio = 1.618
+on-focus-changed = "move-mouse window-lazy-center"
 
 automatically-unhide-macos-hidden-apps = true
 
@@ -33,7 +32,7 @@ automatically-unhide-macos-hidden-apps = true
     outer.bottom 		= 15
     outer.top 			= 15
     # outer.top           = [
-    #     { monitor."built-in" = 25 },
+    #     { monitor."built-in" = 23 },
     # 55]
     outer.right 		= 15
 
@@ -47,50 +46,118 @@ automatically-unhide-macos-hidden-apps = true
 
 [mode.main.binding]
 
-    alt-slash = 'layout tiles horizontal vertical'
-    alt-comma = 'layout accordion horizontal vertical'
+    # ctrl-alt-slash = 'layout tiles horizontal vertical'
+    ctrl-alt-slash = 'layout dwindle horizontal vertical'
+    # ctrl-alt-comma = 'layout accordion horizontal vertical'
+    ctrl-alt-comma = 'layout dwindle'
 
-    cmd-shift-1= 'move left'
-    cmd-shift-2= 'move right'
+    # cmd-shift-h = 'focus left --boundaries all-monitors-outer-frame --boundaries-action stop'
+    # cmd-shift-l = 'focus right --boundaries all-monitors-outer-frame --boundaries-action stop'
+    # cmd-shift-k = 'focus up --boundaries all-monitors-outer-frame --boundaries-action stop'
+    # cmd-shift-j = 'focus down --boundaries all-monitors-outer-frame --boundaries-action stop'
+    cmd-shift-h = 'focus left --boundaries all-monitors-outer-frame --boundaries-action wrap-around-all-monitors'
+    cmd-shift-l = 'focus right --boundaries all-monitors-outer-frame --boundaries-action wrap-around-all-monitors'
+    cmd-shift-k = 'focus up --boundaries all-monitors-outer-frame --boundaries-action wrap-around-all-monitors'
+    cmd-shift-j = 'focus down --boundaries all-monitors-outer-frame --boundaries-action wrap-around-all-monitors'
+
+    # cmd-shift-1= 'swap left'
+    # cmd-shift-2= 'swap right'
+    # cmd-shift-1= 'move left'
+    # cmd-shift-2= 'move right'
+
+    shift-left= 'move left'
+    shift-right= 'move right'
+    shift-up= 'move up'
+    shift-down= 'move down'
+
+    # alt-shift-1= 'workspace 1'
+    # alt-shift-2= 'workspace 2'
+    # alt-shift-3= 'workspace 3'
+    # alt-shift-4= 'workspace 4'
+    # alt-shift-5= 'workspace 5'
+    # alt-shift-6= 'workspace 6'
+
+
+    alt-shift-1= 'workspace 1'
+    alt-shift-2= 'workspace 2'
+    alt-shift-3= 'workspace 3'
+    alt-shift-4= 'workspace 4'
+    alt-shift-5= 'workspace 5'
+    alt-shift-6= 'workspace 6'
+
+    # cmd-shift-1= 'workspace 1'
+    # cmd-shift-2= 'workspace 2'
+    # cmd-shift-3= 'workspace 3'
+    # cmd-shift-4= 'workspace 4'
+    # cmd-shift-5= 'workspace 5'
+    # cmd-shift-6= 'workspace 6'
+
 
     ctrl-1 = 'workspace 1'
     ctrl-2 = 'workspace 2'
     ctrl-3 = 'workspace 3'
     ctrl-4 = 'workspace 4'
     ctrl-5 = 'workspace 5'
-    # ctrl-6 = 'workspace 6'
+    ctrl-6 = 'workspace 6'
 
     cmd-ctrl-h = 'workspace prev'
     cmd-ctrl-l = 'workspace next'
 
-    alt-shift-8= 'resize smart -50'
-    alt-shift-9= 'resize smart +50'
-    alt-shift-0= 'balance-sizes'
+    # alt-shift-8= 'resize smart -100'
+    # alt-shift-9= 'resize smart +100'
+    # alt-shift-0= 'balance-sizes'
 
-    shift-left = ['move-node-to-monitor --wrap-around prev', 'focus-monitor --wrap-around prev']
-    shift-right = ['move-node-to-monitor --wrap-around next', 'focus-monitor --wrap-around next']
+    cmd-shift-8= 'resize smart -100'
+    cmd-shift-9= 'resize smart +100'
+    cmd-shift-0= 'balance-sizes'
+
+    shift-alt-enter='fullscreen'
+    # cmd-enter='fullscreen'
+
+    # shift-left = ['move-node-to-monitor --wrap-around prev', 'focus-monitor --wrap-around prev']
+    # shift-right = ['move-node-to-monitor --wrap-around next', 'focus-monitor --wrap-around next']
 
 
-    ctrl-left = ['move-node-to-workspace --wrap-around prev', 'workspace --wrap-around prev']
-    ctrl-right = ['move-node-to-workspace --wrap-around next', 'workspace --wrap-around next']
+    shift-alt-i= ['move-node-to-monitor --wrap-around prev', 'focus-monitor --wrap-around prev']
+    shift-alt-o= ['move-node-to-monitor --wrap-around next', 'focus-monitor --wrap-around next']
+
+    cmd-left = ['move-node-to-workspace --wrap-around prev', 'workspace --wrap-around prev']
+    cmd-right = ['move-node-to-workspace --wrap-around next', 'workspace --wrap-around next']
 
     alt-tab = 'workspace-back-and-forth'
 
     alt-shift-m= 'mode service'
+    # alt-shift-n= 'mode resize'
 
 [mode.service.binding]
     esc = ['reload-config', 'mode main']
     # r = ['flatten-workspace-tree', 'mode main']
     # f = ['layout floating tiling', 'mode main'] 
+    # a = ['layout tiles accordion', 'mode main']
+    # t = ['layout tiles horizontal vertical', 'mode main']
     # backspace = ['close-all-windows-but-current', 'mode main']
 
-    ctrl-shift-h = ['swap left', 'mode main']
-    ctrl-shift-j = ['swap down', 'mode main']
-    ctrl-shift-k = ['swap up', 'mode main']
-    ctrl-shift-l = ['swap right', 'mode main']
+    j = ['swap down']
+    k = ['swap up']
+    h = ['swap left']
+    l = ['swap right']
+    
 
     shift-left = ['join-with left', 'mode main']
     shift-down = ['join-with down', 'mode main']
     shift-up = ['join-with up', 'mode main']
     shift-right = ['join-with right', 'mode main']
 
+
+# [mode.resize.binding]
+#     h = 'resize width -200'
+#     l = 'resize width +200'
+#     esc = 'mode main'
+
+# [[on-window-detected]]
+# if.app-id = 'com.apple.finder'
+# run = ['layout floating']
+
+# [[on-window-detected]]
+# if.app-id = 'com.apple.finder'
+# run = 'resize smart -275'

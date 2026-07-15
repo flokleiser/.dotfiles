@@ -15,6 +15,7 @@ export TERM=xterm-256color
 export PIP_REQUIRE_VIRTUALENV=true
 
 export XDG_CONFIG_HOME="$HOME/.config"
+# export XDG_CONFIG_HOME="$HOME/Temp/yazi-config/"
 export GOPATH="$HOME/Code/Go/go"
 export CARGO_HOME="$HOME/Code/Rust/.cargo"
 export RUSTUP_HOME="$HOME/Code/Rust/.rustup"
@@ -30,6 +31,8 @@ export LESSHISTFILE=-
 export GROFF_NO_SGR=1
 export MANROFFOPT="-c"
 export MANPAGER='nvim +Man!'
+
+export PLATFORMIO_CORE_DIR="$HOME/Code/Arduino-PlatformIO/PlatformIO"
 
 ### --- PLUGINS & THEMES ---
 export ZSH=$HOME/.zsh
@@ -47,6 +50,7 @@ source $ZSH/completion.zsh
 bindkey '^I' autosuggest-accept
 
 bindkey "^[[Z" fzf-tab-complete
+bindkey '^[1;9Z' fzf-tab-complete
 
 source $ZSH/completion.zsh
 
@@ -61,7 +65,12 @@ alias vim=nvim
 alias vi=nvim
 alias n="nvim $1"
 
-alias yz=yazi
+# alias yz=yazi
+
+alias yz='~/Code/Rust/yazi/target/release/yazi'
+# alias y='~/Code/Rust/yazi/target/release/yazi'
+
+
 alias lf=yazi
 alias z=zoxide
 alias ff=fastfetch
@@ -75,18 +84,26 @@ alias tk="tmux kill-server"
 ### --- ncspot/spotify_player alias --- 
 alias ncsp='~/Code/Rust/ncspot/target/release/ncspot'
 alias sp='~/Code/Rust/spotify-player/target/debug/spotify_player'
+# alias sp='spotify_player'
+alias f='fuck'
+alias temp="cd ~/Temp"
+
 
 ### --- ALIASES FOR PATHS ---
+# alias obsidian="cd /Users/flo/Library/Mobile\ Documents/iCloud\~md\~obsidian/Documents/Flo/02-Freetime/2-Areas)"
+
 alias obsidian="cd /Users/flo/Library/Mobile\ Documents/iCloud\~md\~obsidian/Documents/Flo"
 alias home="cd ~"
 alias config="cd ~/.dotfiles"
-alias zhdk="cd ~/ZHdK/HS25"
-alias hs="cd ~/ZHdK/HS25/DataVisualization/"
+alias zhdk="cd ~/ZHdK/FS26"
+# alias hs="cd ~/ZHdK/FS26/SpacialInteraction/"
+alias hs="cd ~/ZHdK/FS26/"
 alias ghostty="nvim ~/.dotfiles/ghostty/.config/ghostty/config"
-alias x="clear"
+alias cl="clear"
 alias .="open ."
+alias lg="lazygit"
 
-alias neofetch="fastfetch"
+# alias neofetch="fastfetch"
 
 alias code="cd ~/Code/"
 alias vscode="/usr/local/bin/code"
@@ -115,14 +132,29 @@ zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
 # --- Yazi cd thing
 
+# function y() {
+#     local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
+#     yazi "$@" --cwd-file="$tmp"
+#     if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+#         cd -- "$cwd"
+#     fi
+#     rm -f -- "$tmp"
+# }
 function y() {
     local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
-    yazi "$@" --cwd-file="$tmp"
+    ~/Code/Rust/Yazi/target/release/yazi "$@" --cwd-file="$tmp"
     if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
         cd -- "$cwd"
     fi
     rm -f -- "$tmp"
 }
+
+# --- reverse i search
+bindkey "^R" history-incremental-search-backward
+bindkey "^B" history-incremental-search-backward
+# bindkey "^B" history-incremental-search-backward
+# bindkey "^H" history-incremental-search-backward
+
 
 ### --- DIFFERENT CURSORS FOR VIM MODES ---
 # Prevent blinking cursor.

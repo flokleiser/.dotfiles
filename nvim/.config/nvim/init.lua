@@ -12,7 +12,7 @@ vim.opt.shiftwidth = 4
 vim.opt.showcmd = false
 vim.opt.more = true
 vim.opt.showmode = false
-vim.opt.scrolloff = 8
+vim.opt.scrolloff = 12
 vim.opt.wrap = true
 vim.opt.linebreak = true
 vim.opt.fillchars = { eob = " " }
@@ -21,6 +21,8 @@ vim.opt.splitright = true
 vim.opt.undofile = true
 vim.opt.timeoutlen = 300
 vim.opt.conceallevel = 1
+
+vim.opt.shortmess:append("A")
 
 vim.g.copilot_enabled = 0
 
@@ -34,6 +36,8 @@ vim.opt.expandtab = true
 
 vim.opt.winborder = "rounded"
 vim.g.tmux_navigator_no_wrap = 1
+
+-- vim.opt.cursorline = true
 
 -- =========================================================
 -- LEADER KEY SETUP
@@ -65,15 +69,18 @@ vim.cmd([[
 	hi Normal guibg=NONE ctermbg=NONE
 	hi NonText guibg=NONE ctermbg=NONE
 	hi SignColumn guibg=NONE ctermbg=NONE
-	hi LineNr guibg=NONE ctermbg=NONE
-	hi CursorLineNr guibg=NONE ctermbg=NONE
+	hi LineNr guibg=NONE ctermbg=NONE guifg=#ffffff
+	hi CursorLineNr guibg=NONE ctermbg=NONE 
 	hi EndOfBuffer guibg=NONE ctermbg=NONE
 	hi FoldColumn guibg=NONE ctermbg=NONE
 	hi ColorColumn guibg=NONE ctermbg=NONE
-	hi CursorLine guibg=NONE ctermbg=NONE
-	hi CursorColumn guibg=NONE ctermbg=NONE
 	hi VertSplit guibg=NONE ctermbg=NONE
 	hi Folded guibg=NONE ctermbg=NONE
+    hi CursorLine guibg=NONE ctermbg=NONE guifg=NONE
+    hi CursorColumn guibg=NONE ctermbg=NONE guifg=NONE
+
+    hi CursorLine guibg=NONE guifg=#7F8490
+    hi CursorColumn guibg=NONE guifg=#7F8490
 
 	call plug#begin('~/.config/nvim/plugged')
 
@@ -85,7 +92,6 @@ vim.cmd([[
 		Plug 'MunifTanjim/nui.nvim'
 
 		Plug 'echasnovski/mini.nvim'
-
 
 		Plug 'gbprod/cutlass.nvim'
 		Plug 'nvim-lua/plenary.nvim'
@@ -151,7 +157,30 @@ vim.cmd([[
         Plug 'folke/trouble.nvim'
 
         Plug 'github/copilot.vim'
+
+        Plug 'petertriho/nvim-scrollbar'
+
+        Plug 'wfxr/minimap.vim'
+
+        Plug 'Isrothy/neominimap.nvim'
+
+        Plug 'CopilotC-Nvim/CopilotChat.nvim'
+
+        Plug 'rcarriga/nvim-notify'
+
+        Plug 'ej-shafran/compile-mode.nvim'
+
+        Plug 'chentoast/marks.nvim'
+
+        Plug 'nvim-mini/mini.ai'
         
+        Plug 'tris203/precognition.nvim'
+
+        Plug 'm4xshen/hardtime.nvim'
+        
+        Plug 'folke/zen-mode.nvim'
+
+        Plug 'NeogitOrg/neogit'
 
 	call plug#end()
 
@@ -187,21 +216,43 @@ vim.cmd([[
     hi RenderMarkdownH5Bg guibg=NONE guifg=#6C757D
     hi RenderMarkdownH6Bg guibg=NONE guifg=#495057
 
+    "hi RenderMarkdownCode guibg=NONE
+    "hi ColorColumn guibg=NONE
+
     hi Special guibg=NONE guifg=#d4d4d4
 
     hi FlashBackdrop guibg=NONE guifg=#d4d4d4
+
+    hi MinimapCursor guibg=#6C757D
+    hi MinimapRange guibg=#495057 guifg=#d4d4d4
+
+    hi NeoMinimapCursorLine guifg=#ffffff guibg=#777777
+
+    hi NotifyERRORBorder guifg=#8A1F1F
+    hi NotifyWARNBorder guifg=#79491D
+    hi NotifyINFOBorder guifg=#4F6752
+
+    hi NotifyERRORBody guifg=#8A1F1F
+    hi NotifyWARNBody  guifg=#79491D
+    hi NotifyINFOBody guifg=#4F6752
+
+    hi AlphaHeader guifg=#ffffff 
+    hi LineNr guifg=#777777
+
+    "autocmd User AlphaReady set showtabline=0
+    "autocmd BufUnload <buffer> set showtabline=2
 
 ]])
 
 -- =========================================================
 -- LSP CONFIGURATION
 -- =========================================================
+
+vim.filetype.add({ extension = { ino = "cpp" } })
+
 vim.lsp.config.glsl_analyzer = {
 	cmd = { "glsl_analyzer" },
 	filetypes = { "glsl" },
-	on_attach = function(client, bufnr)
-		print("GLSL Analyzer attached to buffer " .. bufnr)
-	end,
 }
 
 vim.lsp.config.sourcekit = {
@@ -234,6 +285,18 @@ vim.lsp.config.gopls = {
 	},
 }
 
+local orig = vim.lsp.handlers["window/showMessageRequest"]
+
+vim.lsp.handlers["window/showMessageRequest"] = function(err, result, ctx, config)
+	local c = ctx and vim.lsp.get_client_by_id(ctx.client_id) or nil
+	if c and c.name == "lua_ls" then
+		return vim.NIL
+	end
+	return orig(err, result, ctx, config)
+end
+
+vim.lsp.handlers["$/progress"] = function() end
+
 vim.lsp.config.lua_ls = {
 	cmd = { "lua-language-server" },
 	filetypes = { "lua" },
@@ -254,10 +317,20 @@ vim.lsp.config.lua_ls = {
 			},
 			diagnostics = {
 				globals = { "vim" },
+				disable = {
+					"incomplete-signature-doc",
+					"lowercase-global",
+					"undefined-global",
+					"workspace-too-large",
+				},
 			},
 			workspace = {
-				library = vim.api.nvim_get_runtime_file("", true),
 				checkThirdParty = false,
+				library = {},
+				maxPreload = 100,
+				-- maxPreload = 2000,
+				preloadFileSize = 100,
+				-- preloadFileSize = 500,
 			},
 			telemetry = {
 				enable = false,
@@ -265,6 +338,17 @@ vim.lsp.config.lua_ls = {
 		},
 	},
 }
+
+vim.lsp.enable("lua_ls")
+
+vim.api.nvim_create_autocmd("VimEnter", {
+	once = true,
+	callback = function()
+		if vim.bo.filetype == "lua" then
+			vim.cmd("LspStart lua_ls")
+		end
+	end,
+})
 
 vim.lsp.config.rust_analyzer = {
 	cmd = { "rust-analyzer" },
@@ -300,20 +384,34 @@ vim.lsp.config.clangd = {
 	},
 }
 
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
+
+vim.lsp.config("html", {
+	capabilities = capabilities,
+})
+
 vim.lsp.enable("clangd")
 vim.lsp.enable("ts_ls")
 vim.lsp.enable("glsl_analyzer")
 vim.lsp.enable("sourcekit")
 vim.lsp.enable("gopls")
 vim.lsp.enable("rust_analyzer")
--- vim.lsp.enable("lua_ls")
+vim.lsp.enable("html")
 
 vim.api.nvim_create_autocmd("LspAttach", {
 	desc = "LSP Actions",
 	callback = function(args)
 		local bufnr = args.buf
 
-		vim.keymap.set("n", "gh", vim.lsp.buf.hover, {
+		vim.keymap.set("n", "gh", function()
+			-- local width = math.floor(vim.o.columns * 0.6)
+			vim.lsp.buf.hover({
+				-- max_width = width,
+				-- max_height = 30,
+				border = "rounded",
+			})
+		end, {
 			buffer = bufnr,
 			noremap = true,
 			silent = true,
@@ -324,7 +422,17 @@ vim.api.nvim_create_autocmd("LspAttach", {
 			buffer = bufnr,
 			noremap = true,
 			silent = false,
+			-- silent = true,
 			desc = "Go to definition",
+		})
+		vim.keymap.set("n", "gD", function()
+			vim.cmd("vsplit")
+			vim.lsp.buf.definition()
+		end, {
+			buffer = bufnr,
+			noremap = true,
+			silent = true,
+			desc = "Go to definition in split",
 		})
 	end,
 })
@@ -334,15 +442,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
 -- =========================================================
 local cmp = require("cmp")
 local luasnip = require("luasnip")
-
-local s = luasnip.snippet
-local t = luasnip.text_node
-local i = luasnip.insert_node
-local f = luasnip.function_node
-local c = luasnip.choice_node
-local d = luasnip.dynamic_node
-local r = luasnip.restore_node
-local fmt = require("luasnip.extras.fmt").fmt
 
 luasnip.config.set_config({
 	history = true,
@@ -421,219 +520,317 @@ cmp.setup({
 	}),
 })
 
+local function toggle_line_numbers()
+	local win = vim.api.nvim_get_current_win()
+	local number = vim.wo[win].number
+	local relativenumber = vim.wo[win].relativenumber
+
+	if number or relativenumber then
+		vim.wo[win].number = false
+		vim.wo[win].relativenumber = false
+	else
+		vim.wo[win].number = true
+		vim.wo[win].relativenumber = relativenumber
+	end
+end
+
+vim.keymap.set("n", "<leader>ln", toggle_line_numbers, { desc = "Toggle line numbers" })
+
 -- =========================================================
 -- PLUGIN CONFIGURATIONS
 -- =========================================================
 
+-- require("compile-mode").setup({})
+
+-- copilot stuff
+require("CopilotChat").setup({
+	mappings = {
+		submit_prompt = {
+			normal = "<Enter>",
+			insert = "<leader>ss",
+		},
+		close = {
+			normal = "q",
+			insert = "q",
+		},
+	},
+})
+
+-- Zen mode
+vim.keymap.set("n", "<leader>zt", function()
+	require("zen-mode").toggle({
+		window = {
+			-- width = 0.85,
+			width = 0.5,
+			options = {
+				number = false,
+			},
+		},
+	})
+end, { desc = "Toggle Zen Mode" })
+
+-- minimap/scrollbar
+-- vim.keymap.set("n", "<leader>mm", "<cmd>MinimapToggle<CR>", { desc = "Toggle Minimap" })
+
+vim.g.neominimap = {
+	auto_enable = false,
+	layout = "split",
+	-- layout = "float",
+	float = {
+		minimap_width = 12, -- width of the minimap
+		margin = {
+			right = 0,
+			bottom = 2,
+		},
+	},
+	split = {
+		minimap_width = 10,
+		direction = "right",
+		-- margin = {
+		-- 	right = 0,
+		-- 	bottom = 2,
+		-- },
+	},
+	exclude_filetypes = { "help", "NvimTree" },
+}
+
+vim.keymap.set("n", "<leader>mm", "<cmd>Neominimap Toggle<CR>", { desc = "Toggle Minimap" })
+
+require("scrollbar").setup({
+	show = false,
+	handle = {
+		text = " ",
+		blend = 80,
+		color = nil,
+		color_nr = nil,
+		highlight = "CursorColumn",
+		hide_if_all_visible = true,
+	},
+	marks = {
+		Cursor = {
+			text = "•",
+			priority = 0,
+			gui = nil,
+			color = nil,
+			cterm = nil,
+			color_nr = nil,
+			highlight = "Normal",
+		},
+	},
+})
+
+vim.keymap.set("n", "<leader>sb", "<cmd>ScrollbarToggle<CR>", { desc = "Toggle Scrollbar" })
+
 -- alpha
 require("alpha").setup(require("alpha.themes.dashboard").config)
+
+-- require("marks").setup()
 
 local alpha = require("alpha")
 local dashboard = require("alpha.themes.dashboard")
 
 dashboard.section.header.val = {
 
-	"                        ..'           ",
-	"                    ,xNMM.            ",
-	"                  .OMMMMo             ",
-	"                  lMM'                ",
-	"        .;loddo:.  .olloddol;.        ",
-	"      cKMMMMMMMMMMNWMMMMMMMMMM0:      ",
-	"    .KMMMMMMMMMMMMMMMMMMMMMMMWd.      ",
-	"    XMMMMMMMMMMMMMMMMMMMMMMMX.        ",
-	"   ;MMMMMMMMMMMMMMMMMMMMMMMM:         ",
-	"   :MMMMMMMMMMMMMMMMMMMMMMMM:         ",
-	"   .MMMMMMMMMMMMMMMMMMMMMMMMX.        ",
-	"    kMMMMMMMMMMMMMMMMMMMMMMMMWd.      ",
-	"    'XMMMMMMMMMMMMMMMMMMMMMMMMMMk     ",
-	"     'XMMMMMMMMMMMMMMMMMMMMMMMMK.     ",
-	"       kMMMMMMMMMMMMMMMMMMMMMMd       ",
-	"        ;KMMMMMMMWXXWMMMMMMMk.        ",
-	"          'cooc*'    '*coo''          ",
+	"                              ",
+	"                              ",
+	"                              ",
+	"         .          .         ",
+	"       ';;,.        ::'       ",
+	"     ,:::;,,        :ccc,     ",
+	"    ,::c::,,,,.     :cccc,    ",
+	"    ,cccc:;;;;;.    cllll,    ",
+	"    ,cccc;.;;;;;,   cllll;    ",
+	"    :cccc; .;;;;;;. coooo;    ",
+	"    ;llll;   ,:::::'loooo;    ",
+	"    ;llll:    ':::::loooo:    ",
+	"    :oooo:     .::::llodd:    ",
+	"    .;ooo:       ;cclooo:.    ",
+	"      .;oc        'coo;.      ",
+	"        .'         .,.        ",
+	"                              ",
+	"                              ",
+	"                              ",
+	"                              ",
+	"                              ",
+	"                              ",
+	"                              ",
 }
 
 dashboard.section.buttons.val = {
-	dashboard.button("f", "  Find file", ":Telescope find_files <CR>"),
 	dashboard.button("e", "  New file", ":ene <BAR> startinsert <CR>"),
 	dashboard.button("r", "  Recently used files", ":Telescope oldfiles <CR>"),
+	dashboard.button("b", "  Bookmarks", ":Telescope marks <CR>"),
+	dashboard.button("f", "  Find file", ":Telescope find_files <CR>"),
 	dashboard.button("t", "  Find text", ":Telescope live_grep <CR>"),
-	dashboard.button("c", "  Configuration", ":e ~/.config/nvim/init.lua <CR>"),
+	dashboard.button("c", "  Configuration", ":e ~/.dotfiles/nvim/.config/nvim/init.lua <CR>"),
 	dashboard.button("q", "  Quit Neovim", ":qa<CR>"),
 }
 
-dashboard.section.footer.opts.hl = "Type"
-dashboard.section.header.opts.hl = "Include"
-dashboard.section.buttons.opts.hl = "Keyword"
+dashboard.section.footer.opts.hl = "CmdLine"
+dashboard.section.header.opts.hl = "CmdLine"
+for _, button in ipairs(dashboard.section.buttons.val) do
+	button.opts.hl = "CmdLine"
+	button.opts.hl_shortcut = "CmdLine"
+end
+
+dashboard.section.buttons.opts = {
+	spacing = 1,
+	keymap = {
+		{ "n", "l", "<CR>", { silent = true, noremap = false } },
+	},
+}
 
 dashboard.opts.opts.noautocmd = true
+dashboard.opts.opts.keymap = {
+	press = { "<CR>", "l" },
+	press_queue = "<M-CR>",
+}
 
 alpha.setup(dashboard.opts)
 
 -- platformio
-local pok, platformio = pcall(require, "platformio")
-if pok then
-	platformio.setup({
-		lsp = "clangd",
-		-- lsp = {
-		--     enable_clangd = true,
-		--     enable ccls = false,
-		-- },
+-- local pok, platformio = pcall(require, "platformio")
+-- if pok then
+-- 	platformio.setup({
+-- 		lsp = "clangd",
+-- 		-- lsp = {
+-- 		--     enable_clangd = true,
+-- 		--     enable ccls = false,
+-- 		-- },
 
-		menu_key = "<leader>p",
-		menu_name = "PlatformIO",
+-- 		menu_key = "<leader>p",
+-- 		menu_name = "PlatformIO",
 
-		menu_bindings = {
-			{ node = "item", desc = "[L]ist terminals", shortcut = "l", command = "PioTermList" },
-			{ node = "item", desc = "[T]erminal Core CLI", shortcut = "t", command = "Piocmdf" },
-			{
-				node = "menu",
-				desc = "[G]eneral",
-				shortcut = "g",
-				items = {
-					{ node = "item", desc = "[B]uild", shortcut = "b", command = "Piocmdf run" },
-					{ node = "item", desc = "[U]pload", shortcut = "u", command = "Piocmdf run -t upload" },
-					{ node = "item", desc = "[M]onitor", shortcut = "m", command = "Piocmdh run -t monitor" },
-					{ node = "item", desc = "[C]lean", shortcut = "c", command = "Piocmdf run -t clean" },
-					{ node = "item", desc = "[F]ull clean", shortcut = "f", command = "Piocmdf run -t fullclean" },
-					{ node = "item", desc = "[D]evice list", shortcut = "d", command = "Piocmdf device list" },
-				},
-			},
-			{
-				node = "item",
-				desc = "Build + Upload + Monitor",
-				shortcut = "x",
-				command = "PioBuildUploadMonitor",
-			},
-			{
-				node = "menu",
-				desc = "[P]latform",
-				shortcut = "p",
-				items = {
-					{
-						node = "item",
-						desc = "[B]uild file system",
-						shortcut = "b",
-						command = "Piocmdf run -t buildfs",
-					},
-					{ node = "item", desc = "Program [S]ize", shortcut = "s", command = "Piocmdf run -t size" },
-					{
-						node = "item",
-						desc = "[U]pload file system",
-						shortcut = "u",
-						command = "Piocmdf run -t uploadfs",
-					},
-					{ node = "item", desc = "[E]rase Flash", shortcut = "e", command = "Piocmdf run -t erase" },
-				},
-			},
-			{
-				node = "menu",
-				desc = "[D]ependencies",
-				shortcut = "d",
-				items = {
-					{ node = "item", desc = "[L]ist packages", shortcut = "l", command = "Piocmdf pkg list" },
-					{ node = "item", desc = "[O]utdated packages", shortcut = "o", command = "Piocmdf pkg outdated" },
-					{ node = "item", desc = "[U]pdate packages", shortcut = "u", command = "Piocmdf pkg update" },
-				},
-			},
-			{
-				node = "menu",
-				desc = "[A]dvanced",
-				shortcut = "a",
-				items = {
-					{ node = "item", desc = "[T]est", shortcut = "t", command = "Piocmdf test" },
-					{ node = "item", desc = "[C]heck", shortcut = "c", command = "Piocmdf check" },
-					{ node = "item", desc = "[D]ebug", shortcut = "d", command = "Piocmdf debug" },
-					{
-						node = "item",
-						desc = "Compilation Data[b]ase",
-						shortcut = "b",
-						command = "Piocmdf run -t compiledb",
-					},
-					{
-						node = "menu",
-						desc = "[V]erbose",
-						shortcut = "v",
-						items = {
-							{ node = "item", desc = "Verbose [B]uild", shortcut = "b", command = "Piocmdf run -v" },
-							{
-								node = "item",
-								desc = "Verbose [U]pload",
-								shortcut = "u",
-								command = "Piocmdf run -v -t upload",
-							},
-							{ node = "item", desc = "Verbose [T]est", shortcut = "t", command = "Piocmdf test -v" },
-							{ node = "item", desc = "Verbose [C]heck", shortcut = "c", command = "Piocmdf check -v" },
-							{ node = "item", desc = "Verbose [D]ebug", shortcut = "d", command = "Piocmdf debug -v" },
-						},
-					},
-				},
-			},
-			{
-				node = "menu",
-				desc = "[R]emote",
-				shortcut = "r",
-				items = {
-					{
-						node = "item",
-						desc = "Remote [U]pload",
-						shortcut = "u",
-						command = "Piocmdf remote run -t upload",
-					},
-					{ node = "item", desc = "Remote [T]est", shortcut = "t", command = "Piocmdf remote test" },
-					{
-						node = "item",
-						desc = "Remote [M]onitor",
-						shortcut = "m",
-						command = "Piocmdh remote run -t monitor",
-					},
-					{
-						node = "item",
-						desc = "Remote [D]evices",
-						shortcut = "d",
-						command = "Piocmdf remote device list",
-					},
-				},
-			},
-			{
-				node = "menu",
-				desc = "[M]iscellaneous",
-				shortcut = "m",
-				items = {
-					{ node = "item", desc = "[U]pgrade PlatformIO Core", shortcut = "u", command = "Piocmdf upgrade" },
-				},
-			},
-		},
-	})
-end
+-- 		menu_bindings = {
+-- 			{ node = "item", desc = "[L]ist terminals", shortcut = "l", command = "PioTermList" },
+-- 			{ node = "item", desc = "[T]erminal Core CLI", shortcut = "t", command = "Piocmdf" },
+-- 			{
+-- 				node = "menu",
+-- 				desc = "[G]eneral",
+-- 				shortcut = "g",
+-- 				items = {
+-- 					{ node = "item", desc = "[B]uild", shortcut = "b", command = "Piocmdf run" },
+-- 					{ node = "item", desc = "[U]pload", shortcut = "u", command = "Piocmdf run -t upload" },
+-- 					{ node = "item", desc = "[M]onitor", shortcut = "m", command = "Piocmdh run -t monitor" },
+-- 					{ node = "item", desc = "[C]lean", shortcut = "c", command = "Piocmdf run -t clean" },
+-- 					{ node = "item", desc = "[F]ull clean", shortcut = "f", command = "Piocmdf run -t fullclean" },
+-- 					{ node = "item", desc = "[D]evice list", shortcut = "d", command = "Piocmdf device list" },
+-- 				},
+-- 			},
+-- 			{
+-- 				node = "item",
+-- 				desc = "Build + Upload + Monitor",
+-- 				shortcut = "x",
+-- 				command = "PioBuildUploadMonitor",
+-- 			},
+-- 			{
+-- 				node = "menu",
+-- 				desc = "[P]latform",
+-- 				shortcut = "p",
+-- 				items = {
+-- 					{
+-- 						node = "item",
+-- 						desc = "[B]uild file system",
+-- 						shortcut = "b",
+-- 						command = "Piocmdf run -t buildfs",
+-- 					},
+-- 					{ node = "item", desc = "Program [S]ize", shortcut = "s", command = "Piocmdf run -t size" },
+-- 					{
+-- 						node = "item",
+-- 						desc = "[U]pload file system",
+-- 						shortcut = "u",
+-- 						command = "Piocmdf run -t uploadfs",
+-- 					},
+-- 					{ node = "item", desc = "[E]rase Flash", shortcut = "e", command = "Piocmdf run -t erase" },
+-- 				},
+-- 			},
+-- 			{
+-- 				node = "menu",
+-- 				desc = "[D]ependencies",
+-- 				shortcut = "d",
+-- 				items = {
+-- 					{ node = "item", desc = "[L]ist packages", shortcut = "l", command = "Piocmdf pkg list" },
+-- 					{ node = "item", desc = "[O]utdated packages", shortcut = "o", command = "Piocmdf pkg outdated" },
+-- 					{ node = "item", desc = "[U]pdate packages", shortcut = "u", command = "Piocmdf pkg update" },
+-- 				},
+-- 			},
+-- 			{
+-- 				node = "menu",
+-- 				desc = "[A]dvanced",
+-- 				shortcut = "a",
+-- 				items = {
+-- 					{ node = "item", desc = "[T]est", shortcut = "t", command = "Piocmdf test" },
+-- 					{ node = "item", desc = "[C]heck", shortcut = "c", command = "Piocmdf check" },
+-- 					{ node = "item", desc = "[D]ebug", shortcut = "d", command = "Piocmdf debug" },
+-- 					{
+-- 						node = "item",
+-- 						desc = "Compilation Data[b]ase",
+-- 						shortcut = "b",
+-- 						command = "Piocmdf run -t compiledb",
+-- 					},
+-- 					{
+-- 						node = "menu",
+-- 						desc = "[V]erbose",
+-- 						shortcut = "v",
+-- 						items = {
+-- 							{ node = "item", desc = "Verbose [B]uild", shortcut = "b", command = "Piocmdf run -v" },
+-- 							{
+-- 								node = "item",
+-- 								desc = "Verbose [U]pload",
+-- 								shortcut = "u",
+-- 								command = "Piocmdf run -v -t upload",
+-- 							},
+-- 							{ node = "item", desc = "Verbose [T]est", shortcut = "t", command = "Piocmdf test -v" },
+-- 							{ node = "item", desc = "Verbose [C]heck", shortcut = "c", command = "Piocmdf check -v" },
+-- 							{ node = "item", desc = "Verbose [D]ebug", shortcut = "d", command = "Piocmdf debug -v" },
+-- 						},
+-- 					},
+-- 				},
+-- 			},
+-- 			{
+-- 				node = "menu",
+-- 				desc = "[R]emote",
+-- 				shortcut = "r",
+-- 				items = {
+-- 					{
+-- 						node = "item",
+-- 						desc = "Remote [U]pload",
+-- 						shortcut = "u",
+-- 						command = "Piocmdf remote run -t upload",
+-- 					},
+-- 					-- { node = "item", desc = "Remote [T]est", shortcut = "t", command = "Piocmdf remote test" },
+-- 					{
+-- 						node = "item",
+-- 						desc = "Remote [M]onitor",
+-- 						shortcut = "m",
+-- 						command = "Piocmdh remote run -t monitor",
+-- 					},
+-- 					{
+-- 						node = "item",
+-- 						desc = "Remote [D]evices",
+-- 						shortcut = "d",
+-- 						command = "Piocmdf remote device list",
+-- 					},
+-- 				},
+-- 			},
+-- 			{
+-- 				node = "menu",
+-- 				desc = "[M]iscellaneous",
+-- 				shortcut = "m",
+-- 				items = {
+-- 					{ node = "item", desc = "[U]pgrade PlatformIO Core", shortcut = "u", command = "Piocmdf upgrade" },
+-- 				},
+-- 			},
+-- 		},
+-- 	})
+-- end
 
-vim.api.nvim_create_user_command("PioBuildUploadMonitor", function()
-	vim.cmd("Piocmdf run -t upload")
-	vim.defer_fn(function()
-		vim.cmd("Piocmdh run -t monitor")
-	end, 2000)
-end, {})
-
--- trouble
-require("trouble").setup({
-	{
-		modes = {
-			preview_float = {
-				mode = "diagnostics",
-				preview = {
-					type = "float",
-					relative = "editor",
-					border = "rounded",
-					title = "Preview",
-					title_pos = "center",
-					position = { 0, -2 },
-					size = { width = 0.3, height = 0.3 },
-					zindex = 200,
-				},
-			},
-		},
-	},
-})
-vim.keymap.set("n", "<leader>xx", "<cmd>Trouble diagnostics toggle<CR>", { desc = "Trouble diagnostics" })
+-- vim.api.nvim_create_user_command("PioBuildUploadMonitor", function()
+-- 	vim.cmd("Piocmdf run -t upload")
+-- 	vim.defer_fn(function()
+-- 		vim.cmd("Piocmdh run -t monitor")
+-- 	end, 2000)
+-- end, {})
 
 vim.keymap.set("n", "<leader>ct", function()
 	if vim.g.copilot_enabled == 1 then
@@ -643,12 +840,13 @@ vim.keymap.set("n", "<leader>ct", function()
 	end
 end, { silent = true })
 
+vim.keymap.set("n", "<leader>cc", "<cmd>CopilotChatToggle<CR>", { desc = "copilot chat toggle" })
+
+-- mini.ai
+require("mini.ai").setup()
+
 -- lazygit
-vim.keymap.set("n", "<leader>gg", "<cmd>LazyGit<CR>", { desc = "lazygit" })
--- vim.keymap.set("n", "<leader>gg", function()
--- require("telescope").extensions.lazygit.lazygit()
--- end,
--- )
+vim.keymap.set("n", "<leader>lg", "<cmd>LazyGit<CR>", { desc = "lazygit" })
 
 -- obsidian
 require("obsidian").setup({
@@ -683,25 +881,54 @@ require("obsidian").setup({
 	},
 })
 
+-- Precognition
+require("precognition").setup({
+	startVisible = false,
+	-- showBlankVirtLine = false,
+})
+
+vim.keymap.set("n", "<leader>pr", function()
+	require("precognition").toggle()
+end, { desc = "Toggle Precognition" })
+
+-- Hardtime
+-- require("hardtime").setup({
+-- 	restriction_mode = "hint",
+-- })
+
 -- yank and keep selection
 vim.keymap.set("v", "y", "ygv", { desc = "yank and keep selection" })
 
 -- move lines
+-- ( shift opt hjkl)
+
 vim.keymap.set("n", "<D-S-j>", "<Nop>")
 vim.keymap.set("n", "<D-S-k>", "<Nop>")
 vim.keymap.set("v", "<D-S-j>", "<Nop>")
 vim.keymap.set("v", "<D-S-k>", "<Nop>")
 
-vim.keymap.set("v", "<D-S-j>", ":m '>+1<CR>gv=gv", { desc = "move line down" })
-vim.keymap.set("v", "<D-S-k>", ":m '<-2<CR>gv=gv", { desc = "move selection up" })
+vim.keymap.set("n", "<S-Up>", "<Nop>")
+vim.keymap.set("n", "<S-Down>", "<Nop>")
+vim.keymap.set("v", "<S-Left>", "<Nop>")
+vim.keymap.set("v", "<S-Right>", "<Nop>")
 
--- require("snacks").setup({
--- 	explorer = {
--- 		keys = {
--- 			["p"] = "parent",
--- 		},
--- 	},
--- })
+-- shift alt k/j
+vim.keymap.set("v", "<S-Down>", ":m '>+1<CR>gv=gv", { desc = "move line down", silent = true })
+vim.keymap.set("v", "<S-Up>", ":m '<-2<CR>gv=gv", { desc = "move selection up", silent = true })
+
+vim.keymap.set("n", "<C-Down>", "<Nop>")
+vim.keymap.set("n", "<C-Up>", "<Nop>")
+
+vim.keymap.set("v", "<C-Down>", ":m '>+1<CR>gv=gv")
+vim.keymap.set("v", "<C-Up>", ":m '<-2<CR>gv=gv")
+
+vim.keymap.set({ "n", "i" }, "<C-c>", function()
+	if #vim.fn.getbufinfo({ buflisted = 1 }) > 1 then
+		vim.cmd("bd")
+	else
+		vim.cmd("q")
+	end
+end, { silent = true })
 
 -- snacks (scratch buffer)
 vim.keymap.set("n", "<leader>.", function()
@@ -726,34 +953,22 @@ end, { desc = "Snacks Help Tags" })
 
 -- which-key
 require("which-key").setup({
-	-- preset = "modern",
+	-- -@type false | "classic" | "modern" | "helix"
 	preset = "helix",
+	-- preset = "classic",
+	-- preset = "modern",
 })
 
 -- maximizer
 require("maximizer").setup()
 
 -- yazi inside nvim
-vim.keymap.set("n", "<leader>yy", function()
+vim.keymap.set("n", "<leader>y", function()
 	require("yazi").yazi()
 end, { desc = "Yazi" })
 
 -- highlight-colors
 require("nvim-highlight-colors").setup({})
--- require("colorizer").setup()
--- require("colorizer").setup({
--- 	"*",
--- }, {
--- 	RGB = true,
--- 	RRGGBB = true,
--- 	custom_patterns = {
--- 		{
--- 			label = "ARGB",
--- 			pattern = "0x%x%x(%x%x%x%x%x%x)",
--- 			group = 1,
--- 		},
--- 	},
--- })
 
 -- XcodeBuild
 require("xcodebuild").setup({
@@ -769,18 +984,15 @@ require("ufo").setup({
 		win_config = {
 			border = { "", "─", "", "", "", "─", "", "" },
 			winhighlight = "Normal:Folded",
-			winblend = 0,
+			winblend = 100,
 		},
 	},
 })
--- vim.o.foldcolumn = "1"
 vim.o.foldlevel = 99
 vim.o.foldlevelstart = 99
 vim.o.foldenable = true
 
--- vim.keymap.set("n", "zR", require("ufo").toggleFold)
 vim.keymap.set("n", "za", "za", { desc = "Toggle fold under cursor" })
--- vim.keymap.set("n", "\x1b[1;5P", "za", { desc = "Toggle fold under cursor" })
 
 vim.keymap.set("n", "zR", require("ufo").openAllFolds, { desc = "Open all folds" })
 vim.keymap.set("n", "zM", require("ufo").closeAllFolds, { desc = "Close all folds" })
@@ -1048,32 +1260,45 @@ require("nvim-tree").setup({
 	},
 })
 
-vim.keymap.set({ "n", "i", "s" }, "<c-f>", function()
+vim.keymap.set({ "n", "i", "s" }, "<Down>", function()
 	if not require("noice.lsp").scroll(4) then
 		return "<c-f>"
 	end
 end, { silent = true, expr = true })
 
-vim.keymap.set({ "n", "i", "s" }, "<c-b>", function()
+vim.keymap.set({ "n", "i", "s" }, "<Up>", function()
 	if not require("noice.lsp").scroll(-4) then
 		return "<c-b>"
 	end
 end, { silent = true, expr = true })
 
 -- flash
-require("flash").setup()
--- vim.keymap.set("n", "<leader>s", function()
-vim.keymap.set("n", "s", function()
+require("flash").setup({
+	labels = "hjkluiopmn",
+})
+vim.keymap.set("n", "f", function()
 	require("flash").jump()
 end, { desc = "Flash" })
-
-vim.keymap.del("n", "f")
-vim.keymap.del("n", "F")
 
 vim.keymap.set({ "n", "x", "o" }, ",", ",")
 vim.keymap.set({ "n", "x", "o" }, ";", ";")
 
--- Noice
+-- notify
+local notify = require("notify")
+
+notify.setup({
+	background_colour = "#000000",
+	fps = 60,
+	timeout = 3000,
+	-- max_width = 35,
+	minimum_width = 35,
+	render = "minimal",
+	stages = "static",
+})
+
+vim.api.nvim_set_hl(0, "NotifyBackground", { bg = "NONE" })
+vim.notify = notify
+
 if not vim.g._noice_loaded then
 	require("noice").setup({
 		views = {
@@ -1081,6 +1306,29 @@ if not vim.g._noice_loaded then
 				size = {
 					width = 35,
 					height = "auto",
+				},
+			},
+
+			top_right = {
+				-- backend = "notify",
+				backend = "popup",
+				relative = "editor",
+				position = {
+					row = 0,
+					col = "100%",
+				},
+				size = {
+					-- width = 35,
+					width = "auto",
+					height = "auto",
+				},
+				border = {
+					style = "rounded",
+				},
+				timeout = 1500,
+				replace = true,
+				win_options = {
+					winblend = 0,
 				},
 			},
 		},
@@ -1112,7 +1360,8 @@ if not vim.g._noice_loaded then
 		},
 		routes = {
 			{
-				view = "mini",
+				-- view = "notify",
+				view = "top_right",
 				filter = {
 					event = "msg_show",
 				},
@@ -1125,7 +1374,8 @@ end
 -- Lualine
 local custom_codedark = require("lualine.themes.codedark")
 
-local modes = { "normal", "insert", "visual" }
+-- local modes = { "normal", "insert", "visual" }
+local modes = { "normal", "insert", "visual", "replace" }
 local sections = { "a", "b", "c" }
 
 for _, mode in ipairs(modes) do
@@ -1153,6 +1403,14 @@ local copilot_component = function()
 	end
 end
 
+local function location_with_words()
+	local line = vim.fn.line(".")
+	local col = vim.fn.col(".")
+	local words = vim.fn.wordcount().words
+
+	return string.format("%d:%d %d", line, col, words)
+end
+
 -- LuaLine
 require("lualine").setup({
 	options = {
@@ -1174,18 +1432,8 @@ require("lualine").setup({
 				colored = false,
 			},
 		},
-		-- lualine_y = {
-		-- 	function()
-		-- 		local clients = vim.lsp.get_clients({ bufnr = 0 })
-		-- 		if next(clients) == nil then
-		-- 			return ""
-		-- 		end
-		-- 		return clients[1].name
-		-- 	end,
-		-- },
 
 		lualine_y = {
-			-- copilot_component,
 			function()
 				local clients = vim.lsp.get_clients({ bufnr = 0 })
 				local names = {}
@@ -1198,7 +1446,21 @@ require("lualine").setup({
 			end,
 		},
 
-		lualine_z = { "location", "progress" },
+		lualine_z = {
+			{
+				location_with_words,
+				cond = function()
+					return vim.bo.filetype == "markdown"
+				end,
+			},
+			{
+				"location",
+				cond = function()
+					return vim.bo.filetype ~= "markdown"
+				end,
+			},
+			"progress",
+		},
 	},
 })
 
@@ -1207,12 +1469,6 @@ require("nvim-autopairs").setup({
 	enable_check_bracket_line = false,
 	ignored_next_char = "[%w%.]",
 })
-
--- ultimate-autopair.nvim
--- require("ultimate-autopair").setup()
-
--- nvim-surround
--- require("nvim-surround").setup()
 
 -- lazygit telescope
 require("telescope").load_extension("lazygit")
@@ -1246,18 +1502,6 @@ require("telescope").setup({
 				["i"] = function()
 					vim.cmd("startinsert")
 				end,
-
-				-- ["l"] = function(prompt_bufnr)
-				-- 	local action_state = require("telescope.actions.state")
-				-- 	local actions = require("telescope.actions")
-				-- 	local entry = action_state.get_selected_entry()
-
-				-- 	if entry.Path:is_dir() then
-				-- 		actions.select_default(prompt_bufnr)
-				-- 	else
-				-- 		actions.file_edit(prompt_bufnr)
-				-- 	end
-				-- end,
 
 				["l"] = "select_default",
 
@@ -1317,11 +1561,6 @@ vim.keymap.set("n", "<C-j>", "<cmd>TmuxNavigateDown<cr>")
 vim.keymap.set("n", "<C-k>", "<cmd>TmuxNavigateUp<cr>")
 vim.keymap.set("n", "<C-l>", "<cmd>TmuxNavigateRight<cr>")
 
--- vim.keymap.set("n", "<C-h>", "<cmd>TmuxNavigateLeft<cr>")
--- vim.keymap.set("n", "<C-j>", "<C-w>j")
--- vim.keymap.set("n", "<C-k>", "<cmd>TmuxNavigateUp<cr>")
--- vim.keymap.set("n", "<C-l>", "<cmd>TmuxNavigateRight<cr>")
-
 -- Enhanced movement keys
 vim.keymap.set("n", "J", "5j")
 vim.keymap.set("n", "K", "5k")
@@ -1359,18 +1598,13 @@ vim.keymap.set("n", "<leader>tt", open_term, { desc = "Open one terminal" })
 vim.keymap.set("n", "<leader>t2", open_two_terms, { desc = "Open two terminals" })
 vim.keymap.set("n", "<leader>th", "<cmd>ToggleTermToggleAll<CR>")
 
--- Utility mappings
--- vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Clear search highlighting" })
-
 -- Telescope mappings
 local builtin = require("telescope.builtin")
 vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Telescope find files" })
--- vim.keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "Telescope live grep" })
--- vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Telescope buffers" })
 vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "Telescope help tags" })
 vim.keymap.set("n", "<leader>fx", "<cmd>Telescope diagnostics<CR>", { desc = "Telescope diagnostics" })
 
-vim.keymap.set("n", "<leader>k", require("telescope.builtin").keymaps, { desc = "Telescope Keymaps" })
+vim.keymap.set("n", "<leader>km", require("telescope.builtin").keymaps, { desc = "Telescope Keymaps" })
 
 -- Commentary plugin
 vim.keymap.set("n", "\\", "<Plug>CommentaryLine", { noremap = false })
@@ -1384,8 +1618,6 @@ vim.api.nvim_set_keymap("n", "mt", '<cmd>lua require("maximizer").toggle()<CR>',
 -- splits --
 vim.api.nvim_set_keymap("n", "<leader>|", "<cmd>vnew<CR>", { silent = true, noremap = true })
 vim.api.nvim_set_keymap("n", "<leader>-", "<cmd>new<CR>", { silent = true, noremap = true })
--- vim.keymap.set("n", "<C-Up>", ":resize -2<CR>", { silent = true })
--- vim.keymap.set("n", "<C-Down>", ":resize +2<CR>", { silent = true })
 vim.keymap.set("n", "<D-C-j>", ":resize -2<CR>", { silent = true })
 vim.keymap.set("n", "<D-C-k>", ":resize +2<CR>", { silent = true })
 
@@ -1418,9 +1650,9 @@ vim.api.nvim_create_autocmd("WinEnter", {
 -- Error showing
 vim.diagnostic.config({
 	float = { border = "rounded" },
-	virtual_text = true,
+	-- virtual_text = true,
 	virtual_lines = false,
-	virtual_text = false,
+	-- virtual_text = false,
 	signs = false,
 	underline = true,
 	update_in_insert = false,

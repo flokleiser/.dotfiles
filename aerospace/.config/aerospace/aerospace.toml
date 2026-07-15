@@ -1,10 +1,4 @@
 after-login-command = []
-# after-startup-command = [
-#   'exec-and-forget borders active_color=0xffe1e3e4 inactive_color=0xff494d64 width=5.0'
-# ]
-# after-startup-command = [
-#   'exec-and-forget borders active_color=0xffe1e3e4 inactive_color=0xff494d64 width=3.0'
-# ]
 after-startup-command = []
 start-at-login = false
 
@@ -16,7 +10,7 @@ accordion-padding = 30
 default-root-container-layout = 'tiles'
 default-root-container-orientation = 'auto'
 on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
-# on-focus-changed = "move-mouse window-lazy-center"
+on-focus-changed = "move-mouse window-lazy-center"
 
 automatically-unhide-macos-hidden-apps = true
 
@@ -31,7 +25,7 @@ automatically-unhide-macos-hidden-apps = true
     outer.bottom 		= 15
     outer.top 			= 15
     # outer.top           = [
-    #     { monitor."built-in" = 25 },
+        # { monitor."built-in" = 23 },
     # 55]
     outer.right 		= 15
 
@@ -41,54 +35,93 @@ automatically-unhide-macos-hidden-apps = true
     2 = "OMEN 32q"
     3 = "OMEN 32q"
     4 = "Built-in Retina Display"
-    5 = "DELL UP2516D"
+    5 = "Built-in Retina Display"
+    6 = "DELL UP2516D"
+    7 = "DELL UP2516D"
+    8 = "DELL UP2516D"
+    9 = "DELL S2722QC"
+    10 = "DELL S2722QC"
+    11 = "DELL S2722QC"
+
 
 [mode.main.binding]
 
-    alt-slash = 'layout tiles horizontal vertical'
-    alt-comma = 'layout accordion horizontal vertical'
+    ctrl-alt-slash = 'layout tiles horizontal vertical'
+    ctrl-alt-comma = 'layout accordion horizontal vertical'
 
-    cmd-shift-1= 'move left'
-    cmd-shift-2= 'move right'
+    cmd-shift-h = 'focus left --boundaries all-monitors-outer-frame --boundaries-action wrap-around-all-monitors'
+    cmd-shift-l = 'focus right --boundaries all-monitors-outer-frame --boundaries-action wrap-around-all-monitors'
+    cmd-shift-k = 'focus up --boundaries all-monitors-outer-frame --boundaries-action wrap-around-all-monitors'
+    cmd-shift-j = 'focus down --boundaries all-monitors-outer-frame --boundaries-action wrap-around-all-monitors'
 
-    ctrl-1 = 'workspace 1'
-    ctrl-2 = 'workspace 2'
-    ctrl-3 = 'workspace 3'
-    ctrl-4 = 'workspace 4'
-    ctrl-5 = 'workspace 5'
-    ctrl-6 = 'workspace 6'
+    cmd-shift-1= 'swap left'
+    cmd-shift-2= 'swap right'
+
+    alt-shift-1= 'workspace 1'
+    alt-shift-2= 'workspace 2'
+    alt-shift-3= 'workspace 3'
+    alt-shift-4= 'workspace 4'
+    alt-shift-5= 'workspace 5'
+    alt-shift-6= 'workspace 6'
+
+    # ctrl-1 = 'workspace 1'
+    # ctrl-2 = 'workspace 2'
+    # ctrl-3 = 'workspace 3'
+    # ctrl-4 = 'workspace 4'
+    # ctrl-5 = 'workspace 5'
+    # ctrl-6 = 'workspace 6'
+    # ctrl-7 = 'workspace 7'
+    # ctrl-8 = 'workspace 8'
+    # ctrl-9 = 'workspace 9'
+
+    # ctrl-alt-i = 'move-node-to-workspace next'
+    # ctrl-alt-o = 'move-workspace-to-monitor right'
+
 
     cmd-ctrl-h = 'workspace prev'
     cmd-ctrl-l = 'workspace next'
 
-    alt-shift-8= 'resize smart -50'
-    alt-shift-9= 'resize smart +50'
-    alt-shift-0= 'balance-sizes'
+    cmd-shift-8= 'resize smart -100'
+    cmd-shift-9= 'resize smart +100'
+    cmd-shift-0= 'balance-sizes'
 
-    shift-left = ['move-node-to-monitor --wrap-around prev', 'focus-monitor --wrap-around prev']
-    shift-right = ['move-node-to-monitor --wrap-around next', 'focus-monitor --wrap-around next']
+    shift-alt-enter='fullscreen'
 
+    shift-alt-i= ['move-node-to-monitor --wrap-around prev', 'focus-monitor --wrap-around prev']
+    shift-alt-o= ['move-node-to-monitor --wrap-around next', 'focus-monitor --wrap-around next']
 
-    ctrl-left = ['move-node-to-workspace --wrap-around prev', 'workspace --wrap-around prev']
-    ctrl-right = ['move-node-to-workspace --wrap-around next', 'workspace --wrap-around next']
+    cmd-left = ['move-node-to-workspace --wrap-around prev', 'workspace --wrap-around prev']
+    cmd-right = ['move-node-to-workspace --wrap-around next', 'workspace --wrap-around next']
 
-    alt-tab = 'workspace-back-and-forth'
 
     alt-shift-m= 'mode service'
 
 [mode.service.binding]
     esc = ['reload-config', 'mode main']
-    # r = ['flatten-workspace-tree', 'mode main']
-    # f = ['layout floating tiling', 'mode main'] 
-    # backspace = ['close-all-windows-but-current', 'mode main']
+    f = ['layout floating tiling', 'mode main'] 
+    a = ['layout tiles accordion', 'mode main']
+    t = ['layout tiles horizontal vertical', 'mode main']
 
-    ctrl-shift-h = ['swap left', 'mode main']
-    ctrl-shift-j = ['swap down', 'mode main']
-    ctrl-shift-k = ['swap up', 'mode main']
-    ctrl-shift-l = ['swap right', 'mode main']
+    # j = ['swap down', 'mode main']
+    # k = ['swap up', 'mode main']
+    # h = ['swap left', 'mode main']
+    # l = ['swap right', 'mode main']
+
+    j = ['swap down']
+    k = ['swap up']
+    h = ['swap left']
+    l = ['swap right']
+
 
     shift-left = ['join-with left', 'mode main']
     shift-down = ['join-with down', 'mode main']
     shift-up = ['join-with up', 'mode main']
     shift-right = ['join-with right', 'mode main']
+
+    r = 'mode resize'
+
+[mode.resize.binding]
+    h = 'resize smart -200'
+    l = 'resize smart +200'
+    esc = 'mode main'
 

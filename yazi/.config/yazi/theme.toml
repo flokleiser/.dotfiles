@@ -1,21 +1,22 @@
-"$schema" = "https://yazi-rs.github.io/schemas/theme.json"
+#:schema https://yazi-rs.github.io/schemas/theme.json
 
 # vim:fileencoding=utf-8:foldmethod=marker
+
 
 [flavor]
 dark  = "vscode-dark-modern"
 # dark  = "vscode-light-plus"
 light = ""
 
+# [indicator]
+# padding = { open = "█", close = "█" }
+
 [mgr]
 cwd = { fg = "white" }
 
-# hovered         = { reversed = true }
-# preview_hovered = { underline = false}
-# hovered         = { reversed = true}
-hovered         = { fg="white", bg="black",reversed = true}
+# hovered         = { fg="white", bg="black",reversed = true}
+hovered         = { fg="white", bg="reset", reversed = true}
 preview_hovered = { underline = false}
-
 find_keyword  = { fg = "yellow", bold = true, italic = true, underline = true }
 find_position = { fg = "magenta", bg = "lightcyan", bold = true, italic = true }
 
@@ -48,6 +49,14 @@ separator       = "   "
 separator_style = { fg = "lightcyan" }
 
 # : }}}
+
+[tabs]
+active   = { fg="black",bg = "white", bold = true }
+inactive = { fg = "white", bg = "reset", bold = true  }
+
+# Separator
+sep_inner = { open = "", close = "" }
+sep_outer = { open = "", close = "" }
 
 
 # : Confirmation {{{
@@ -169,12 +178,16 @@ rules = [
 	{ mime = "application/{pdf,doc,rtf}", fg = "cyan" },
 
 	# Dummy files
-	{ name = "*", is = "dummy", bg = "red" },
-	{ name = "*/", is = "dummy", bg = "red" },
+	# { name = "*", is = "dummy", bg = "red" },
+	# { name = "*/", is = "dummy", bg = "red" },
+
+	{ url = "*", is = "dummy", bg = "red" },
+	{ url = "*/", is = "dummy", bg = "red" },
 
 	# Fallback
 	# { name = "*", fg = "white" },
-	{ name = "*/", fg = "blue" }
+	# { url = "*/", fg = "blue" }
+	{ url = "*/", fg = "white" }
 ]
 
 [icon]

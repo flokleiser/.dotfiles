@@ -6,6 +6,35 @@
 # command = "PreviousTrack"
 # key_sequence = ">"
 
+
+# unknown variant `{VolumeChange = {offset = -5}}`, expected one of `None`, `NextTrack`, `PreviousTrack`, `ResumePause`, `PlayRandom`, `Repeat`, `Shuffle`, `VolumeChange`, `Mute`, `SeekStart`, `SeekForward`, `SeekBackward`, `Quit`, `OpenCommandHelp`, `ClosePopup`, `SelectNextOrScrollDown`, `SelectPreviousOrScrollUp`, `PageSelectNextOrScrollDown`, `PageSelectPreviousOrScrollUp`, `SelectFirstOrScrollToTop`, `SelectLastOrScrollToBottom`, `JumpToCurrentTrackInContext`, `ChooseSelected`, `RefreshPlayback`, `RestartIntegratedClient`, `FocusNextWindow`, `FocusPreviousWindow`, `SwitchTheme`, `SwitchDevice`, `Search`, `Queue`, `ShowActionsOnSelectedItem`, `ShowActionsOnCurrentTrack`, `ShowActionsOnCurrentContext`, `AddSelectedItemToQueue`, `JumpToHighlightTrackInContext`, `BrowseUserPlaylists`, `BrowseUserFollowedArtists`, `BrowseUserSavedAlbums`, `CurrentlyPlayingContextPage`, `TopTrackPage`, `RecentlyPlayedTrackPage`, `LikedTrackPage`, `LyricsPage`, `LibraryPage`, `SearchPage`, `BrowsePage`, `PreviousPage`, `OpenSpotifyLinkFromClipboard`, `SortTrackByTitle`, `SortTrackByArtists`, `SortTrackByAlbum`, `SortTrackByDuration`, `SortTrackByAddedDate`, `ReverseTrackOrder`, `SortLibraryAlphabetically`, `SortLibraryByRecent`, `MovePlaylistItemUp`, `MovePlaylistItemDown`, `CreatePlaylist`
+
+
+# [[keymaps]]
+# command = "VolumeChange"
+# key_sequence = "-"
+
+# keymaps = [
+#       {
+#         command = { VolumeChange = { offset = 2 } };
+#         key_sequence = "0";
+#       },
+
+#       {
+#         command = { VolumeChange = { offset = -2 } };
+#         key_sequence = "9";
+#       }
+
+
+[[keymaps]]
+command = { VolumeChange = { offset = 2 } }
+key_sequence = "0"
+
+
+[[keymaps]]
+command = { VolumeChange = { offset = -2 } }
+key_sequence = "9"
+
 [[keymaps]]
 command = "Search"
 key_sequence = "/"
@@ -21,6 +50,13 @@ key_sequence = "space"
 [[keymaps]]
 command = "ResumePause"
 key_sequence = "p"
+
+[[keymaps]]
+command = "NextTrack"
+key_sequence = "g n"
+[[keymaps]]
+command = "PreviousTrack"
+key_sequence = "g p"
 
 [[keymaps]]
 command = "ReverseTrackOrder"
@@ -92,15 +128,15 @@ key_sequence = "."
 command = "Queue"
 key_sequence = "C-q"
 
-# [[keymaps]]
-# command = "SeekForward"
-# key_sequence = "f"
+[[keymaps]]
+command = { SeekForward = { duration = 10 } }
+key_sequence = "<"
 
-# [[keymaps]]
-# command = "SeekBackward"
-# key_sequence = "b"
+[[keymaps]]
+command = { SeekBackward = { duration = 10 } }
+key_sequence = ">"
+
 
 [[keymaps]]
 command = "PreviousPage"
 key_sequence = "h"
-

@@ -1,124 +1,69 @@
-#!/bin/bash
+# https://github.com/FelixKratz/dotfiles
 
-# --- Sourcing of core scripts + Initial setup config ---
-RELPATH="$(dirname "$0")"
-export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:/run/current-system/sw/bin:/nix/var/nix/profiles/default/bin:$PATH"
-mkdir -p "${TMPDIR}sketchybar"
+source "$CONFIG_DIR/colors.sh"
+source "$CONFIG_DIR/icons.sh" # Loads all defined icons
 
-if [[ -z $(ls /Library/Fonts/ | grep 'sketchybar-app-font') ]]; then
-  echo 'Sketchybarfont not found…' # Notice if Sketchybar-app-font is not installed
-fi
+ITEM_DIR="$CONFIG_DIR/items"
+PLUGIN_DIR="$CONFIG_DIR/plugins"
 
-# Optional user configuration
-if [[ -n "$SKETCHYBAR_CONFIG" && -f "$SKETCHYBAR_CONFIG" ]]; then
-  # External override path (useful for Nix)
-  # shellcheck disable=SC1090
-  source "$SKETCHYBAR_CONFIG"
-elif [[ -f "$RELPATH/config.sh" ]]; then
-  # Local config file in repository
-  # shellcheck disable=SC1091
-  source "$RELPATH/config.sh"
-fi
+FONT="JetBrainsMono Nerd Font"
 
-# Fallback defaults if variables unset
-: "${NOTCH_WIDTH:=180}"
-: "${MUSIC_INFO_WIDTH:=80}"
-: "${CPU_UPDATE_FREQ:=2}"
+##### Bar Appearance #####
+# Configuring the general appearance of the bar.
+# These are only some of the options available. For all options see:
+# https://felixkratz.github.io/SketchyBar/config/bar
+# If you are looking for other colors, see the color picker:
+# https://felixkratz.github.io/SketchyBar/config/tricks#color-picker
 
-source "$RELPATH/set_colors.sh"
-source "$RELPATH/icon_map.sh"
-source "$RELPATH/add_separator.sh"
+sketchybar --bar position=top height=40 blur_radius=0 color="$TRANSPARENT"
 
-### Global bar properties
+##### Changing Defaults #####
+# We now change some default values, which are applied to all further items.
+# For a full list of all available item properties see:
+# https://felixkratz.github.io/SketchyBar/config/items
 
-FONT="SF Pro"
-OUTER_PADDINGS=5
-INNER_PADDINGS=5
-X_BAR_PADDING=12
-BAR_HEIGHT=34
+default=(
+        padding_left=3
+        padding_right=3
 
-# --- Bar & Default Properties ---
+        background.color="$ITEM_BG_COLOR"
+        background.corner_radius=5
+        background.height=25
 
-bar=(
-  height=$BAR_HEIGHT
-  y_offset=4
-  margin=5
-  shadow=on
-  shadow.color=$TEXT
-  padding_left=0
-  padding_right=$X_BAR_PADDING
-  color=$BAR_COLOR
-  border_width=1
-  border_color=$BORDER_COLOR
-  corner_radius=14
-  blur_radius=40
-  notch_width=$NOTCH_WIDTH
+        icon.font="$FONT:Regular:15.0"
+        label.font="$FONT:Regular:14.0"
+
+        icon.color=$WHITE
+        icon.y_offset=1
+
+        label.color=$WHITE
+        label.y_offset=1
+
+        icon.padding_left=10
+        icon.padding_right=4
+
+        label.padding_left=4
+        label.padding_right=10
 )
+sketchybar --default "${default[@]}"
+sketchybar --add event aerospace_workspace_change
 
-defaults=(
-  updates=when_shown
-  icon.font="$FONT:Regular:14.0"
-  icon.color=$ICON_COLOR
-  padding_left=$OUTER_PADDINGS
-  padding_right=$OUTER_PADDINGS
-  icon.padding_left=$INNER_PADDINGS
-  icon.padding_right=$INNER_PADDINGS
-  label.font="$FONT:Semibold:13.0"
-  label.color=$LABEL_COLOR
-  label.padding_left=$INNER_PADDINGS
-  label.padding_right=$INNER_PADDINGS
-  background.corner_radius=8
-  popup.y_offset=4
-  popup.background.border_width=1
-  popup.background.corner_radius=6
-  popup.background.border_color=$POPUP_BORDER_COLOR
-  popup.background.color=$POPUP_BACKGROUND_COLOR
-  popup.blur_radius=20
-  popup.background.shadow.drawing=on
-)
+##### Left Items #####
+source "$ITEM_DIR/space.sh"
+# adds layout background for workspaces
+sketchybar --add bracket workspaces space.1 space.2 space.3 space.4 space.8 space.9 space.B space.F space.M space.N space.T \
+           --set workspaces background.color="$PURE_BLACK" \
 
-zones=(
-  background.height=$(($BAR_HEIGHT - 8))
-  background.border_width=2
-  background.border_color=$HIGH_MED
-  background.color=$OVERLAY
-  background.corner_radius=8
-  blur_radius=24
-)
+source "$ITEM_DIR/front_app.sh"
 
-sketchybar --bar "${bar[@]}"
-sketchybar --default "${defaults[@]}"
+##### Right Items #####
+source "$ITEM_DIR/clock.sh"
 
-# --- Bar Items ---
-
-source "$RELPATH/sketchy-items/logo.sh"
-source "$RELPATH/sketchy-items/spaces.sh"
-source "$RELPATH/sketchy-items/frontapp.sh"
-source "$RELPATH/sketchy-items/menus.sh"
-source "$RELPATH/sketchy-items/calendar.sh"
-source "$RELPATH/sketchy-items/mic.sh"
-source "$RELPATH/sketchy-items/volume.sh"
-source "$RELPATH/sketchy-items/battery.sh"
-source "$RELPATH/sketchy-items/wifi.sh"
-source "$RELPATH/sketchy-items/display.sh"
-source "$RELPATH/sketchy-items/more-menu.sh"
-source "$RELPATH/sketchy-items/packages.sh"
-source "$RELPATH/sketchy-items/currentuser.sh"
-source "$RELPATH/sketchy-items/notifications.sh"
-source "$RELPATH/sketchy-items/controls.sh"
-
-source "$RELPATH/sketchy-items/music.sh"
-
-# CPU module is always sourced by default (original behavior)
-source "$RELPATH/sketchy-items/cpu.sh"
-
-sketchybar --add bracket base-controls battery wifi display \
-  --set base-controls "${zones[@]}" \
-  --add bracket volume_controls volume_icon mic \
-  --set volume_controls "${zones[@]}" \
-  --add bracket more_menu '/moremenu\..*/' "${menuitem[@]}" \
-  --set more_menu "${zones[@]}"
-
+source "$ITEM_DIR/media_block.sh"
+          
+           
+sketchybar --hotload on
+##### Force all scripts to run the first time (never do this in a script) #####
 sketchybar --update
 
 echo "sketchybar configuation loaded.."
