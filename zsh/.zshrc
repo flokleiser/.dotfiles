@@ -101,13 +101,12 @@ alias hs="cd ~/ZHdK/FS26/"
 alias ghostty="nvim ~/.dotfiles/ghostty/.config/ghostty/config"
 alias cl="clear"
 alias .="open ."
-alias lg="lazygit"
+# alias lg="lazygit"
 
 # alias neofetch="fastfetch"
 
 alias code="cd ~/Code/"
 alias vscode="/usr/local/bin/code"
-
 
 export HOMEBREW_AUTO_UPDATE_SECS=604800
 
@@ -116,7 +115,7 @@ eval "$(zoxide init zsh)"
 eval "$(starship init zsh)"
 
 ### --- LazyGit function ---
-function flogit() {
+function lg() {
 	git add .
 	git commit -a -m "$*"
 	git push
@@ -140,6 +139,7 @@ zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 #     fi
 #     rm -f -- "$tmp"
 # }
+
 function y() {
     local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
     ~/Code/Rust/Yazi/target/release/yazi "$@" --cwd-file="$tmp"
